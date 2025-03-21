@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.Chunk;
@@ -24,14 +23,13 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.petcemetery.petcemetery.DTO.AquisicaoJazigoDTO;
 import com.petcemetery.petcemetery.DTO.CarrinhoDTO;
-import com.petcemetery.petcemetery.DTO.DetalharJazigoDTO;
 import com.petcemetery.petcemetery.DTO.JazigoDTO;
 import com.petcemetery.petcemetery.DTO.JazigoPerfilDTO;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Contrato;
 import com.petcemetery.petcemetery.model.Jazigo;
-import com.petcemetery.petcemetery.model.Pagamento;
 import com.petcemetery.petcemetery.model.Jazigo.StatusEnum;
+import com.petcemetery.petcemetery.model.Pagamento;
 import com.petcemetery.petcemetery.model.Pet;
 import com.petcemetery.petcemetery.model.Servico;
 import com.petcemetery.petcemetery.model.Servico.ServicoEnum;
