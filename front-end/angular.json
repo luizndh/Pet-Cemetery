@@ -37,7 +37,6 @@
               }
             ],
             "styles": [
-              "node_modules/normalize-scss/sass/normalize/_import-now.scss",
               "src/styles.scss",
               "node_modules/bootstrap/scss/bootstrap.scss"
             ],
