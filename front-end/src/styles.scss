@@ -1,6 +1,5 @@
-.button-primary-background {
-    background-color: #7fd7f5;
-}
+@import "bootstrap/scss/bootstrap";
+
 
 .main {
     background-color: rgb(8, 8, 8);
@@ -23,4 +22,17 @@ hr {
 html, body {
     height: 100%;
     overflow: hidden;
+}
+
+:host {
+    --btn-base-color: #7fd7f5;
+    --btn-hover-color: #{lighten(#7fd7f5, 15%)};
+
+    .btn-info {
+        background-color: var(--btn-base-color);
+
+        &:hover {
+            background-color: var(--btn-hover-color);
+        }
+    }
 }
