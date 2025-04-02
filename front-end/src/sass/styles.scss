@@ -1,8 +1,10 @@
 @import "bootstrap/scss/bootstrap";
+$enable-grid: true;
 
 
 .main {
-    background-color: rgb(8, 8, 8);
+    @extend .container-fluid, .d-flex, .flex-column, .align-items-center, .gap-2;
+    background-color: rgba(8, 8, 8, 0.950);
     height: 100%;
 }
 
