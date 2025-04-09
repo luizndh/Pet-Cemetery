@@ -13,7 +13,7 @@ $enable-grid: true;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-h1, h5 {
+h1, h2, h3, h4, h5, p {
     color: white;
 }
 
@@ -37,4 +37,30 @@ html, body {
             background-color: var(--btn-hover-color);
         }
     }
+}
+
+.btn-primario {
+    --bs-btn-font-weight: 400;
+    --bs-btn-color: black;
+    --bs-btn-bg: #7fd7f5;
+    --bs-btn-hover-color: white;
+    --bs-btn-border-color: #7fd7f5;
+    --bs-btn-hover-bg: #{shade-color(#7fd7f5, 15%)};
+    --bs-btn-hover-border-color: #{shade-color(#7fd7f5, 15%)};
+    --bs-btn-active-color: var(--bs-btn-hover-color);
+    --bs-btn-active-bg: #{shade-color(#7fd7f5, 20%)};
+    --bs-btn-active-border-color: #{shade-color(#7fd7f5, 20%)};
+}
+
+.btn-secundario {
+    --bs-btn-font-weight: 400;
+    --bs-btn-color: #7fd7f5;
+    --bs-btn-bg: rgba(8, 8, 8, 0.550);
+    --bs-btn-hover-color: black;
+    --bs-btn-border-color: #7fd7f5;
+    --bs-btn-hover-bg: #{shade-color(#7fd7f5, 15%)};
+    --bs-btn-hover-border-color: #{shade-color(#7fd7f5, 15%)};
+    --bs-btn-active-color: var(--bs-btn-hover-color);
+    --bs-btn-active-bg: #{shade-color(#7fd7f5, 20%)};
+    --bs-btn-active-border-color: #{shade-color(#7fd7f5, 20%)};
 }

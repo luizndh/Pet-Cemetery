@@ -5,6 +5,7 @@ import { CadastroComponent } from './auth/cadastro/cadastro.component';
 import { QuemSomosComponent } from './info-navbar/quem-somos/quem-somos.component';
 import { PlanosComponent } from './info-navbar/planos/planos.component';
 import { ContatoComponent } from './info-navbar/contato/contato.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
     {
@@ -30,6 +31,10 @@ export const routes: Routes = [
     {
         path: 'contato',
         component: ContatoComponent
+    },
+    {
+        path: 'home',
+        component: HomeComponent
     },
 
     {
