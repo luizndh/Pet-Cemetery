@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-quem-somos',
   imports: [RouterLink],
   templateUrl: './quem-somos.component.html',
-  styleUrl: './quem-somos.component.scss'
+  styleUrl: './quem-somos.component.css'
 })
 export class QuemSomosComponent {
 

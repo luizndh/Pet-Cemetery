@@ -1,17 +1,19 @@
-<nav class="navbar bg-dark justify-content-between">
-    <div class="d-flex mx-2">
-        <a routerLink="/home">
-            <img src="/assets/logo.svg" height="50px" width="50px" alt="Logo" />
-        </a>
-    </div>
-    <div class="d-flex gap-2">
-        <button type="button" class="btn btn-secondary" routerLink="/home">HOME</button>
-        <button type="button" class="btn btn-secondary" routerLink="/quem-somos">QUEM SOMOS</button>
-        <button type="button" class="btn btn-secondary" routerLink="/planos">PLANOS</button>
-        <button type="button" class="btn btn-secondary" routerLink="/contato">CONTATO</button>
-    </div>
-    <div class="d-flex gap-2 mx-2">
-        <button type="button" class="btn btn-primario text-black" routerLink="/login">LOGIN</button>
-        <button type="button" class="btn btn-primario text-black" routerLink="/cadastro">CADASTRO</button>
+<nav class="bg-neutral-800">
+    <div class="w-full flex items-center p-3">
+        <div class="flex-1">
+            <a routerLink="/home">
+                <img src="/assets/logo.svg" class="h-14 w-14" alt="Logo" />
+            </a>
+        </div>
+        <div class="flex space-x-4 mx-auto">
+            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/home">HOME</a>
+            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/quem-somos">QUEM SOMOS </a>
+            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/planos">PLANOS</a>
+            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/contato">CONTATO</a>
+        </div>
+        <div class="flex-1 flex justify-end space-x-4">
+            <a href="#" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/login">LOGIN</a>
+            <a href="#" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/cadastro">CADASTRO</a>
+        </div>
     </div>
 </nav>

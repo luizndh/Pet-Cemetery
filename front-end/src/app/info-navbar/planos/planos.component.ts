@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-planos',
   imports: [],
   templateUrl: './planos.component.html',
-  styleUrl: './planos.component.scss'
+  styleUrl: './planos.component.css'
 })
 export class PlanosComponent {
 

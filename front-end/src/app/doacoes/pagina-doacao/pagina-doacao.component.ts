@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-pagina-doacao',
   imports: [CartaoDoacaoComponent, CommonModule],
   templateUrl: './pagina-doacao.component.html',
-  styleUrl: './pagina-doacao.component.scss'
+  styleUrl: './pagina-doacao.component.css'
 })
 export class PaginaDoacaoComponent {
 

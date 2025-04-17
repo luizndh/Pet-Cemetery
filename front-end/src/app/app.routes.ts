@@ -6,6 +6,7 @@ import { QuemSomosComponent } from './info-navbar/quem-somos/quem-somos.componen
 import { PlanosComponent } from './info-navbar/planos/planos.component';
 import { ContatoComponent } from './info-navbar/contato/contato.component';
 import { HomeComponent } from './home/home.component';import { PaginaDoacaoComponent } from './doacoes/pagina-doacao/pagina-doacao.component';
+import { MapaJazigoComponent } from './compra/mapa-jazigo/mapa-jazigo.component';
 
 
 export const routes: Routes = [
@@ -40,6 +41,10 @@ export const routes: Routes = [
     {
         path: 'home/doacao',
         component: PaginaDoacaoComponent,
+    },
+    {
+        path: 'home/mapa-jazigos',
+        component: MapaJazigoComponent
     },
 
 

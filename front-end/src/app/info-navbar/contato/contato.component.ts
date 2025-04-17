@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-contato',
   imports: [RouterLink],
   templateUrl: './contato.component.html',
-  styleUrl: './contato.component.scss'
+  styleUrl: './contato.component.css'
 })
 export class ContatoComponent {
 

@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer base {
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+      cursor: pointer;
+    }
+}
+
+
+.main {
+    @apply w-full flex flex-col items-center gap-2 h-full bg-neutral-900;
+}
+
+.title {
+    font-size: 100px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, h4, h5, p {
+    color: white;
+}
+
+hr {
+    border-width: 0.5px;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.btn-primario {
+    @apply font-normal text-neutral-200 bg-neutral-800 rounded-2xl p-2;
+
+    &:hover {
+        @apply text-neutral-200 bg-neutral-700;
+    }
+
+    &:active {
+        @apply text-black bg-cyan-400 border-cyan-400;
+    }
+}
+
+.btn-secundario {
+    @apply font-normal text-cyan-500 bg-[rgba(8,8,8,0.55)] border bg-cyan-500 rounded;
+
+    &:hover {
+        @apply text-black bg-cyan-400 border-cyan-400;
+    }
+
+    &:active {
+        @apply text-black bg-cyan-400 border-cyan-400;
+    }
+}

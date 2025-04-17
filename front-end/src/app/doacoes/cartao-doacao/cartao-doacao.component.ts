@@ -5,7 +5,7 @@ import { Organizacao } from '../model/organizacao.model';
   selector: 'app-cartao-doacao',
   imports: [],
   templateUrl: './cartao-doacao.component.html',
-  styleUrl: './cartao-doacao.component.scss'
+  styleUrl: './cartao-doacao.component.css'
 })
 export class CartaoDoacaoComponent {
 
