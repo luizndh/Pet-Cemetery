@@ -47,9 +47,6 @@ public class Jazigo {
     @Column(name = "foto")
     private String foto;
 
-    @Column(name = "notas")
-    private String notas;
-
     @Column(name = "plano")
     @Enumerated(EnumType.STRING)
     private ServicoEnum plano;
@@ -84,7 +81,6 @@ public class Jazigo {
 
         this.mensagem = mensagem;
         this.foto = foto;
-        this.notas = notas;
         this.plano = plano;
         this.petEnterrado = petEnterrado;
         this.historicoPets = new ArrayList<>();
@@ -125,12 +121,6 @@ public class Jazigo {
     }
     public void setFoto(String foto) {
         this.foto = foto;
-    }
-    public String getNotas() {
-        return notas;
-    }
-    public void setNotas(String notas) {
-        this.notas = notas;
     }
     public Pet getPetEnterrado() {
         return petEnterrado;

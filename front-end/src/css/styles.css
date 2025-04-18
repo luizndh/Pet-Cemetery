@@ -7,31 +7,35 @@
     }
 }
 
+:root {
+    --navbar-height: 5rem; /* Define a altura da navbar */
+}
+
+.navbar {
+    @apply fixed top-0 left-0 w-full bg-neutral-800 z-50;
+    height: var(--navbar-height);
+}
 
 .main {
-    @apply w-full flex flex-col items-center gap-2 h-full bg-neutral-900;
+    @apply w-full flex flex-col items-center gap-2 bg-neutral-900 min-h-screen py-8;
+    padding-top: var(--navbar-height);
 }
 
 .title {
-    font-size: 100px;
+    @apply text-7xl font-bold mt-15 text-white;
     font-family: 'Montserrat', sans-serif;
-}
-
-h1, h2, h3, h4, h5, p {
-    color: white;
 }
 
 hr {
     border-width: 0.5px;
 }
 
-html, body {
-    height: 100%;
-    overflow: hidden;
+p {
+    color: white;
 }
 
 .btn-primario {
-    @apply font-normal text-neutral-200 bg-neutral-800 rounded-2xl p-2;
+    @apply font-normal text-neutral-200 bg-neutral-800 rounded-2xl p-3;
 
     &:hover {
         @apply text-neutral-200 bg-neutral-700;
@@ -43,7 +47,7 @@ html, body {
 }
 
 .btn-secundario {
-    @apply font-normal text-cyan-500 bg-[rgba(8,8,8,0.55)] border bg-cyan-500 rounded;
+    @apply font-normal text-cyan-500 bg-neutral-800 rounded-2xl p-2;
 
     &:hover {
         @apply text-black bg-cyan-400 border-cyan-400;

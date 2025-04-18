@@ -1,8 +1,9 @@
-@import '../../../css/styles.css';
+p.text-black {
+    color: black
+}
 
-
-h5 {
-    color: black;
+p.text-white {
+    color: white
 }
 
 .card {

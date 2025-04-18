@@ -1,8 +1,10 @@
-<div class="card" style="width: 18rem;">
-    <img [src]="org.imagem" class="card-img-top" alt="org.imagem">
-    <div class="card-body items-center flex flex-col">
-      <h5 class="card-title">{{org.nome}}</h5>
-      <p class="card-text">{{org.descricao}}</p>
-      <a [href]="org.link" class="btn btn-primario">Ajudar</a>
+<div class="max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
+    <img [src]="org.imagem" alt="Imagem da ONG" class="w-full h-48 object-cover">
+    <div class="p-6 flex flex-col items-center">
+      <h5 class="text-xl font-bold text-gray-900 mb-2">{{org.nome}}</h5>
+      <p class="text-center mb-4">{{org.descricao}}</p>
+      <a [href]="org.link" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition">
+        Ajudar
+      </a>
     </div>
-  </div>
+</div>
