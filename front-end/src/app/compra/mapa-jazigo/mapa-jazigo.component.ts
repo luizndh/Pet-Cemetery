@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Jazigo } from '../../shared/model/jazigo.model';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-mapa-jazigo',
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './mapa-jazigo.component.html',
   styleUrl: './mapa-jazigo.component.css'
 })
@@ -459,4 +459,24 @@ export class MapaJazigoComponent {
             foto: null
         }
     ]
+
+    jazigoSelecionado: Jazigo | null = null;
+
+    selecionarJazigo(jazigo: Jazigo) {
+        this.jazigoSelecionado = jazigo;
+    }
+
+    fecharModal() {
+        this.jazigoSelecionado = null;
+    }
+
+    comprarJazigo(jazigo: Jazigo) {
+        console.log(`Comprar jazigo: ${jazigo.endereco}`);
+        this.fecharModal();
+    }
+
+    alugarJazigo(jazigo: Jazigo) {
+        console.log(`Alugar jazigo: ${jazigo.endereco}`);
+        this.fecharModal();
+    }
 }

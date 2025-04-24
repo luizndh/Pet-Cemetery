@@ -1,9 +1,50 @@
 <div class="main">
-    <h1 class="my-3 title">Mapa de Jazigos</h1>
-    <div class="gap-3 flex flex-col items-center">
-        <h3 class="mb-3">Selecione um jazigo</h3>
-        <div class="row w-75 g-3">
-            <img class="col" *ngFor="let jazigo of jazigos" src="/assets/jverde.png" height="50px" width="50px" alt="Jazigo" />
-        </div>
+    <h1 class="title">Mapa de Jazigos</h1>
+    <p class="text-white text-2xl my-3 text-center">Selecione um jazigo</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4 w-full max-w-6xl mx-auto">
+      <div
+        class="col flex items-center justify-center rounded-full cursor-pointer hover:bg-neutral-700 transition p-2"
+        *ngFor="let jazigo of jazigos"
+        (click)="selecionarJazigo(jazigo)"
+      >
+        <img
+          class="rounded-lg"
+          src="/assets/jverde.png"
+          [style.width.px]="50"
+          [style.height.px]="50"
+          alt="Jazigo"
+        />
+      </div>
     </div>
-</div>
+
+    <!-- Modal -->
+    <div
+      *ngIf="jazigoSelecionado"
+      class="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
+    >
+      <div class="bg-neutral-800 rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4 text-white">Jazigo {{ jazigoSelecionado!.endereco }}</h2>
+        <p class="mb-6">Escolha uma opção para o jazigo {{ jazigoSelecionado!.endereco }}:</p>
+        <div class="flex justify-between">
+          <button
+            class="btn-primario border border-gray-700 w-[48%]"
+            (click)="comprarJazigo(jazigoSelecionado!)"
+          >
+            Comprar
+          </button>
+          <button
+            class="btn-primario border border-gray-700 w-[48%]"
+            (click)="alugarJazigo(jazigoSelecionado!)"
+          >
+            Alugar
+          </button>
+        </div>
+        <button
+          class="mt-6 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-500 transition"
+          (click)="fecharModal()"
+        >
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
