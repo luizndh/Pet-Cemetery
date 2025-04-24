@@ -54,6 +54,6 @@ p {
     }
 
     &:active {
-        @apply text-black bg-cyan-400 border-cyan-400;
+        @apply text-black bg-neutral-700 border-neutral-400;
     }
 }
