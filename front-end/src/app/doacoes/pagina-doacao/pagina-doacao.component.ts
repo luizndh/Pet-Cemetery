@@ -15,37 +15,37 @@ export class PaginaDoacaoComponent {
         {
             nome: 'Paraíso dos Focinhos',
             descricao: 'Descrição da Organização 1',
-            imagem: 'https://via.placeholder.com/150',
+            imagem: 'assets/paraiso-dos-fucinhos.png',
             link: 'https://www.paraisodosfocinhos.com.br/faca-sua-doacao/'
         },
         {
             nome: 'Instituto Caramelo',
             descricao: 'Descrição da Organização 2',
-            imagem: 'https://via.placeholder.com/150',
+            imagem: 'assets/instituto-caramelo.png',
             link: 'https://institutocaramelo.org/doe'
         },
         {
             nome: 'Os Indefesos',
             descricao: 'Descrição da Organização 3',
-            imagem: 'https://via.placeholder.com/150',
+            imagem: 'assets/os-indefesos.png',
             link: 'https://www.osindefesos.com.br/doacoes'
         },
         {
             nome: 'Cão sem Dono',
             descricao: 'Descrição da Organização 3',
-            imagem: 'https://via.placeholder.com/150',
+            imagem: 'assets/cao-sem-dono.png',
             link: 'https://www.caosemdono.com.br/doacoes'
         },
         {
             nome: 'Cão sem Fome',
             descricao: 'Descrição da Organização 3',
-            imagem: 'https://via.placeholder.com/150',
+            imagem: 'assets/cao-sem-fome.png',
             link: 'https://projetocaosemfome.com/central-de-doacoes'
         },
         {
             nome: 'Associação Quatro Patinhas',
             descricao: 'Descrição da Organização 3',
-            imagem: 'https://via.placeholder.com/150',
+            imagem: 'assets/quatro-patinhas.png',
             link: 'https://quatropatinhas.com.br/4P/quero-ajudar/'
         }
     ];
