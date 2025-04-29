@@ -32,7 +32,7 @@ export class CadastroComponent {
   onSubmit() {
     this.service.cadastro(this.cadastroForm.value).subscribe((response: any) => {
         this.tokenService.setToken(response.token);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home']).then(() => window.location.reload());
     })
   }
 }

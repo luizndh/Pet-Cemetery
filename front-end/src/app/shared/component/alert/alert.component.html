@@ -1,5 +1,5 @@
 <div [hidden]="!form">
-    <div *ngIf="firstInvalidField() as field" class="text-red-500">
+    <div *ngIf="firstInvalidField() as field">
       <p *ngIf="form.get(field)?.errors as errors">
         <span *ngIf="errors['required']">O campo "{{ field }}" é obrigatório.</span>
         <span *ngIf="!errors['required'] && errors['email']">O campo "{{ field }}" deve ser um email válido.</span>
