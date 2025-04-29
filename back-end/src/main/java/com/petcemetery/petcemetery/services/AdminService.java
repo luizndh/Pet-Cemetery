@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.petcemetery.petcemetery.DTO.HistoricoJazigoDTO;
-import com.petcemetery.petcemetery.DTO.HorarioFuncionamentoDTO;
+import com.petcemetery.petcemetery.dto.HistoricoJazigoDTO;
+import com.petcemetery.petcemetery.dto.HorarioFuncionamentoDTO;
 import com.petcemetery.petcemetery.model.Admin;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Jazigo;
@@ -84,7 +84,7 @@ public class AdminService {
         emailService.sendEmail(emails, subject, body);
     }
 
-    public Admin findByEmailAndSenha(String email, String senha) {
-        return this.repository.findByEmailAndSenha(email, senha);
+    public Admin findByEmail(String email) {
+        return this.repository.findByEmail(email);
     }
 }

@@ -1,20 +1,20 @@
 package com.petcemetery.petcemetery.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
+
+import java.util.List;
 
 @Entity(name = "Cliente")
 @Table(name = "Cliente")
 @NoArgsConstructor
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
+@ToString
 public class Cliente extends Usuario {
 
     @Column(name = "desativado")
@@ -24,6 +24,7 @@ public class Cliente extends Usuario {
     private Boolean inadimplente;
 
     @OneToMany(mappedBy = "cliente")
+    @ToString.Exclude
     private List<Pagamento> pagamentos;
 
     public Cliente(String email, String telefone, String nome, String cpf, String senha) {
@@ -31,8 +32,9 @@ public class Cliente extends Usuario {
         this.desativado = false;
         this.inadimplente = false;
     }
-    public Cliente(String email, String telefone, String nome, String cpf, String cep, String rua, String numero, String complemento, String senha) {
-        super(cpf, email, telefone, nome, cep, rua, numero, complemento, senha);
+
+    public Cliente(String email, String telefone, String nome, String cpf, String cep, String rua, String numero, String complemento, String senha, Role role) {
+        super(cpf, email, telefone, nome, cep, rua, numero, complemento, senha, role);
         this.desativado = false;
         this.inadimplente = false;
     }
@@ -44,4 +46,8 @@ public class Cliente extends Usuario {
         this.pagamentos.remove(pagamento);
     }
 
+    @Override
+    public boolean isEnabled() {
+        return !this.desativado;
+    }
 }

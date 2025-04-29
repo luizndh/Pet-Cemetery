@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity(name = "Administrador")
 @Table(name = "Administrador")
 @NoArgsConstructor
@@ -14,8 +16,8 @@ public class Admin extends Usuario{
     }
 
     public Admin(String email, String telefone, String nome, String cpf, String cep,  String rua, String numero,
-        String complemento, String senha) {
+        String complemento, String senha, Role role) {
 
-        super(email, telefone, nome, cpf, cep, rua, numero, complemento, senha);
+        super(email, telefone, nome, cpf, cep, rua, numero, complemento, senha, role);
     }
 }

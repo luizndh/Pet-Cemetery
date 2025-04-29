@@ -1,0 +1,14 @@
+<div [hidden]="!form">
+    <div *ngIf="firstInvalidField() as field" class="text-red-500">
+      <p *ngIf="form.get(field)?.errors as errors">
+        <span *ngIf="errors['required']">O campo "{{ field }}" é obrigatório.</span>
+        <span *ngIf="!errors['required'] && errors['email']">O campo "{{ field }}" deve ser um email válido.</span>
+        <span *ngIf="!errors['required'] && !errors['email'] && errors['minlength']">
+          O campo "{{ field }}" deve ter no mínimo {{ errors['minlength'].requiredLength }} caracteres.
+        </span>
+        <span *ngIf="!errors['required'] && !errors['email'] && !errors['minlength'] && errors['pattern']">
+          O campo "{{ field }}" possui um formato inválido.
+        </span>
+      </p>
+    </div>
+  </div>

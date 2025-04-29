@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.petcemetery.petcemetery.DTO.ClienteDTO;
-import com.petcemetery.petcemetery.DTO.ClientePerfilDTO;
-import com.petcemetery.petcemetery.DTO.VisualizarDespesasDTO;
+import com.petcemetery.petcemetery.dto.ClienteDTO;
+import com.petcemetery.petcemetery.dto.ClientePerfilDTO;
+import com.petcemetery.petcemetery.dto.VisualizarDespesasDTO;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Lembrete;
 import com.petcemetery.petcemetery.repositorio.LembreteRepository;
@@ -38,10 +40,10 @@ public class ClienteController {
 
     // Recebe as informações que o cliente deseja mudar, em JSON, e altera no banco de dados
     @PutMapping("")
-    public boolean editarPerfil(@RequestBody Map<String, Object> requestBody,
-            @PathVariable String cpf) {
+    public boolean editarPerfil(@Valid @RequestBody EditarPerfilDTO requestBody,
+                                @PathVariable String cpf) {
 
-        return this.clienteService.editaPerfil(cpf, requestBody);
+        return this.clienteService.editarPerfil(cpf, requestBody);
     }
 
     // Desativa o perfil do Cliente quando solicitado

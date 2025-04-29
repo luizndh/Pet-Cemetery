@@ -30,10 +30,6 @@ hr {
     border-width: 0.5px;
 }
 
-p {
-    color: white;
-}
-
 .btn-primario {
     @apply font-normal text-neutral-200 bg-neutral-800 rounded-2xl p-3;
 

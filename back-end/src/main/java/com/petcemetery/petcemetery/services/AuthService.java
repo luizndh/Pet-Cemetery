@@ -1,70 +1,65 @@
 package com.petcemetery.petcemetery.services;
 
+import com.petcemetery.petcemetery.config.JwtService;
+import com.petcemetery.petcemetery.dto.AuthResponseDTO;
+import com.petcemetery.petcemetery.dto.CadastroRequestDTO;
+import com.petcemetery.petcemetery.dto.LoginRequestDTO;
+import com.petcemetery.petcemetery.model.Role;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.petcemetery.petcemetery.model.Admin;
 import com.petcemetery.petcemetery.model.Cliente;
-import com.petcemetery.petcemetery.outros.EmailValidator;
 
 import io.micrometer.common.util.StringUtils;
 
+import java.util.Collections;
+
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    @Autowired
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private AdminService adminService;
+    public AuthResponseDTO login(LoginRequestDTO loginRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getSenha())
+        );
 
-    public String login(String email, String senha) {
-        Cliente cliente = clienteService.findByEmailAndSenha(email, senha);
-        Admin admin = adminService.findByEmailAndSenha(email, senha);
-
-        if (cliente != null) {
-            if(cliente.getDesativado()) {
-                throw new IllegalArgumentException("Cliente desativado");
-            }
-
-        return "cliente;" + cliente.getCpf();
-
-        } else if (admin != null) {
-            return "admin;" + admin.getCpf();
-
-        } else {
-            throw new IllegalArgumentException("Email ou senha incorretos");
-        }
+        var cliente = clienteService.findByEmail(loginRequest.getEmail());
+        var jwtToken = jwtService.createToken(cliente.getEmail());
+        return new AuthResponseDTO(jwtToken);
     }
 
-    public String cadastro(String email, String senha, String senhaRepetida, String cpf, String cep, String rua,
-            String numero, String complemento, String nome, String telefone) {
+    public AuthResponseDTO cadastro(CadastroRequestDTO cadastroRequest) {
+        PasswordEncoder enconder = new BCryptPasswordEncoder();
 
-        // Checa se algum dos campos não foi preenchido e exibe uma mensagem de erro
-        if (StringUtils.isBlank(nome) || StringUtils.isBlank(email) || StringUtils.isBlank(senha)
-            || StringUtils.isBlank(senhaRepetida)
-            || StringUtils.isBlank(cep) || StringUtils.isBlank(rua) || StringUtils.isBlank(numero) || StringUtils.isBlank(cpf)
-            || StringUtils.isBlank(telefone)) {
+        Cliente cliente = new Cliente(
+                cadastroRequest.getEmail(),
+                cadastroRequest.getTelefone(),
+                cadastroRequest.getNome(),
+                cadastroRequest.getCpf(),
+                cadastroRequest.getCep(),
+                cadastroRequest.getRua(),
+                cadastroRequest.getNumero(),
+                cadastroRequest.getComplemento(),
+                enconder.encode(cadastroRequest.getSenha()),
+                Role.CLIENTE
+        );
 
-            throw new IllegalArgumentException("Preencha todos os campos necessários");
-
-            // Checa se a senha é igual a senha repetida e exibe uma mensagem de erro
-        } else if (!senha.equals(senhaRepetida)) {
-            throw new IllegalArgumentException("As senhas devem ser iguais");
-
-            // Checa se o email é válido através de regex e exibe uma mensagem de erro
-        } else if (!EmailValidator.isValid(email)) {
-            throw new IllegalArgumentException("Formato de email inválido");
-            // Checa se já existe um cliente cadastrado com o email fornecido e exibe uma
-            // mensagem de erro
-        } else if (clienteService.findByEmail(email) != null) {
-            throw new IllegalArgumentException("Esse email já está cadastrado");
-
-            // Adiciona o cliente no banco de dados
-        } else {
-            clienteService.save(new Cliente(email, telefone, nome, cpf, cep, rua, numero, complemento, senha));
-            return cpf;
-        }
+        clienteService.save(cliente);
+        var jwtToken = jwtService.createToken(cliente.getEmail());
+        return new AuthResponseDTO(jwtToken);
     }
 
 }

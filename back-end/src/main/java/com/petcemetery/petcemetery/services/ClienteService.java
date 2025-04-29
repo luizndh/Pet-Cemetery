@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.petcemetery.petcemetery.DTO.ClienteDTO;
-import com.petcemetery.petcemetery.DTO.ClienteInadimplenteDTO;
-import com.petcemetery.petcemetery.DTO.ClientePerfilDTO;
+import com.petcemetery.petcemetery.dto.ClienteDTO;
+import com.petcemetery.petcemetery.dto.ClienteInadimplenteDTO;
+import com.petcemetery.petcemetery.dto.ClientePerfilDTO;
 import com.petcemetery.petcemetery.model.Cliente;
-import com.petcemetery.petcemetery.outros.EmailValidator;
 import com.petcemetery.petcemetery.repositorio.ClienteRepository;
 
 import io.micrometer.common.util.StringUtils;
@@ -43,58 +44,43 @@ public class ClienteService {
     }
 
     public Cliente findByEmail(String email) {
-        return this.repository.findByEmail(email);
+        return this.repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 
     public Cliente findByCpf(String cpf) {
         return this.repository.findByCpf(cpf);
     }
 
-    public boolean editaPerfil(String cpf, Map<String, Object> requestBody) {
-
+    public boolean editarPerfil(String cpf, EditarPerfilDTO dto) {
         Cliente cliente = this.repository.findByCpf(cpf);
-        // Vai passar por todos os valores do forms de editar perfil, para verificar
-        // quais foram preenchidos e quais não foram
-        for (Map.Entry<String, Object> entry : requestBody.entrySet()) {
-            String campo = entry.getKey();
-            Object valor = entry.getValue();
 
-            if (!StringUtils.isBlank((String) valor)) {
-                // Atualizar o campo correspondente no cliente
-                switch (campo) {
-                    case "nome":
-                        cliente.setNome((String) valor);
-                        break;
-                    case "email":
-                        if (!EmailValidator.isValid((String) valor)) {
-                            throw new IllegalArgumentException("Formato de email inválido");
-                        }
-                        cliente.setEmail((String) valor);
-                        break;
-                    case "telefone":
-                        cliente.setTelefone((String) valor);
-                        break;
-                    case "rua":
-                        cliente.setRua((String) valor);
-                        break;
-                    case "numero":
-                        cliente.setNumero((String) valor);
-                        break;
-                    case "complemento":
-                        cliente.setComplemento((String) valor);
-                        break;
-                    case "cep":
-                        cliente.setCep((String) valor);
-                        break;
-                    case "senha":
-                        String senhaRepetida = (String) requestBody.get("senharepeat");
-                        if (!valor.equals(senhaRepetida)) {
-                            throw new IllegalArgumentException("As senhas devem ser iguais");
-                        }
-                        cliente.setSenha((String) valor);
-                        break;
-                }
+        // Atualiza os campos preenchidos no DTO
+        if (!StringUtils.isBlank(dto.getNome())) {
+            cliente.setNome(dto.getNome());
+        }
+        if (!StringUtils.isBlank(dto.getEmail())) {
+            cliente.setEmail(dto.getEmail());
+        }
+        if (!StringUtils.isBlank(dto.getTelefone())) {
+            cliente.setTelefone(dto.getTelefone());
+        }
+        if (!StringUtils.isBlank(dto.getRua())) {
+            cliente.setRua(dto.getRua());
+        }
+        if (!StringUtils.isBlank(dto.getNumero())) {
+            cliente.setNumero(dto.getNumero());
+        }
+        if (!StringUtils.isBlank(dto.getComplemento())) {
+            cliente.setComplemento(dto.getComplemento());
+        }
+        if (!StringUtils.isBlank(dto.getCep())) {
+            cliente.setCep(dto.getCep());
+        }
+        if (!StringUtils.isBlank(dto.getSenha()) && !StringUtils.isBlank(dto.getSenhaRepetida())) {
+            if (!dto.getSenha().equals(dto.getSenhaRepetida())) {
+                throw new IllegalArgumentException("As senhas devem ser iguais");
             }
+            cliente.setSenha(dto.getSenha());
         }
 
         this.repository.save(cliente);
