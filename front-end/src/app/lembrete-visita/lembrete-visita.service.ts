@@ -7,11 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class LembreteVisitaService {
 
+    private prefixoApi: string = 'http://localhost:8080/api/lembrete-visita'
+
     constructor(private http: HttpClient) {}
 
-    recuperaDadosMeteorologicos(): Observable<any> {
-        const apiKey = 'SUA_API_KEY'; // Substitua pela sua chave de API do OpenWeatherMap
-        const city = 'Rio de Janeiro'; // Substitua pela cidade desejada
-        return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&cnt=40`);
+    recuperaDadosMeteorologicos(data: Date): Observable<any> {
+        return this.http.get<any>(`${this.prefixoApi}/previsao`, { params: { data: data.toString() } });
+    }
+
+    agendaLembreteVisita(data: Date): Observable<any> {
+        return this.http.post<any>(`${this.prefixoApi}`, data);
     }
 }

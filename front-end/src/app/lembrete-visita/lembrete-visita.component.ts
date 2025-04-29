@@ -1,39 +1,42 @@
 import { Component } from '@angular/core';
 import { LembreteVisitaService } from './lembrete-visita.service';
+import { DatePipe, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-lembrete-visita',
-  templateUrl: './lembrete-visita.component.html',
-  styleUrls: ['./lembrete-visita.component.css'],
+    selector: 'app-lembrete-visita',
+    templateUrl: './lembrete-visita.component.html',
+    styleUrls: ['./lembrete-visita.component.css'],
+    imports: [NgIf, FormsModule, DatePipe]
 })
 export class LembreteVisitaComponent {
-  selectedDate: string | null = null;
-  weather: { temp: number; description: string; humidity: number } | null = null;
+    weather: { temp: number; description: string; humidity: number } | null = null;
+    modalAberto: boolean = false;
+    dataSelecionada!: Date;
 
-  constructor(private service: LembreteVisitaService) {}
+    constructor(private service: LembreteVisitaService) { }
 
-  async onDateChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.selectedDate = input.value;
-
-    if (this.selectedDate) {
-        this.service.recuperaDadosMeteorologicos().subscribe(response => {
-            // Filtrar a previsão para a data selecionada
-        const forecast = response.data.list.find((item: any) =>
-            item.dt_txt.startsWith(this.selectedDate)
-          );
-
-          if (forecast) {
-            this.weather = {
-              temp: forecast.main.temp,
-              description: forecast.weather[0].description,
-              humidity: forecast.main.humidity,
-            };
-          } else {
-            this.weather = null;
-            alert('Nenhuma previsão disponível para esta data.');
-          }
-        })
+    abrirModal() {
+        this.modalAberto = true;
+        this.service.recuperaDadosMeteorologicos(this.dataSelecionada!).subscribe(
+            (response) => {
+                console.log('Dados meteorológicos recebidos:', response);
+                this.weather = {
+                    temp: response.main.temp,
+                    description: response.weather[0].description,
+                    humidity: response.main.humidity
+                };
+            }
+        );
     }
-  }
+
+    agendarLembrete(data: Date) {
+        console.log('Agendando lembrete para a data:', data);
+        this.service.agendaLembreteVisita(data).subscribe(
+            (response) => {
+                console.log('Lembrete agendado com sucesso!', response);
+                this.modalAberto = false;
+            }
+        );
+    }
 }
