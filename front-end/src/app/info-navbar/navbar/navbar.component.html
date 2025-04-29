@@ -10,8 +10,10 @@
             <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/contato">CONTATO</a>
         </div>
         <div class="flex-1 flex justify-end space-x-4">
-            <a href="#" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/login">LOGIN</a>
-            <a href="#" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/cadastro">CADASTRO</a>
+            <a *ngIf="!usuarioLogado" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/login">LOGIN</a>
+            <a *ngIf="!usuarioLogado" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/cadastro">CADASTRO</a>
+            <a *ngIf="usuarioLogado" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/home/perfil">PERFIL</a>
+            <a *ngIf="usuarioLogado" (click)="logout()" class="bg-red-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-red-400 hover:text-black cursor-pointer">LOGOUT</a>
         </div>
     </div>
 </nav>
