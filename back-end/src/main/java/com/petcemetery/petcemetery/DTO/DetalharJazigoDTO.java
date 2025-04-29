@@ -1,4 +1,4 @@
-package com.petcemetery.petcemetery.DTO;
+package com.petcemetery.petcemetery.dto;
 
 
 import com.petcemetery.petcemetery.model.Jazigo;

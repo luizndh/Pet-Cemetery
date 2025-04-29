@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.petcemetery.petcemetery.DTO.AquisicaoJazigoDTO;
-import com.petcemetery.petcemetery.DTO.CarrinhoDTO;
-import com.petcemetery.petcemetery.DTO.JazigoDTO;
-import com.petcemetery.petcemetery.DTO.JazigoPerfilDTO;
+import com.petcemetery.petcemetery.dto.AquisicaoJazigoDTO;
+import com.petcemetery.petcemetery.dto.CarrinhoDTO;
+import com.petcemetery.petcemetery.dto.JazigoDTO;
+import com.petcemetery.petcemetery.dto.JazigoPerfilDTO;
 import com.petcemetery.petcemetery.model.Jazigo;
 import com.petcemetery.petcemetery.model.Servico;
 import com.petcemetery.petcemetery.model.Servico.ServicoEnum;

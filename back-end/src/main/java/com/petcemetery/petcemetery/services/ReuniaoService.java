@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.petcemetery.petcemetery.DTO.ReuniaoDTO;
+import com.petcemetery.petcemetery.dto.ReuniaoDTO;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Reuniao;
 import com.petcemetery.petcemetery.repositorio.ReuniaoRepository;

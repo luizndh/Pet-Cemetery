@@ -16,11 +16,13 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity(name = "Contrato")
 @Table(name = "Contrato")
 @AllArgsConstructor
+@NoArgsConstructor
 public class Contrato {
 
     @Id
@@ -56,8 +58,6 @@ public class Contrato {
     @OneToOne
     @JoinColumn(name = "tipo_servico")
     private Servico servico;
-
-    public Contrato(){}
 
     // All args constructor
     public Contrato(double valor, Cliente cliente, Jazigo jazigo, Pet pet, LocalDateTime dataServico, LocalDate primeiroPagamento, LocalDate ultimoPagamento, Servico servico) {

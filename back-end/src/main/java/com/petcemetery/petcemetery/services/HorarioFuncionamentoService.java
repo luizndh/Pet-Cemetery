@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.petcemetery.petcemetery.DTO.HorarioFuncionamentoDTO;
+import com.petcemetery.petcemetery.dto.HorarioFuncionamentoDTO;
 import com.petcemetery.petcemetery.model.HorarioFuncionamento;
 import com.petcemetery.petcemetery.repositorio.HorarioFuncionamentoRepository;
 

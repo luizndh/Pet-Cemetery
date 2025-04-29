@@ -1,4 +1,4 @@
-package com.petcemetery.petcemetery.DTO;
+package com.petcemetery.petcemetery.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
