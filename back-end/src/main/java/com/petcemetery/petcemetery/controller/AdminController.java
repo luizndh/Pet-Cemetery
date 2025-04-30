@@ -1,5 +1,6 @@
 package com.petcemetery.petcemetery.controller;
 
+import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -75,7 +76,7 @@ public class AdminController {
 
     // Atualiza o valor do plano no banco com base no seu nome
     @PutMapping("/servico/{nomeServico}")
-    public boolean alterarServicos(@PathVariable String nomeServico, @RequestParam double valor) {
+    public boolean alterarServicos(@PathVariable String nomeServico, @RequestParam BigDecimal valor) {
         return this.servicoService.alterarServicos(nomeServico, valor);
     }
 

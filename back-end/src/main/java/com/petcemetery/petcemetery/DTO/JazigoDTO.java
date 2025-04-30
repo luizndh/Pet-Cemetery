@@ -2,31 +2,19 @@ package com.petcemetery.petcemetery.dto;
 
 import java.time.LocalDate;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class JazigoDTO {
-    String nomePet;
-    String cpfCliente;
+    private String nomePet;
+    private Long idCliente;
     private LocalDate dataEnterro;
     private String endereco;
-    private Long idJazigo;
-    LocalDate dataNascimento;
-    String especie;
-    String mensagem;
-    String plano;
-
-    public JazigoDTO(String nomePet, LocalDate dataEnterro, String endereco, Long idJazigo, LocalDate dataNascimento, String especie, String mensagem, String plano, String cpfCliente) {
-        this.nomePet = nomePet;
-        this.dataEnterro = dataEnterro;
-        this.endereco = endereco;
-        this.idJazigo = idJazigo;
-        this.dataNascimento = dataNascimento;
-        this.especie = especie;
-        this.mensagem = mensagem;
-        this.plano = plano;
-        this.cpfCliente = cpfCliente;
-    }
-
-    public JazigoDTO() {}
+    private Long id;
+    private LocalDate dataNascimento;
+    private String especie;
+    private String mensagem;
+    private String plano;
 }

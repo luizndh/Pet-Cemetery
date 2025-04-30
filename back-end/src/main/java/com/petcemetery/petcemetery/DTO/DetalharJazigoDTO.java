@@ -27,7 +27,7 @@ public class DetalharJazigoDTO{
             this.especiePet = null;
         }
         else{
-            this.nomePet = pet.getNomePet();
+            this.nomePet = pet.getNome();
             this.dataNascimento = pet.getDataNascimento().toString();
             this.dataNascimento = pet.getDataNascimento().toString();
             this.especiePet = pet.getEspecie();

@@ -1,16 +1,10 @@
  package com.petcemetery.petcemetery.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.petcemetery.petcemetery.dto.AquisicaoJazigoDTO;
 import com.petcemetery.petcemetery.dto.CarrinhoDTO;
@@ -39,67 +33,68 @@ public class JazigoController {
     }
 
     // Envia para o front uma lista dos jazigos do proprietário, contendo o nome do pet e a data do enterro, ou "Vazio" e null caso não tenha pet enterrado.
-    @GetMapping("/{cpf}/jazigos")
-    public List<JazigoDTO> recuperaJazigosProprietario(@PathVariable String cpf) {
-        return this.jazigoService.recuperaJazigosProprietario(cpf);
+    @GetMapping("/jazigo")
+    public List<JazigoDTO> recuperaJazigosProprietario(@RequestHeader("Authorization") String authHeader) {
+        // passa apenas o token, sem o "Bearer "
+        return this.jazigoService.recuperaJazigosProprietario(authHeader.substring(7));
     }
 
     // Envia para o front o endereco do jazigo selecionado, o id dele e o preço de compra, para ser exibido na tela antes da compra do ornamento
-    @GetMapping("/{cpf}/jazigo/{id}")
-    public AquisicaoJazigoDTO comprarJazigo(@PathVariable String cpf, @PathVariable Long id, @RequestParam String tipo) {
-        return this.jazigoService.comprarJazigo(cpf, id, tipo);
+    @GetMapping("/jazigo/{id}")
+    public AquisicaoJazigoDTO comprarJazigo(@PathVariable Long id, @RequestParam String tipo) {
+        return this.jazigoService.comprarJazigo(id, tipo);
     }
 
     // Envia para o front os precos dos planos atuais do sistema, para ser exibido na tela de seleção de planos
     @GetMapping("/{cpf}/jazigo/{id}/planos")
-    public List<Servico> listarPlanos(@PathVariable String cpf, @PathVariable Long id) {
+    public List<Servico> listarPlanos(@RequestHeader("Authorization") String authHeader, @PathVariable Long id) {
         return this.servicoService.listarPlanos();
     }
 
     // //adiciona no carrinho o jazigo selecionado pelo cliente
     // // TODO: alterar OU excluir metodo que caiu em desuso ao excluir carrinho (tem varios nessa classe assim)
     @PostMapping("/{cpf}/finalizar-compra") //tipo == COMPRA ou ALUGUEL
-    public boolean finalizarCompra(@PathVariable String cpf, @RequestBody List<CarrinhoDTO> carrinho) {
-        return this.jazigoService.finalizarCompra(cpf, carrinho);
+    public Boolean finalizarCompra(@RequestHeader("Authorization") String authHeader, @RequestBody List<CarrinhoDTO> carrinho) {
+        return this.jazigoService.finalizarCompra(authHeader.substring(7), carrinho);
     }
 
     // Retorna a mensagem e a foto atual para serem exibidas no front quando o usuário quiser alterar as informações do jazigo
     // Tem que ver a foto ainda
     @GetMapping("/{cpf}/informacao-jazigo/{id}")
-    public JazigoPerfilDTO exibirMensagemFotoJazigo(@PathVariable String cpf, @PathVariable Long id) {
-        return this.jazigoService.exibeMensagemFotoJazigo(cpf, id);
+    public JazigoPerfilDTO exibirMensagemFotoJazigo(@RequestHeader("Authorization") String authHeader, @PathVariable Long id) {
+        return this.jazigoService.exibeMensagemFotoJazigo(authHeader.substring(7), id);
     }
 
     //edita só a mensagem do jazigo, nao sei a situação da foto ainda
     @PutMapping("/{cpf}/informacao-jazigo/{id}")
-    public boolean editarMensagemFotoJazigo(@PathVariable String cpf, @PathVariable Long id, @RequestBody String mensagem) {
+    public Boolean editarMensagemFotoJazigo(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestBody String mensagem) {
         if (mensagem.length() > 80) {
             throw new IllegalArgumentException("Limite de 80 caracteres excedido");
         }
 
-        return this.jazigoService.editarMensagemFotoJazigo(cpf, id, mensagem);
+        return this.jazigoService.editarMensagemFotoJazigo(authHeader.substring(7), id, mensagem);
     }
 
     // Recebe a data e hora do enterro e também os dados do pet a ser enterrado.
     // Cria um novo pet e um novo servico de enterro
     @PostMapping("/{cpf}/informacao-jazigo/{id}/enterro")
-    public boolean agendarEnterro(@PathVariable String cpf, @PathVariable Long id, @RequestParam String data, @RequestParam String hora,
+    public Boolean agendarEnterro(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data, @RequestParam String hora,
         @RequestParam String nomePet, @RequestParam String especie, @RequestParam String dataNascimento) {
 
-        return this.jazigoService.agendarEnterro(cpf, id, data, hora, nomePet, especie, dataNascimento);
+        return this.jazigoService.agendarEnterro(authHeader.substring(7), id, data, hora, nomePet, especie, dataNascimento);
     }
 
 
     // Recebe os parâmetros data (yyyy-mm-dd) e hora (hh-mm) da exumacao, no formato correto, e salva no banco
     // Não estamos utilizando o cpf pra nada :D - utiliza sim, p saber se o jazigo é do kra ou nao
     @PostMapping("/{cpf}/informacao-jazigo/{id}/exumacao")
-    public boolean agendarExumacao(@PathVariable String cpf, @PathVariable Long id, @RequestParam String data, @RequestParam String hora) {
-        return this.jazigoService.agendarExumacao(cpf, id, data, hora);
+    public Boolean agendarExumacao(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data, @RequestParam String hora) {
+        return this.jazigoService.agendarExumacao(authHeader.substring(7), id, data, hora);
     }
 
     // Retorna o valor atual do preço de um servico
     @GetMapping("/{cpf}/informacao-jazigo/{id}/servico/{nomeServico}")
-    public Double precoEnterro(@PathVariable String nomeServico) {
+    public BigDecimal precoEnterro(@PathVariable String nomeServico) {
         return servicoService.findByTipoServico(ServicoEnum.valueOf(nomeServico.toUpperCase())).getValor();
     }
 
@@ -110,13 +105,13 @@ public class JazigoController {
     }
 
     @PostMapping("/{cpf}/informacao-jazigo/{id}/manutencao")
-    public boolean agendarManutencao(@PathVariable String cpf, @PathVariable Long id, @RequestParam String data) {
-        return this.jazigoService.agendarManutencao(cpf, id, data);
+    public Boolean agendarManutencao(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data) {
+        return this.jazigoService.agendarManutencao(authHeader.substring(7), id, data);
     }
 
     //metodo post com o servico PERSONALIZACAO, que troca o plano do jazigo
     @PutMapping("/{cpf}/informacao-jazigo/{id}/plano")
-    public boolean trocarPlano (@PathVariable String cpf, @PathVariable Long id, @RequestParam String tipo){
-        return this.jazigoService.trocarPlano(cpf, id, tipo);
+    public Boolean trocarPlano (@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String tipo){
+        return this.jazigoService.trocarPlano(authHeader.substring(7), id, tipo);
     }
 }

@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.petcemetery.petcemetery.config.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +18,20 @@ import com.petcemetery.petcemetery.repositorio.ReuniaoRepository;
 @Service
 public class ReuniaoService {
 
-    @Autowired
-    private ReuniaoRepository repository;
+    private final ReuniaoRepository repository;
+    private final EmailService emailService;
+    private final ClienteService clienteService;
+    private final JwtService jwtService;
 
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private ClienteService clienteService;
+    public ReuniaoService(ReuniaoRepository repository, EmailService emailService, ClienteService clienteService, JwtService jwtService) {
+        this.repository = repository;
+        this.emailService = emailService;
+        this.clienteService = clienteService;
+        this.jwtService = jwtService;
+    }
 
     public List<ReuniaoDTO> visualizarReunioes() {
-        List<Reuniao> reunioes = repository.findAllOrderByDataAsc();
+        List<Reuniao> reunioes = repository.findAllByOrderByDataAsc();
         List<ReuniaoDTO> reunioesDTO = new ArrayList<>();
 
         for (Reuniao reuniao : reunioes) {
@@ -43,7 +47,8 @@ public class ReuniaoService {
         return reunioesDTO;
     }
 
-    public boolean agendarReuniao(String cpf, ReuniaoDTO reuniaoDTO) {
+    public boolean agendarReuniao(String token, ReuniaoDTO reuniaoDTO) {
+        Long id = Long.valueOf(jwtService.extractId(token));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Reuniao reuniao = new Reuniao();
         reuniao.setAssunto(reuniaoDTO.getAssunto());
@@ -53,7 +58,7 @@ public class ReuniaoService {
             throw new IllegalArgumentException("A reunião deve ser agendada com uma antecedência mínima de dois dias");
         }
 
-        Cliente cliente = clienteService.findByCpf(cpf);
+        Cliente cliente = clienteService.findById(id);
         reuniao.setCliente(cliente);
 
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");

@@ -18,12 +18,12 @@ public class UsuarioDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = clienteService.findByEmail(email);
-        usuario = (usuario != null) ? usuario : adminService.findByEmail(email);
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        Usuario usuario = clienteService.findById(Long.valueOf(id));
+        usuario = (usuario != null) ? usuario : adminService.findById(Long.valueOf(id));
 
         if (usuario == null) {
-            throw new UsernameNotFoundException("Usuário não encontrado com o email: " + email);
+            throw new UsernameNotFoundException("Usuário não encontrado com o id: " + id);
         }
 
         return usuario;

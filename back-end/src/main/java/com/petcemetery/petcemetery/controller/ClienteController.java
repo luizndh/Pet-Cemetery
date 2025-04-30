@@ -2,19 +2,11 @@ package com.petcemetery.petcemetery.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.petcemetery.petcemetery.dto.ClienteDTO;
 import com.petcemetery.petcemetery.dto.ClientePerfilDTO;
@@ -29,14 +21,17 @@ import com.petcemetery.petcemetery.services.ContratoService;
 @RequestMapping("/api/cliente/{cpf}")
 public class ClienteController {
 
-    @Autowired
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
+    private final LembreteRepository lembreteRepository;
+    private final ContratoService contratoService;
 
-    @Autowired
-    private LembreteRepository lembreteRepository;
-
-    @Autowired
-    private ContratoService contratoService;
+    public ClienteController(ClienteService clienteService,
+                             LembreteRepository lembreteRepository,
+                             ContratoService contratoService) {
+        this.clienteService = clienteService;
+        this.lembreteRepository = lembreteRepository;
+        this.contratoService = contratoService;
+    }
 
     // Recebe as informações que o cliente deseja mudar, em JSON, e altera no banco de dados
     @PutMapping("")
@@ -66,17 +61,13 @@ public class ClienteController {
 
     // Recebe uma data no formato YYYY-mm-dd do front quando o cliente adiciona um novo lembrete de visita e adiciona no banco de dados com seu cpf e data.
     @PostMapping("/lembrete")
-    public boolean adicionarLembrete(@PathVariable String cpf, @RequestParam LocalDate data) {
+    public ResponseEntity<Lembrete> adicionarLembrete(@RequestHeader("Authorization") String authHeader, @RequestParam LocalDate data) {
         if (LocalDate.now().isAfter(data)) {
             throw new IllegalArgumentException("A data informada não pode ser no passado");
         }
 
-        Cliente cliente = clienteService.findByCpf(cpf);
-        Lembrete lembrete = new Lembrete(data, cliente);
-
-        lembreteRepository.save(lembrete);
-
-        return true;
+        Lembrete lembrete = this.clienteService.adicionaLembrete(authHeader.substring(7), data);
+        return ResponseEntity.ok(lembrete);
     }
 
     // Retorna para o front um objeto despesasDTO contendo o tipo de serviço, valor, data do ultimo pagamento e data do vencimento.

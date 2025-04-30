@@ -2,15 +2,13 @@ package com.petcemetery.petcemetery.model;
 
 import java.time.LocalTime;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Document(collection = "horario_funcionamento")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class HorarioFuncionamento {

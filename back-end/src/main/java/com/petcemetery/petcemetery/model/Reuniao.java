@@ -13,20 +13,24 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Entity(name = "Reuniao")
 @Table(name = "Reuniao")
+@Getter
+@Setter
 public class Reuniao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reuniao")
-    private Long idReuniao;
+    @GeneratedValue
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cpf_cliente", referencedColumnName = "cpf")
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,40 +44,5 @@ public class Reuniao {
         this.cliente = cliente;
         this.data = data;
         this.assunto = assunto;
-    }
-
-    public Long getIdReuniao() {
-        return idReuniao;
-    }
-
-    public void setIdReuniao(Long idReuniao) {
-        this.idReuniao = idReuniao;
-    }
-
-    public Cliente getCliente() {
-        return this.cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public LocalDateTime getData() {
-        return this.data;
-    }
-
-    public void setData(LocalDateTime data) {
-        this.data = data;
-    }
-
-    public String getAssunto() {
-        return this.assunto;
-    }
-
-    public void setAssunto(String assunto) {
-        this.assunto = assunto;
-    }
-
-    public void setHora(LocalTime hora) {
     }
 }

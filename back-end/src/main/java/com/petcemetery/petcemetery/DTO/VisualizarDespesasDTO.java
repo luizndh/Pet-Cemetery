@@ -1,5 +1,6 @@
 package com.petcemetery.petcemetery.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.petcemetery.petcemetery.model.Contrato;
@@ -9,7 +10,7 @@ import lombok.Data;
 @Data
 public class VisualizarDespesasDTO {
     private String tipoServico;
-    private double valor;
+    private BigDecimal valor;
     private LocalDate ultimoPagamento;
     private LocalDate dataVencimento;
 

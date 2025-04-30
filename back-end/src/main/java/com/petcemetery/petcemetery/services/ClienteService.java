@@ -1,10 +1,15 @@
 package com.petcemetery.petcemetery.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.petcemetery.petcemetery.config.JwtService;
 import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
+import com.petcemetery.petcemetery.model.Lembrete;
+import com.petcemetery.petcemetery.repositorio.LembreteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,8 +25,15 @@ import io.micrometer.common.util.StringUtils;
 @Service
 public class ClienteService {
 
-    @Autowired
-    private ClienteRepository repository;
+    private final ClienteRepository repository;
+    private final JwtService jwtService;
+    private final LembreteRepository lembreteRepository;
+
+    public ClienteService(ClienteRepository repository, JwtService jwtService, LembreteRepository lembreteRepository) {
+        this.repository = repository;
+        this.jwtService = jwtService;
+        this.lembreteRepository = lembreteRepository;
+    }
 
     public List<ClienteInadimplenteDTO> findInadimplentes() {
         List<Cliente> clientesInadimplentes = repository.findByInadimplenteTrue();
@@ -47,8 +59,14 @@ public class ClienteService {
         return this.repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 
-    public Cliente findByCpf(String cpf) {
-        return this.repository.findByCpf(cpf);
+    public Cliente findById(Long id) {
+        Optional<Cliente> c = this.repository.findById(id);
+
+        if (c.isPresent()) {
+            return c.get();
+        } else {
+            throw new IllegalArgumentException("Cliente não encontrado");
+        }
     }
 
     public boolean editarPerfil(String cpf, EditarPerfilDTO dto) {
@@ -128,5 +146,13 @@ public class ClienteService {
             cliente.getNome(),
             cliente.getEmail()
         );
+    }
+
+    public Lembrete adicionaLembrete(String token, LocalDate dataLembrete) {
+        Long id = Long.valueOf(this.jwtService.extractId(token));
+        Cliente cliente = this.findById(id);
+
+        Lembrete lembrete = new Lembrete(dataLembrete, cliente);
+        return this.lembreteRepository.save(lembrete);
     }
 }

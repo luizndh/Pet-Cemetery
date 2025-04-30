@@ -1,5 +1,6 @@
 package com.petcemetery.petcemetery.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,11 +15,10 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity(name = "Contrato")
 @Table(name = "Contrato")
 @AllArgsConstructor
@@ -26,16 +26,16 @@ import lombok.NoArgsConstructor;
 public class Contrato {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Adicionado para permitir auto incremento do id
-    @Column(name = "id_contrato")
-    private Long idContrato;
+    @GeneratedValue
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "jazigo_id_jazigo")
+    @JoinColumn(name = "id_jazigo")
     private Jazigo jazigo;
 
     @Column(name = "valor")
-    private double valor;
+    private BigDecimal valor;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_servico")
@@ -46,7 +46,7 @@ public class Contrato {
     private Pet pet;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_cpf")
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @Column(name = "primeiro_pagamento")
@@ -59,8 +59,7 @@ public class Contrato {
     @JoinColumn(name = "tipo_servico")
     private Servico servico;
 
-    // All args constructor
-    public Contrato(double valor, Cliente cliente, Jazigo jazigo, Pet pet, LocalDateTime dataServico, LocalDate primeiroPagamento, LocalDate ultimoPagamento, Servico servico) {
+    public Contrato(BigDecimal valor, Cliente cliente, Jazigo jazigo, Pet pet, LocalDateTime dataServico, LocalDate primeiroPagamento, LocalDate ultimoPagamento, Servico servico) {
         this.valor = valor;
         this.cliente = cliente;
         this.jazigo = jazigo;
@@ -71,7 +70,7 @@ public class Contrato {
         this.servico = servico;
     }
 
-    public Contrato(double valor, Cliente cliente, Jazigo jazigo, Pet pet, LocalDateTime dataServico, Servico servico) {
+    public Contrato(BigDecimal valor, Cliente cliente, Jazigo jazigo, Pet pet, LocalDateTime dataServico, Servico servico) {
         this.valor = valor;
         this.cliente = cliente;
         this.jazigo = jazigo;

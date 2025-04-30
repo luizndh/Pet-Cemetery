@@ -22,7 +22,12 @@ import java.util.List;
 public class Usuario implements UserDetails {
 
     @Id
+    @GeneratedValue
+    private Long id;
+
     @Column(name = "cpf")
+    @NotBlank
+    @Size(min = 11, max = 11, message = "O CPF deve ter 11 dígitos")
     private String cpf;
 
     @Column(name = "email")
@@ -62,6 +67,19 @@ public class Usuario implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public Usuario(String email, String telefone, String nome, String cpf, String cep, String rua, String numero, String complemento, String senha, Role role) {
+        this.email = email;
+        this.telefone = telefone;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.cep = cep;
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.senha = senha;
+        this.role = role;
+    }
 
     public Usuario(String email, String telefone, String nome, String cpf, String senha) {
         this.email = email;

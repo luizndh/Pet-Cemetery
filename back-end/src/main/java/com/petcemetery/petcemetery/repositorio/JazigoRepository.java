@@ -9,8 +9,6 @@ import com.petcemetery.petcemetery.model.Jazigo;
 
 public interface JazigoRepository extends JpaRepository<Jazigo, Long> {
     Jazigo findByIdJazigo(Long id_jazigo);
-    List<Jazigo> findByProprietarioCpf(String cpf_proprietario);
-
-    @Query("SELECT j FROM Jazigo j ORDER BY j.id ASC")
-    List<Jazigo> findAllOrderByIdAsc();
+    List<Jazigo> findAllByIdProprietario(Long id);
+    List<Jazigo> findAllByOrderByIdAsc();
 }

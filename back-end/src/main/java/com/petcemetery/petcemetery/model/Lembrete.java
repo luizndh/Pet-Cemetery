@@ -11,31 +11,35 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 @Table(name = "Lembrete")
 @Entity(name = "Lembrete")
+@NoArgsConstructor
 public class Lembrete {
     @Id
-    @Column(name = "id_lembrete")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idLembrete;
+    @Column(name = "id")
+    @GeneratedValue
+    private Long id;
 
     @Column(name = "data")
     private LocalDate data;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
 
     @Column(name = "enviado")
-    private boolean enviado;
+    private Boolean enviado;
 
     public Lembrete (LocalDate data, Cliente cliente) {
         this.data = data;
         this.cliente = cliente;
     }
 
-    public Lembrete() {}
 }

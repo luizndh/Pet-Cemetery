@@ -14,8 +14,11 @@ import com.petcemetery.petcemetery.repositorio.HorarioFuncionamentoRepository;
 @Service
 public class HorarioFuncionamentoService {
 
-    @Autowired
-    private HorarioFuncionamentoRepository repository;
+    private final HorarioFuncionamentoRepository repository;
+
+    public HorarioFuncionamentoService(HorarioFuncionamentoRepository repository) {
+        this.repository = repository;
+    }
 
     public void alterarHorarioFuncionamento(List<HorarioFuncionamentoDTO> horarios) {
         try {

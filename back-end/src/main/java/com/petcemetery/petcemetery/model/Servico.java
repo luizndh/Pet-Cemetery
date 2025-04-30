@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Entity(name = "Servicos")
 @Table(name = "Servicos")
@@ -21,7 +23,7 @@ public class Servico {
     private ServicoEnum tipoServico;
 
     @Column(name = "valor")
-    private double valor;
+    private BigDecimal valor;
 
     public enum ServicoEnum {
         COMPRA,
@@ -35,7 +37,7 @@ public class Servico {
         GOLD;
     }
 
-    public Servico(ServicoEnum tipoServico, double valor) {
+    public Servico(ServicoEnum tipoServico, BigDecimal valor) {
         this.tipoServico = tipoServico;
         this.valor = valor;
     }

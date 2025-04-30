@@ -10,8 +10,11 @@ import com.petcemetery.petcemetery.repositorio.PagamentoRepository;
 @Service
 public class PagamentoService {
 
-    @Autowired
-    private PagamentoRepository repository;
+    private final PagamentoRepository repository;
+
+    public PagamentoService(PagamentoRepository repository) {
+        this.repository = repository;
+    }
 
     public void save(Pagamento pagamento) {
         this.repository.save(pagamento);

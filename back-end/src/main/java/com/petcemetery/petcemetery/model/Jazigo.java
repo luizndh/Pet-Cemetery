@@ -17,25 +17,29 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "Jazigo")
 @Table(name = "Jazigo")
+@Getter
+@Setter
 public class Jazigo {
+
+    @Id
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "endereco")
     private String endereco;
 
     @ManyToOne
-    @JoinColumn(name = "cpf_proprietario", referencedColumnName = "cpf")
+    @JoinColumn(name = "id_proprietario", referencedColumnName = "id")
     private Cliente proprietario;
 
     @OneToMany(fetch=FetchType.EAGER)
     @Column(name = "historico_pets")
     private List<Pet> historicoPets;
-
-    @Id
-    @Column(name = "id_jazigo")
-    private long idJazigo;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -63,20 +67,20 @@ public class Jazigo {
     public Jazigo() {
     }
 
-    public Jazigo(String endereco, Cliente proprietario, int idJazigo, StatusEnum status, ServicoEnum plano) {
+    public Jazigo(String endereco, Cliente proprietario, Long id, StatusEnum status, ServicoEnum plano) {
         this.endereco = endereco;
         this.proprietario = proprietario;
-        this.idJazigo = idJazigo;
+        this.id = id;
         this.status = status;
         this.plano = plano;
         this.historicoPets = new ArrayList<>();
     }
 
-    public Jazigo(String endereco, Cliente proprietario, int idJazigo, StatusEnum status,
+    public Jazigo(String endereco, Cliente proprietario, Long id, StatusEnum status,
                 String mensagem, String foto, String notas, ServicoEnum plano, Pet petEnterrado) {
         this.endereco = endereco;
         this.proprietario = proprietario;
-        this.idJazigo = idJazigo;
+        this.id = id;
         this.status = status;
 
         this.mensagem = mensagem;
@@ -84,67 +88,5 @@ public class Jazigo {
         this.plano = plano;
         this.petEnterrado = petEnterrado;
         this.historicoPets = new ArrayList<>();
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-    public Cliente getProprietario() {
-        return proprietario;
-    }
-    public void setProprietario(Cliente proprietario) {
-        this.proprietario = proprietario;
-    }
-    public long getIdJazigo() {
-        return idJazigo;
-    }
-    public void setIdJazigo(long idJazigo) {
-        this.idJazigo = idJazigo;
-    }
-    public StatusEnum getStatus() {
-        return status;
-    }
-    public void setStatus(StatusEnum status) {
-        this.status = status;
-    }
-    public String getMensagem() {
-        return mensagem;
-    }
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }
-    public String getFoto() {
-        return foto;
-    }
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-    public Pet getPetEnterrado() {
-        return petEnterrado;
-    }
-    public void setPetEnterrado(Pet petEnterrado) {
-        this.petEnterrado = petEnterrado;
-    }
-    public ServicoEnum getPlano() {
-        return plano;
-    }
-    public void setPlano(ServicoEnum plano) {
-        this.plano = plano;
-    }
-
-    public List<Pet> getHistoricoPets() {
-        return historicoPets;
-    }
-    public void setHistoricoPets(List<Pet> historicoPets) {
-        this.historicoPets = historicoPets;
-    }
-    public void addPetHistorico(Pet pet) {
-        this.historicoPets.add(pet);
-    }
-    public void removePetHistorico(Pet pet) {
-        this.historicoPets.remove(pet);
     }
 }

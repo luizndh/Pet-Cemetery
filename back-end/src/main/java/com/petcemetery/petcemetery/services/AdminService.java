@@ -2,6 +2,7 @@ package com.petcemetery.petcemetery.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -20,23 +21,26 @@ import com.petcemetery.petcemetery.repositorio.HorarioFuncionamentoRepository;
 @Service
 public class AdminService {
 
-    @Autowired
-    private JazigoService jazigoService;
+    private final JazigoService jazigoService;
+    private final HorarioFuncionamentoService horarioFuncionamentoService;
+    private final EmailService emailService;
+    private final ClienteRepository clienteRepository;
+    private final HorarioFuncionamentoRepository horarioFuncionamentoRepository;
+    private final AdminRepository repository;
 
-    @Autowired
-    private HorarioFuncionamentoService horarioFuncionamentoService;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private HorarioFuncionamentoRepository horarioFuncionamentoRepository;
-
-    @Autowired
-    private AdminRepository repository;
+    public AdminService(JazigoService jazigoService,
+                        HorarioFuncionamentoService horarioFuncionamentoService,
+                        EmailService emailService,
+                        ClienteRepository clienteRepository,
+                        HorarioFuncionamentoRepository horarioFuncionamentoRepository,
+                        AdminRepository repository) {
+        this.jazigoService = jazigoService;
+        this.horarioFuncionamentoService = horarioFuncionamentoService;
+        this.emailService = emailService;
+        this.clienteRepository = clienteRepository;
+        this.horarioFuncionamentoRepository = horarioFuncionamentoRepository;
+        this.repository = repository;
+    }
 
     public List<HistoricoJazigoDTO> visualizarHistorico(Long id) {
         Jazigo jazigo = this.jazigoService.findById(id);
@@ -44,7 +48,7 @@ public class AdminService {
 
         if(jazigo != null) {
             for(Pet pet: jazigo.getHistoricoPets()) {
-                historico.add(new HistoricoJazigoDTO(id, pet.getNomePet(), pet.getDataNascimento(), pet.getEspecie(), pet.getProprietario().getNome(), pet.getDataEnterro().toLocalDate(), pet.getDataExumacao().toLocalDate()));
+                historico.add(new HistoricoJazigoDTO(id, pet.getNome(), pet.getDataNascimento(), pet.getEspecie(), pet.getProprietario().getNome(), pet.getDataEnterro().toLocalDate(), pet.getDataExumacao().toLocalDate()));
             }
 
         } else {
@@ -84,7 +88,13 @@ public class AdminService {
         emailService.sendEmail(emails, subject, body);
     }
 
-    public Admin findByEmail(String email) {
-        return this.repository.findByEmail(email);
+    public Admin findById(Long id) {
+        Optional<Admin> admin = this.repository.findById(id);
+
+        if(admin.isPresent()) {
+            return admin.get();
+        } else {
+            throw new IllegalArgumentException("Admin não encontrado");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.petcemetery.petcemetery.services;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,14 +14,17 @@ import com.petcemetery.petcemetery.repositorio.ServicoRepository;
 @Service
 public class ServicoService {
 
-    @Autowired
-    private ServicoRepository repository;
+    private final ServicoRepository repository;
+
+    public ServicoService(ServicoRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Servico> exibirServicos() {
         return repository.findAll();
     }
 
-    public boolean alterarServicos(String nomeServico, double valor) {
+    public boolean alterarServicos(String nomeServico, BigDecimal valor) {
         ServicoEnum servicoEnum = ServicoEnum.valueOf(nomeServico);
         Servico servicoEntity = repository.findByTipoServico(servicoEnum);
 

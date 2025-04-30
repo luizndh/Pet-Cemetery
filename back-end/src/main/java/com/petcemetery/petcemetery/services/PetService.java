@@ -9,8 +9,11 @@ import com.petcemetery.petcemetery.repositorio.PetRepository;
 @Service
 public class PetService {
 
-    @Autowired
-    private PetRepository repository;
+    private final PetRepository repository;
+
+    public PetService(PetRepository repository) {
+        this.repository = repository;
+    }
 
     public void save(Pet pet) {
         this.repository.save(pet);

@@ -1,5 +1,6 @@
 package com.petcemetery.petcemetery.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -13,22 +14,30 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "Pagamento")
 @Table(name = "Pagamento")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class Pagamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Adicionado para permitir auto incremento do id
-    @Column(name = "id_pagamento")
-    private Long idPagamento;
+    @GeneratedValue
+    @Column(name = "i")
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
 
     @Column(name = "valor")
-    private double valor;
+    private BigDecimal valor;
 
     @Column(name = "data_pagamento")
     private LocalDate dataPagamento;
@@ -37,7 +46,7 @@ public class Pagamento {
     private LocalDate dataVencimento;
 
     @Column(name = "isPago")
-    private boolean pago;
+    private Boolean pago;
 
     @OneToOne
     @JoinColumn(name = "id_contrato")
@@ -48,15 +57,17 @@ public class Pagamento {
     @Enumerated(EnumType.STRING)
     private MetodoEnum metodoPagamento;
 
+    public boolean isPago() {
+        return this.pago;
+    }
+
     public enum MetodoEnum{
         CREDITO,
         DEBITO,
         PAYPAL
     }
 
-    public Pagamento() {}
-
-    public Pagamento(Cliente cliente, double valor, LocalDate dataPagamento, LocalDate dataVencimento, boolean pago, Contrato contrato, MetodoEnum metodoPagamento) {
+    public Pagamento(Cliente cliente, BigDecimal valor, LocalDate dataPagamento, LocalDate dataVencimento, Boolean pago, Contrato contrato, MetodoEnum metodoPagamento) {
         this.cliente = cliente;
         this.valor = valor;
         this.dataPagamento = dataPagamento;
@@ -64,53 +75,5 @@ public class Pagamento {
         this.pago = pago;
         this.contrato = contrato;
         this.metodoPagamento = metodoPagamento;
-    }
-    public Cliente getCliente() {
-         return cliente;
-    }
-    public void setCliente(Cliente cliente) {
-         this.cliente = cliente;
-    }
-    public double getValor() {
-        return valor;
-    }
-    public void setValor(float valor) {
-        this.valor = valor;
-    }
-    public LocalDate getDataPagamento() {
-        return dataPagamento;
-    }
-    public void setDataPagamento(LocalDate dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
-    public LocalDate getDataVencimento() {
-        return dataVencimento;
-    }
-    public void setDataVencimento(LocalDate dataVencimento) {
-        this.dataVencimento = dataVencimento;
-    }
-    public boolean isPago() {
-        return pago;
-    }
-    public void setPago(boolean pago) {
-        this.pago = pago;
-    }
-    public Contrato getContrato() {
-        return contrato;
-    }
-    public void setContrato(Contrato contratos) {
-        this.contrato = contratos;
-    }
-    public MetodoEnum getMetodoPagamento() {
-        return metodoPagamento;
-    }
-    public void setMetodoPagamento(MetodoEnum metodoPagamento) {
-        this.metodoPagamento = metodoPagamento;
-    }
-    public Long getIdPagamento() {
-        return idPagamento;
-    }
-    public void setIdPagamento(Long idPagamento) {
-        this.idPagamento = idPagamento;
     }
 }

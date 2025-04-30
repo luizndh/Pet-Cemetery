@@ -23,8 +23,11 @@ import com.petcemetery.petcemetery.repositorio.ContratoRepository;
 @Service
 public class ContratoService {
 
-    @Autowired
-    private ContratoRepository repository;
+    private final ContratoRepository repository;
+
+    public ContratoService(ContratoRepository repository) {
+        this.repository = repository;
+    }
 
     public List<ContratoDTO> findEnterros() {
         List<Contrato> contratos = repository.findByServicoTipoServico(ServicoEnum.valueOf("ENTERRO"));
@@ -35,7 +38,7 @@ public class ContratoService {
                 contrato.getValor(),
                 contrato.getServico().getTipoServico(),
                 contrato.getJazigo().getEndereco(),
-                contrato.getJazigo().getIdJazigo(),
+                contrato.getJazigo().getId(),
                 contrato.getPet().getId(),
                 contrato.getPet().getDataEnterro().toString(),
                 contrato.getCliente().getCpf()
@@ -89,7 +92,7 @@ public class ContratoService {
                 contrato.getValor(),
                 contrato.getServico().getTipoServico(),
                 contrato.getJazigo().getEndereco(),
-                contrato.getJazigo().getIdJazigo(),
+                contrato.getJazigo().getId(),
                 contrato.getPet().getId(),
                 contrato.getPet().getDataEnterro().toString(),
                 contrato.getCliente().getCpf()
