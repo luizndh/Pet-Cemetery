@@ -18,9 +18,10 @@ import java.util.function.Function;
 public class JwtService {
     public static final String SECRET = "5367566859703373367639792F423F452848284D6251655468576D5A71347437";
 
-    public String createToken(String id) { // Use id as username
+    public String createToken(String email, Long id) { // Use id as username
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, id);
+        claims.put("id", id);
+        return createToken(claims, email);
     }
 
     private String createToken(Map<String, Object> claims, String id) {
@@ -38,8 +39,9 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String extractId(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public Long extractId(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("id", Long.class);
     }
 
     public Date extractExpiration(String token) {
@@ -64,7 +66,7 @@ public class JwtService {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String id = extractId(token);
-        return (id.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String email = extractClaim(token, Claims::getSubject);
+        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

@@ -37,28 +37,31 @@ public class AuthService {
         );
 
         var cliente = clienteService.findByEmail(loginRequest.getEmail());
-        var jwtToken = jwtService.createToken(cliente.getEmail());
+        var jwtToken = jwtService.createToken(cliente.getEmail(), cliente.getId());
         return new AuthResponseDTO(jwtToken);
     }
 
     public AuthResponseDTO cadastro(CadastroRequestDTO cadastroRequest) {
-        PasswordEncoder enconder = new BCryptPasswordEncoder();
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        Cliente cliente = new Cliente(
-                cadastroRequest.getEmail(),
-                cadastroRequest.getTelefone(),
-                cadastroRequest.getNome(),
-                cadastroRequest.getCpf(),
-                cadastroRequest.getCep(),
-                cadastroRequest.getRua(),
-                cadastroRequest.getNumero(),
-                cadastroRequest.getComplemento(),
-                enconder.encode(cadastroRequest.getSenha()),
-                Role.CLIENTE
-        );
+        Cliente cliente = Cliente.builder()
+                .email(cadastroRequest.getEmail())
+                .telefone(cadastroRequest.getTelefone())
+                .nome(cadastroRequest.getNome())
+                .cpf(cadastroRequest.getCpf())
+                .cep(cadastroRequest.getCep())
+                .rua(cadastroRequest.getRua())
+                .numero(cadastroRequest.getNumero())
+                .complemento(cadastroRequest.getComplemento())
+                .senha(encoder.encode(cadastroRequest.getSenha()))
+                .desativado(false)
+                .inadimplente(false)
+                .pagamentos(Collections.emptyList())
+                .role(Role.CLIENTE)
+                .build();
 
-        clienteService.save(cliente);
-        var jwtToken = jwtService.createToken(cliente.getEmail());
+        var novoCliente = clienteService.save(cliente);
+        var jwtToken = jwtService.createToken(novoCliente.getEmail(), novoCliente.getId());
         return new AuthResponseDTO(jwtToken);
     }
 

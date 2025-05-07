@@ -97,4 +97,8 @@ public class AdminService {
             throw new IllegalArgumentException("Admin não encontrado");
         }
     }
+
+    public Admin findByEmail(String email) {
+        return this.repository.findByEmail(email);
+    }
 }
