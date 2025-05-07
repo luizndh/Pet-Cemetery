@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.petcemetery.petcemetery.model.Jazigo;
 
 public interface JazigoRepository extends JpaRepository<Jazigo, Long> {
-    Jazigo findByIdJazigo(Long id_jazigo);
-    List<Jazigo> findAllByIdProprietario(Long id);
+    List<Jazigo> findAllByProprietarioId(Long id);
     List<Jazigo> findAllByOrderByIdAsc();
 }

@@ -1,20 +1,17 @@
 package com.petcemetery.petcemetery.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
 @Entity(name = "Servicos")
 @Table(name = "Servicos")
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Servico {
 
     @Id
@@ -35,10 +32,5 @@ public class Servico {
         BASIC,
         SILVER,
         GOLD;
-    }
-
-    public Servico(ServicoEnum tipoServico, BigDecimal valor) {
-        this.tipoServico = tipoServico;
-        this.valor = valor;
     }
 }

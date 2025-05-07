@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.petcemetery.petcemetery.config.JwtService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.Chunk;
@@ -160,9 +159,7 @@ public class JazigoService {
             document.close();
             writer.close();
 
-            byte[] pdfBytes = outputStream.toByteArray();
-
-            return pdfBytes;
+            return outputStream.toByteArray();
         } catch (Exception e) {
             throw new RuntimeException("Ocorreu um erro ao gerar o pdf.");
         }
@@ -181,38 +178,29 @@ public class JazigoService {
     }
 
     public List<JazigoDTO> recuperaJazigosProprietario(String token) {
-        Long id = Long.valueOf(jwtService.extractId(token));
-        List<Jazigo> listaJazigos = repository.findAllByIdProprietario(id);
-        System.out.println(listaJazigos);
-        System.out.println(listaJazigos.size());
+        Long id = jwtService.extractId(token);
+        List<Jazigo> listaJazigos = repository.findAllByProprietarioId(id);
 
         List<JazigoDTO> listaJazigosDTO = new ArrayList<>();
 
         for (Jazigo jazigo : listaJazigos) {
             JazigoDTO jazigoDTO;
 
-            if(jazigo.getPetEnterrado() == null) {
-                jazigoDTO = JazigoDTO.builder()
-                        .idCliente(id)
-                        .endereco(jazigo.getEndereco())
-                        .id(jazigo.getId())
-                        .mensagem(jazigo.getMensagem())
-                        .plano(jazigo.getPlano().toString())
-                        .build();
-            } else {
-                jazigoDTO = JazigoDTO.builder()
-                        .idCliente(id)
-                        .endereco(jazigo.getEndereco())
-                        .id(jazigo.getId())
-                        .mensagem(jazigo.getMensagem())
-                        .plano(jazigo.getPlano().toString())
-                        .nomePet(jazigo.getPetEnterrado().getNome())
-                        .especie(jazigo.getPetEnterrado().getEspecie())
-                        .dataNascimento(jazigo.getPetEnterrado().getDataNascimento())
-                        .dataEnterro(jazigo.getPetEnterrado().getDataEnterro().toLocalDate())
-                        .build();
+            jazigoDTO = JazigoDTO.builder()
+                    .idCliente(id)
+                    .endereco(jazigo.getEndereco())
+                    .id(jazigo.getId())
+                    .mensagem(jazigo.getMensagem())
+                    .plano(jazigo.getPlano().toString())
+                    .build();
 
+            if(jazigo.getPetEnterrado() != null) {
+                jazigoDTO.setNomePet(jazigo.getPetEnterrado().getNome());
+                jazigoDTO.setEspecie(jazigo.getPetEnterrado().getEspecie());
+                jazigoDTO.setDataNascimento(jazigo.getPetEnterrado().getDataNascimento());
+                jazigoDTO.setDataEnterro(jazigo.getPetEnterrado().getDataEnterro().toLocalDate());
             }
+
             listaJazigosDTO.add(jazigoDTO);
         }
 
@@ -220,7 +208,10 @@ public class JazigoService {
     }
 
     public AquisicaoJazigoDTO comprarJazigo(Long idJazigo, String tipo) {
-        Jazigo jazigo = repository.findByIdJazigo(idJazigo);
+        Optional<Jazigo> jazigo = repository.findById(idJazigo);
+        if(jazigo.isEmpty()) {
+            throw new NoSuchElementException("Jazigo nao existe.");
+        }
         BigDecimal valor;
 
         if(tipo.equals("compra")){
@@ -229,17 +220,21 @@ public class JazigoService {
             valor = servicoService.findByTipoServico(ServicoEnum.ALUGUEL).getValor();
         }
 
-        return new AquisicaoJazigoDTO(jazigo.getEndereco(), valor);
+        return new AquisicaoJazigoDTO(jazigo.get().getEndereco(), valor);
     }
 
     public JazigoPerfilDTO exibeMensagemFotoJazigo(String token, Long id) {
         Optional<Jazigo> optionalJazigo = repository.findById(id);
 
         if (optionalJazigo.isPresent()) {
-            Long idCliente = Long.valueOf(jwtService.extractId(token));
+            Long idCliente = jwtService.extractId(token);
             Jazigo jazigo = optionalJazigo.get();
             if(jazigo.getProprietario().equals(clienteService.findById(idCliente))){
-                return new JazigoPerfilDTO(jazigo.getMensagem(), jazigo.getFoto(), jazigo.getPlano().toString());
+                return JazigoPerfilDTO.builder()
+                        .mensagem(jazigo.getMensagem())
+                        .foto(jazigo.getFoto())
+                        .plano(jazigo.getPlano().toString())
+                        .build();
             }
         }
 
@@ -247,35 +242,44 @@ public class JazigoService {
     }
 
     public boolean editarMensagemFotoJazigo(String token, Long id, String mensagem) {
-    Optional<Jazigo> optionalJazigo = repository.findById(id);
+        Optional<Jazigo> optionalJazigo = repository.findById(id);
 
-    if (optionalJazigo.isPresent()) {
-        Long idCliente = Long.valueOf(jwtService.extractId(token));
-        Jazigo jazigo = optionalJazigo.get();
+        if (optionalJazigo.isPresent()) {
+            Long idCliente = jwtService.extractId(token);
+            Jazigo jazigo = optionalJazigo.get();
 
-        BigDecimal valor = servicoService.findByTipoServico(ServicoEnum.PERSONALIZACAO).getValor();
-        Cliente cliente = clienteService.findById(idCliente);
-        if (jazigo.getProprietario().equals(cliente)) {
-            jazigo.setMensagem(mensagem);
-            repository.save(jazigo);
+            BigDecimal valor = servicoService.findByTipoServico(ServicoEnum.PERSONALIZACAO).getValor();
+            Cliente cliente = clienteService.findById(idCliente);
+            if (jazigo.getProprietario().equals(cliente)) {
+                jazigo.setMensagem(mensagem);
+                repository.save(jazigo);
 
-            Contrato personalizacaoServico = new Contrato(valor, cliente, jazigo, null, LocalDateTime.now(), null, null, new Servico(ServicoEnum.PERSONALIZACAO, valor));
-            contratoService.save(personalizacaoServico);
+                Contrato personalizacaoServico = Contrato.builder()
+                        .valor(valor)
+                        .cliente(cliente)
+                        .jazigo(jazigo)
+                        .dataServico(LocalDateTime.now())
+                        .servico(Servico.builder()
+                                .tipoServico(ServicoEnum.PERSONALIZACAO)
+                                .valor(valor)
+                                .build())
+                        .build();
 
-            return true;
+                contratoService.save(personalizacaoServico);
+                return true;
+            } else {
+                throw new IllegalArgumentException("Jazigo não pertence ao cliente");
+            }
         } else {
-            throw new IllegalArgumentException("Jazigo não pertence ao cliente");
+            throw new NoSuchElementException("Jazigo não encontrado");
         }
-    } else {
-        throw new NoSuchElementException("Jazigo não encontrado");
-    }
     }
 
     public boolean agendarEnterro(String token, Long id, String data, String hora, String nomePet, String especie,
             String dataNascimento) {
 
         Optional<Jazigo> jazigoOpt = repository.findById(id);
-        if(!jazigoOpt.isPresent()) throw new NoSuchElementException("Esse jazigo não existe");
+        if(jazigoOpt.isEmpty()) throw new NoSuchElementException("Esse jazigo não existe");
 
         Jazigo jazigo = jazigoOpt.get();
 
@@ -283,7 +287,7 @@ public class JazigoService {
             throw new IllegalArgumentException("Jazigo selecionado já ocupado");
         }
 
-        Long idCliente = Long.valueOf(jwtService.extractId(token));
+        Long idCliente = jwtService.extractId(token);
         Cliente cliente = clienteService.findById(idCliente);
 
         BigDecimal valor = servicoService.findByTipoServico(ServicoEnum.ENTERRO).getValor();
@@ -293,15 +297,25 @@ public class JazigoService {
         Pet pet = new Pet(nomePet, LocalDateTime.parse(data + "T" + hora), LocalDate.parse(dataNascimento), especie, cliente);
         petService.save(pet); //! o pet é setado no banco mesmo q o kra nao pague o enterro e n prossiga c nada, vao ter pets setados sem estar no cemiterio
 
-        Contrato enterroServico = new Contrato(valor, cliente, jazigo, pet, LocalDateTime.parse(data + "T" + hora), new Servico(ServicoEnum.ENTERRO, valor));
-        contratoService.save(enterroServico);
+        Contrato enterroServico = Contrato.builder()
+                .valor(valor)
+                .cliente(cliente)
+                .jazigo(jazigo)
+                .pet(pet)
+                .dataServico(LocalDateTime.parse(data + "T" + hora))
+                .servico(Servico.builder()
+                        .tipoServico(ServicoEnum.ENTERRO)
+                        .valor(valor)
+                        .build())
+                .build();
 
+        contratoService.save(enterroServico);
         return true;
     }
 
     public boolean agendarExumacao(String token, Long id, String data, String hora) {
         Optional<Jazigo> jazigoOpt = repository.findById(id);
-        if(!jazigoOpt.isPresent()) throw new NoSuchElementException("Esse jazigo não existe");
+        if(jazigoOpt.isEmpty()) throw new NoSuchElementException("Esse jazigo não existe");
         Jazigo jazigo = jazigoOpt.get();
 
         Pet pet = jazigo.getPetEnterrado();
@@ -311,46 +325,78 @@ public class JazigoService {
         pet.setDataExumacao(LocalDateTime.parse(data + "T" + hora));
         petService.save(pet);
 
-        Long idCliente = Long.valueOf(jwtService.extractId(token));
+        Long idCliente = jwtService.extractId(token);
         Cliente cliente = clienteService.findById(idCliente);
 
-        Contrato exumacao = new Contrato(valor, cliente, jazigo, pet, LocalDateTime.parse(data + "T" + hora), new Servico(ServicoEnum.EXUMACAO, valor));
+        Contrato exumacao = Contrato.builder()
+                .valor(valor)
+                .cliente(cliente)
+                .jazigo(jazigo)
+                .pet(pet)
+                .dataServico(LocalDateTime.parse(data + "T" + hora))
+                .servico(Servico.builder()
+                        .tipoServico(ServicoEnum.EXUMACAO)
+                        .valor(valor)
+                        .build())
+                .build();
         contratoService.save(exumacao);
+        return true;
+    }
 
+    public boolean agendarManutencao(String token, Long id, String data) {
+        Optional<Jazigo> optJazigo = repository.findById(id);
+        if(optJazigo.isEmpty()) {
+            throw new NoSuchElementException("Jazigo não encontrado");
+        }
+
+        Jazigo jazigo = optJazigo.get();
+        BigDecimal valor = servicoService.findByTipoServico(ServicoEnum.MANUTENCAO).getValor();
+
+        Long idCliente = jwtService.extractId(token);
+        Cliente cliente = clienteService.findById(idCliente);
+
+        Contrato manutencaoServico = Contrato.builder()
+                .valor(valor)
+                .cliente(cliente)
+                .jazigo(jazigo)
+                .pet(jazigo.getPetEnterrado())
+                .dataServico(LocalDateTime.parse(data + "T00:00:00"))
+                .servico(Servico.builder()
+                        .tipoServico(ServicoEnum.MANUTENCAO)
+                        .valor(valor)
+                        .build())
+                .build();
+
+        contratoService.save(manutencaoServico);
         return true;
     }
 
     public Jazigo detalharJazigo(Long id) {
-        return repository.findByIdJazigo(id);
+        return repository.findById(id).get();
     }
 
-    public boolean agendarManutencao(String token, Long id, String data) {
-        Jazigo jazigo = repository.findByIdJazigo(id);
-        BigDecimal valor = servicoService.findByTipoServico(ServicoEnum.MANUTENCAO).getValor();
-
-        Long idCliente = Long.valueOf(jwtService.extractId(token));
-        Cliente cliente = clienteService.findById(idCliente);
-
-        Contrato manutencaoServico = new Contrato(valor, cliente, jazigo, jazigo.getPetEnterrado(), LocalDateTime.parse(data + "T00:00:00"), new Servico(ServicoEnum.MANUTENCAO, valor));
-        contratoService.save(manutencaoServico);
-
-        return true;
-    }
 
     public boolean trocarPlano(String token, Long id, String tipo) {
         Optional<Jazigo> optionalJazigo = repository.findById(id);
 
-        if(!optionalJazigo.isPresent()){
+        if(optionalJazigo.isEmpty()){
             throw new NoSuchElementException("Jazigo não encontrado");
         } else {
             Jazigo jazigo = optionalJazigo.get();
 
             Servico plano = this.servicoService.findByTipoServico(ServicoEnum.valueOf(tipo));
 
-            Long idCliente = Long.valueOf(jwtService.extractId(token));
+            Long idCliente = jwtService.extractId(token);
             Cliente cliente = clienteService.findById(idCliente);
 
-            Contrato contratos = new Contrato(BigDecimal.ZERO, cliente, jazigo, null, LocalDateTime.now(), plano); // O valor do servico é 0 pois será somado com o valor do plano selecionado no construtor do Serviço
+            Contrato contratos = Contrato.builder()
+                    .valor(BigDecimal.ZERO) // O valor do servico é 0 pois será somado com o valor do plano selecionado no construtor do Serviço
+                    .cliente(cliente)
+                    .jazigo(jazigo)
+                    .pet(jazigo.getPetEnterrado())
+                    .dataServico(LocalDateTime.now())
+                    .servico(plano)
+                    .build();
             contratoService.save(contratos);
             return true;
         }
@@ -358,33 +404,44 @@ public class JazigoService {
 
     public boolean finalizarCompra(String token, List<CarrinhoDTO> carrinho) {
 
-        Long idCliente = Long.valueOf(jwtService.extractId(token));
+        Long idCliente = jwtService.extractId(token);
 
-        for(int i = 0; i < carrinho.size(); i++) {
-            Jazigo jazigo = repository.findByIdJazigo(Long.valueOf(carrinho.get(i).getJazigoId()));
-            if(jazigo == null) throw new NoSuchElementException("Jazigo não encontrado");
+        for (CarrinhoDTO carrinhoDTO : carrinho) {
+            Optional<Jazigo> optJazigo = repository.findById(Long.valueOf(carrinhoDTO.getJazigoId()));
+            if (optJazigo.isEmpty()) throw new NoSuchElementException("Jazigo não encontrado");
+            Jazigo jazigo = optJazigo.get();
             Cliente cliente = this.clienteService.findById(idCliente);
-            ServicoEnum servico = ServicoEnum.valueOf(carrinho.get(i).getTipo().toUpperCase());
+            ServicoEnum servico = ServicoEnum.valueOf(carrinhoDTO.getTipo().toUpperCase());
             Pet pet = null;
-            if(jazigo.getPetEnterrado() != null) pet = jazigo.getPetEnterrado();
+            if (jazigo.getPetEnterrado() != null) pet = jazigo.getPetEnterrado();
 
-            Contrato contrato = new Contrato(carrinho.get(i).getValor(), cliente, jazigo, pet, LocalDateTime.now(), this.servicoService.findByTipoServico(servico));
+            Contrato contrato = Contrato.builder()
+                    .valor(carrinhoDTO.getValor())
+                    .cliente(cliente)
+                    .jazigo(jazigo)
+                    .pet(pet)
+                    .dataServico(LocalDateTime.now())
+                    .servico(Servico.builder()
+                            .tipoServico(servico)
+                            .valor(carrinhoDTO.getValor())
+                            .build())
+                    .build();
             contratoService.save(contrato);
 
-            if(contrato.getServico().getTipoServico().equals(ServicoEnum.COMPRA) || contrato.getServico().getTipoServico().equals(ServicoEnum.ALUGUEL)) {
+            if (contrato.getServico().getTipoServico().equals(ServicoEnum.COMPRA) || contrato.getServico().getTipoServico().equals(ServicoEnum.ALUGUEL)) {
                 jazigo.setProprietario(cliente);
-                jazigo.setPlano(ServicoEnum.valueOf(carrinho.get(i).getSelectedOrnament().toUpperCase()));
+                jazigo.setPlano(ServicoEnum.valueOf(carrinhoDTO.getSelectedOrnament().toUpperCase()));
                 jazigo.setStatus(StatusEnum.OCUPADO);
                 repository.save(jazigo);
             }
 
             LocalDate dataVencimento = null;
 
-            if(contrato.getServico().getTipoServico().equals(ServicoEnum.ALUGUEL)) {
+            if (contrato.getServico().getTipoServico().equals(ServicoEnum.ALUGUEL)) {
                 dataVencimento = LocalDate.now().plusMonths(1);
             }
 
-            Pagamento pagamento = new Pagamento(cliente, carrinho.get(i).getValor(), LocalDate.now(), dataVencimento, true, contrato, null);
+            Pagamento pagamento = new Pagamento(cliente, carrinhoDTO.getValor(), LocalDate.now(), dataVencimento, true, contrato, null);
             pagamentoService.save(pagamento);
         }
 

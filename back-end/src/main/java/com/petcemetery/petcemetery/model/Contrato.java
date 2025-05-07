@@ -23,6 +23,7 @@ import lombok.*;
 @Table(name = "Contrato")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Contrato {
 
     @Id
@@ -42,7 +43,7 @@ public class Contrato {
     private LocalDateTime dataServico;
 
     @OneToOne
-    @JoinColumn(name = "id_pet")
+    @JoinColumn(name = "id")
     private Pet pet;
 
     @ManyToOne
@@ -58,24 +59,4 @@ public class Contrato {
     @OneToOne
     @JoinColumn(name = "tipo_servico")
     private Servico servico;
-
-    public Contrato(BigDecimal valor, Cliente cliente, Jazigo jazigo, Pet pet, LocalDateTime dataServico, LocalDate primeiroPagamento, LocalDate ultimoPagamento, Servico servico) {
-        this.valor = valor;
-        this.cliente = cliente;
-        this.jazigo = jazigo;
-        this.pet = pet;
-        this.dataServico = dataServico;
-        this.primeiroPagamento = primeiroPagamento;
-        this.ultimoPagamento = ultimoPagamento;
-        this.servico = servico;
-    }
-
-    public Contrato(BigDecimal valor, Cliente cliente, Jazigo jazigo, Pet pet, LocalDateTime dataServico, Servico servico) {
-        this.valor = valor;
-        this.cliente = cliente;
-        this.jazigo = jazigo;
-        this.pet = pet;
-        this.dataServico = dataServico;
-        this.servico = servico;
-    }
 }

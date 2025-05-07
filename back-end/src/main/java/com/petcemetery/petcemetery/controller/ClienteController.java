@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,48 +19,41 @@ import com.petcemetery.petcemetery.services.ClienteService;
 import com.petcemetery.petcemetery.services.ContratoService;
 
 @RestController
-@RequestMapping("/api/cliente/{cpf}")
+@RequestMapping("/api/cliente")
+@RequiredArgsConstructor
 public class ClienteController {
 
     private final ClienteService clienteService;
     private final LembreteRepository lembreteRepository;
     private final ContratoService contratoService;
 
-    public ClienteController(ClienteService clienteService,
-                             LembreteRepository lembreteRepository,
-                             ContratoService contratoService) {
-        this.clienteService = clienteService;
-        this.lembreteRepository = lembreteRepository;
-        this.contratoService = contratoService;
-    }
-
     // Recebe as informações que o cliente deseja mudar, em JSON, e altera no banco de dados
     @PutMapping("")
     public boolean editarPerfil(@Valid @RequestBody EditarPerfilDTO requestBody,
-                                @PathVariable String cpf) {
+                                @RequestHeader("Authorization") String authHeader) {
 
-        return this.clienteService.editarPerfil(cpf, requestBody);
+        return this.clienteService.editarPerfil(authHeader.substring(7), requestBody);
     }
 
     // Desativa o perfil do Cliente quando solicitado
     @PostMapping("/desativar")
-    public boolean desativarPerfil(@PathVariable String cpf) {
-        return this.clienteService.desativarPerfil(cpf);
+    public boolean desativarPerfil(@RequestHeader("Authorization") String authHeader) {
+        return this.clienteService.desativarPerfil(authHeader.substring(7));
     }
 
     // Retorna os dados do cliente, menos a senha e CPF, na tela AlterarPerfil.js, para serem exibidos no editar perfil. Isso evita o cliente ter que escrever tudo de novo.
     @GetMapping("/alterar")
-    public ClienteDTO getAlterarPerfil(@PathVariable String cpf) {
-        return this.clienteService.recuperaInformacoesAlteracao(cpf);
+    public ClienteDTO getAlterarPerfil(@RequestHeader("Authorization") String authHeader) {
+        return this.clienteService.recuperaInformacoesAlteracao(authHeader.substring(7));
     }
 
     // Exibe o nome e o email do perfil do Cliente na página ExibirPerfil.js
     @GetMapping("")
-    public ClientePerfilDTO exibirPerfil(@PathVariable String cpf) {
-        return this.clienteService.recuperaInformacoesPerfil(cpf);
+    public ClientePerfilDTO exibirPerfil(@RequestHeader("Authorization") String authHeader) {
+        return this.clienteService.recuperaInformacoesPerfil(authHeader.substring(7));
     }
 
-    // Recebe uma data no formato YYYY-mm-dd do front quando o cliente adiciona um novo lembrete de visita e adiciona no banco de dados com seu cpf e data.
+    // Recebe uma data no formato YYYY-mm-dd do front quando o cliente adiciona um novo lembrete de visita e adiciona no banco de dados com seu authHeader.substring(7) e data.
     @PostMapping("/lembrete")
     public ResponseEntity<Lembrete> adicionarLembrete(@RequestHeader("Authorization") String authHeader, @RequestParam LocalDate data) {
         if (LocalDate.now().isAfter(data)) {
@@ -72,7 +66,7 @@ public class ClienteController {
 
     // Retorna para o front um objeto despesasDTO contendo o tipo de serviço, valor, data do ultimo pagamento e data do vencimento.
     @GetMapping("/despesas")
-    public List<VisualizarDespesasDTO> visualizarDespesas(@PathVariable String cpf){
-        return contratoService.visualizarDespesas(cpf);
+    public List<VisualizarDespesasDTO> visualizarDespesas(@RequestHeader("Authorization") String authHeader){
+        return contratoService.visualizarDespesas(authHeader.substring(7));
     }
 }

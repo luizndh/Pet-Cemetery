@@ -48,7 +48,7 @@ public class ReuniaoService {
     }
 
     public boolean agendarReuniao(String token, ReuniaoDTO reuniaoDTO) {
-        Long id = Long.valueOf(jwtService.extractId(token));
+        Long id = jwtService.extractId(token);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Reuniao reuniao = new Reuniao();
         reuniao.setAssunto(reuniaoDTO.getAssunto());

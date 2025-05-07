@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class Usuario implements UserDetails {
 
     @Id
@@ -69,6 +71,7 @@ public class Usuario implements UserDetails {
     private Role role;
 
     public Usuario(String email, String telefone, String nome, String cpf, String cep, String rua, String numero, String complemento, String senha, Role role) {
+        System.out.println("construtor do usuario");
         this.email = email;
         this.telefone = telefone;
         this.nome = nome;

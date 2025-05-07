@@ -10,6 +10,7 @@ import com.petcemetery.petcemetery.config.JwtService;
 import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
 import com.petcemetery.petcemetery.model.Lembrete;
 import com.petcemetery.petcemetery.repositorio.LembreteRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -23,17 +24,13 @@ import com.petcemetery.petcemetery.repositorio.ClienteRepository;
 import io.micrometer.common.util.StringUtils;
 
 @Service
+@RequiredArgsConstructor
 public class ClienteService {
 
     private final ClienteRepository repository;
     private final JwtService jwtService;
     private final LembreteRepository lembreteRepository;
 
-    public ClienteService(ClienteRepository repository, JwtService jwtService, LembreteRepository lembreteRepository) {
-        this.repository = repository;
-        this.jwtService = jwtService;
-        this.lembreteRepository = lembreteRepository;
-    }
 
     public List<ClienteInadimplenteDTO> findInadimplentes() {
         List<Cliente> clientesInadimplentes = repository.findByInadimplenteTrue();
@@ -51,8 +48,8 @@ public class ClienteService {
         return this.repository.findByEmailAndSenha(email, senha);
     }
 
-    public void save(Cliente cliente) {
-        this.repository.save(cliente);
+    public Cliente save(Cliente cliente) {
+        return this.repository.save(cliente);
     }
 
     public Cliente findByEmail(String email) {
@@ -149,7 +146,7 @@ public class ClienteService {
     }
 
     public Lembrete adicionaLembrete(String token, LocalDate dataLembrete) {
-        Long id = Long.valueOf(this.jwtService.extractId(token));
+        Long id = this.jwtService.extractId(token);
         Cliente cliente = this.findById(id);
 
         Lembrete lembrete = new Lembrete(dataLembrete, cliente);

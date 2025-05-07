@@ -3,7 +3,8 @@
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.petcemetery.petcemetery.dto.AquisicaoJazigoDTO;
@@ -18,13 +19,11 @@ import com.petcemetery.petcemetery.services.ServicoService;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class JazigoController {
 
-    @Autowired
-    private JazigoService jazigoService;
-
-    @Autowired
-    private ServicoService servicoService;
+    private final JazigoService jazigoService;
+    private final ServicoService servicoService;
 
     // Igual ao do cliente, porém o admin não vai conseguir selecionar um jazigo
     @GetMapping("/mapa-jazigos")
@@ -33,10 +32,10 @@ public class JazigoController {
     }
 
     // Envia para o front uma lista dos jazigos do proprietário, contendo o nome do pet e a data do enterro, ou "Vazio" e null caso não tenha pet enterrado.
-    @GetMapping("/jazigo")
-    public List<JazigoDTO> recuperaJazigosProprietario(@RequestHeader("Authorization") String authHeader) {
+    @GetMapping("/jazigo/cliente")
+    public ResponseEntity<List<JazigoDTO>> recuperaJazigosProprietario(@RequestHeader("Authorization") String authHeader) {
         // passa apenas o token, sem o "Bearer "
-        return this.jazigoService.recuperaJazigosProprietario(authHeader.substring(7));
+        return ResponseEntity.ok(this.jazigoService.recuperaJazigosProprietario(authHeader.substring(7)));
     }
 
     // Envia para o front o endereco do jazigo selecionado, o id dele e o preço de compra, para ser exibido na tela antes da compra do ornamento
@@ -46,21 +45,21 @@ public class JazigoController {
     }
 
     // Envia para o front os precos dos planos atuais do sistema, para ser exibido na tela de seleção de planos
-    @GetMapping("/{cpf}/jazigo/{id}/planos")
-    public List<Servico> listarPlanos(@RequestHeader("Authorization") String authHeader, @PathVariable Long id) {
+    @GetMapping("/jazigo/planos")
+    public List<Servico> listarPlanos() {
         return this.servicoService.listarPlanos();
     }
 
     // //adiciona no carrinho o jazigo selecionado pelo cliente
     // // TODO: alterar OU excluir metodo que caiu em desuso ao excluir carrinho (tem varios nessa classe assim)
-    @PostMapping("/{cpf}/finalizar-compra") //tipo == COMPRA ou ALUGUEL
+    @PostMapping("/finalizar-compra") //tipo == COMPRA ou ALUGUEL
     public Boolean finalizarCompra(@RequestHeader("Authorization") String authHeader, @RequestBody List<CarrinhoDTO> carrinho) {
         return this.jazigoService.finalizarCompra(authHeader.substring(7), carrinho);
     }
 
     // Retorna a mensagem e a foto atual para serem exibidas no front quando o usuário quiser alterar as informações do jazigo
     // Tem que ver a foto ainda
-    @GetMapping("/{cpf}/informacao-jazigo/{id}")
+    @GetMapping("/cliente/jazigo/{id}")
     public JazigoPerfilDTO exibirMensagemFotoJazigo(@RequestHeader("Authorization") String authHeader, @PathVariable Long id) {
         return this.jazigoService.exibeMensagemFotoJazigo(authHeader.substring(7), id);
     }

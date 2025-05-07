@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.petcemetery.petcemetery.config.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +23,11 @@ import com.petcemetery.petcemetery.model.Servico.ServicoEnum;
 import com.petcemetery.petcemetery.repositorio.ContratoRepository;
 
 @Service
+@RequiredArgsConstructor
 public class ContratoService {
 
     private final ContratoRepository repository;
-
-    public ContratoService(ContratoRepository repository) {
-        this.repository = repository;
-    }
+    private final JwtService tokenService;
 
     public List<ContratoDTO> findEnterros() {
         List<Contrato> contratos = repository.findByServicoTipoServico(ServicoEnum.valueOf("ENTERRO"));
@@ -137,8 +137,9 @@ public class ContratoService {
         }
     }
 
-    public List<VisualizarDespesasDTO> visualizarDespesas(String cpf) {
-        List<Contrato> contratos = repository.findAllByClienteCpf(cpf);
+    public List<VisualizarDespesasDTO> visualizarDespesas(String token) {
+        Long id = tokenService.extractId(token);
+        List<Contrato> contratos = repository.findAllByClienteId(id);
 
         List<VisualizarDespesasDTO> despesasDTO = new ArrayList<>();
 

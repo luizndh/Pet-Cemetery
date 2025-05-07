@@ -11,9 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableTransactionManagement
 @SpringBootApplication
 @EnableScheduling
-public class PetcemeteryApplication implements WebMvcConfigurer{
+public class PetCemeteryApplication implements WebMvcConfigurer{
 
 	public static void main(String[] args) {
-		SpringApplication.run(PetcemeteryApplication.class, args);
+		SpringApplication.run(PetCemeteryApplication.class, args);
 	}	
 }

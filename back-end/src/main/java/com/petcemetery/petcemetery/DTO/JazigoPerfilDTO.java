@@ -1,17 +1,12 @@
 package com.petcemetery.petcemetery.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class JazigoPerfilDTO {
-
-    String mensagem;
-    String foto; // ?
-    String plano;
-
-    public JazigoPerfilDTO(String mensagem, String foto, String plano) {
-        this.mensagem = mensagem;
-        this.foto = foto;
-        this.plano = plano;
-    }
+    private String mensagem;
+    private String foto;
+    private String plano;
 }

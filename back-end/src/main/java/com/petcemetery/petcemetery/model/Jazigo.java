@@ -56,7 +56,7 @@ public class Jazigo {
     private ServicoEnum plano;
 
     @OneToOne
-    @JoinColumn(name = "pet_enterrado_id", referencedColumnName = "id_pet")
+    @JoinColumn(name = "id_pet_enterrado", referencedColumnName = "id")
     private Pet petEnterrado;
 
     public enum StatusEnum {

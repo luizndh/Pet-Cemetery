@@ -9,8 +9,7 @@ import com.petcemetery.petcemetery.model.Servico;
 import com.petcemetery.petcemetery.model.Servico.ServicoEnum;
 
 public interface ContratoRepository extends JpaRepository<Contrato, Long> {
-    Contrato findByidContrato(Long idContrato);
-    List<Contrato> findAllByClienteCpf(String cpf);
+    List<Contrato> findAllByClienteId(Long id);
     List<Contrato> findByServico(Servico servico);
     List<Contrato> findByServicoTipoServico(ServicoEnum servicoEnum);
 }
