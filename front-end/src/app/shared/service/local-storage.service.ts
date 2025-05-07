@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
+import { PlatformService } from './platform.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,25 +9,41 @@ export class LocalStorageService {
 
   private readonly TOKEN_KEY = 'jwt_token';
 
-  constructor() { }
+  constructor(private platformService: PlatformService) { }
 
   // Salva o token no Local Storage
   setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+    if(this.platformService.isBrowser()) {
+        localStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
 
   // Recupera o token do Local Storage
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    if(this.platformService.isBrowser()) {
+        return localStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
   }
 
   // Remove o token do Local Storage
   removeToken(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
+    if(this.platformService.isBrowser()) {
+        localStorage.removeItem(this.TOKEN_KEY);
+    }
   }
 
   // Verifica se o token existe
   hasToken(): boolean {
     return !!this.getToken();
+  }
+
+  // Recupera informações do usuário a partir do token
+  getUserInfo(): any | null {
+    const token = this.getToken();
+    if (token) {
+      return jwtDecode(token); // Decodifica o token JWT
+    }
+    return null;
   }
 }
