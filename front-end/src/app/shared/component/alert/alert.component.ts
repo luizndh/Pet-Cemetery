@@ -1,10 +1,11 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-alert',
   imports: [NgIf, FormsModule],
+  styleUrls: ['./alert.component.css'],
   templateUrl: './alert.component.html'
 })
 export class AlertComponent {

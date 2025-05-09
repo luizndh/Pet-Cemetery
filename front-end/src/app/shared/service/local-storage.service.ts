@@ -38,12 +38,4 @@ export class LocalStorageService {
     return !!this.getToken();
   }
 
-  // Recupera informações do usuário a partir do token
-  getUserInfo(): any | null {
-    const token = this.getToken();
-    if (token) {
-      return jwtDecode(token); // Decodifica o token JWT
-    }
-    return null;
-  }
 }

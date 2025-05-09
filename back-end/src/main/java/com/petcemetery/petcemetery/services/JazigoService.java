@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.petcemetery.petcemetery.config.JwtService;
+import com.petcemetery.petcemetery.dto.*;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.Chunk;
@@ -22,10 +23,6 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.petcemetery.petcemetery.dto.AquisicaoJazigoDTO;
-import com.petcemetery.petcemetery.dto.CarrinhoDTO;
-import com.petcemetery.petcemetery.dto.JazigoDTO;
-import com.petcemetery.petcemetery.dto.JazigoPerfilDTO;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Contrato;
 import com.petcemetery.petcemetery.model.Jazigo;
@@ -166,15 +163,8 @@ public class JazigoService {
     }
 
     // TODO: consertar essa merda
-    public String getMapaJazigos() {
-        String str = "";
-
-        // Busque todos os jazigos do banco de dados e adicione sua disponibilidade à lista.
-        for (Jazigo i : repository.findAllByOrderByIdAsc()) {
-            str = str + String.valueOf(i.getStatus() == Jazigo.StatusEnum.DISPONIVEL) + (i == repository.findAllByOrderByIdAsc().get(repository.findAllByOrderByIdAsc().size() - 1) ? "" : ";");
-        }
-
-        return str;
+    public List<JazigoMapaDTO> getMapaJazigos() {
+        return this.repository.findMapaJazigo();
     }
 
     public List<JazigoDTO> recuperaJazigosProprietario(String token) {

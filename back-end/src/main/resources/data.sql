@@ -1,3 +1,6 @@
+INSERT INTO cliente (id, nome, cpf, telefone, email, senha, desativado, inadimplente, cep, complemento, numero, role, rua) VALUES
+(1, 'Luiz', '12345678901', '21987654321', 'luiz.ndh@gmail.com', '$2a$10$RWoPzUSLL5khMI9087L/mOkr1YkqkpwM0mMhpIlzu5Q4BS3wvtIMy', false, false, '12345678', 'Apto 101', '123', 'CLIENTE', 'Rua A');
+
 -- Initial data load for Jazigo table
 INSERT INTO Jazigo (id, endereco, id_proprietario, status, mensagem, foto, plano, id_pet_enterrado) VALUES
 (1, 'A-1', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL),

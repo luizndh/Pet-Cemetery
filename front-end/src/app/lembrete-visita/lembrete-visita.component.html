@@ -20,7 +20,18 @@
         >
         <div class="bg-neutral-800 rounded-lg shadow-lg p-6 w-full max-w-md">
             <h2 class="text-xl font-bold mb-4 text-white">Data: {{ dataSelecionada | date: 'dd/MM/yyyy'}}</h2>
-            <p class="mb-6">Previsão para o dia: {{ weather?.description }}</p>
+            <div *ngIf="clima!.icone" class="mb-6 flex flex-col items-center">
+                <p class="mb-2 flex items-center">
+                    <span class="text-white">Previsão:</span>
+                    <img
+                        [src]="clima?.icone"
+                        alt="Ícone do clima"
+                        class="ml-2 w-12 h-12"
+                    />
+                </p>
+                <p class="mb-2">Minima: {{ clima?.temperaturaMinima + ' ºC' }}</p>
+                <p class="mb-2">Máxima: {{ clima?.temperaturaMaxima + ' ºC' }}</p>
+            </div>
             <div class="flex justify-between">
                 <button
                     class="btn-primario border border-gray-700 w-[48%]"

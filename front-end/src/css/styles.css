@@ -34,10 +34,6 @@ p {
     color: white;
 }
 
-span {
-    @apply text-red-500;
-}
-
 .btn-primario {
     @apply font-normal text-neutral-200 bg-neutral-800 rounded-2xl p-3;
 

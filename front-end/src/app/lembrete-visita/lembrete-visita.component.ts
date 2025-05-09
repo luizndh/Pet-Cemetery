@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { LembreteVisitaService } from './lembrete-visita.service';
 import { DatePipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Clima } from './model/clima.model';
 
 @Component({
     selector: 'app-lembrete-visita',
     templateUrl: './lembrete-visita.component.html',
-    styleUrls: ['./lembrete-visita.component.css'],
     imports: [NgIf, FormsModule, DatePipe]
 })
 export class LembreteVisitaComponent {
-    weather: { temp: number; description: string; humidity: number } | null = null;
+    clima?: Clima;
     modalAberto: boolean = false;
     dataSelecionada!: Date;
 
@@ -20,12 +20,8 @@ export class LembreteVisitaComponent {
         this.modalAberto = true;
         this.service.recuperaDadosMeteorologicos(this.dataSelecionada!).subscribe(
             (response) => {
-                console.log('Dados meteorológicos recebidos:', response);
-                this.weather = {
-                    temp: response.main.temp,
-                    description: response.weather[0].description,
-                    humidity: response.main.humidity
-                };
+                this.clima = response;
+                console.log(this.clima)
             }
         );
     }
