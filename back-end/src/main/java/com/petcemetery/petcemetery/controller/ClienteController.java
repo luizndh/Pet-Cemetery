@@ -3,15 +3,12 @@ package com.petcemetery.petcemetery.controller;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
+import com.petcemetery.petcemetery.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.petcemetery.petcemetery.dto.ClienteDTO;
-import com.petcemetery.petcemetery.dto.ClientePerfilDTO;
-import com.petcemetery.petcemetery.dto.VisualizarDespesasDTO;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Lembrete;
 import com.petcemetery.petcemetery.repositorio.LembreteRepository;
@@ -28,8 +25,8 @@ public class ClienteController {
     private final ContratoService contratoService;
 
     // Recebe as informações que o cliente deseja mudar, em JSON, e altera no banco de dados
-    @PutMapping("")
-    public boolean editarPerfil(@Valid @RequestBody EditarPerfilDTO requestBody,
+    @PutMapping("/alterar")
+    public Cliente editarPerfil(@Valid @RequestBody EditarPerfilDTO requestBody,
                                 @RequestHeader("Authorization") String authHeader) {
 
         return this.clienteService.editarPerfil(authHeader.substring(7), requestBody);
@@ -68,5 +65,10 @@ public class ClienteController {
     @GetMapping("/despesas")
     public List<VisualizarDespesasDTO> visualizarDespesas(@RequestHeader("Authorization") String authHeader){
         return contratoService.visualizarDespesas(authHeader.substring(7));
+    }
+
+    @PutMapping("/trocar-senha")
+    public void trocarSenha(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody TrocarSenhaDTO dto) {
+        clienteService.trocarSenha(authHeader.substring(7), dto);
     }
 }

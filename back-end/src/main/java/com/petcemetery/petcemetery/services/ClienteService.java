@@ -7,17 +7,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.petcemetery.petcemetery.config.JwtService;
-import com.petcemetery.petcemetery.dto.EditarPerfilDTO;
+import com.petcemetery.petcemetery.dto.*;
 import com.petcemetery.petcemetery.model.Lembrete;
 import com.petcemetery.petcemetery.repositorio.LembreteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.petcemetery.petcemetery.dto.ClienteDTO;
-import com.petcemetery.petcemetery.dto.ClienteInadimplenteDTO;
-import com.petcemetery.petcemetery.dto.ClientePerfilDTO;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.repositorio.ClienteRepository;
 
@@ -30,6 +30,7 @@ public class ClienteService {
     private final ClienteRepository repository;
     private final JwtService jwtService;
     private final LembreteRepository lembreteRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     public List<ClienteInadimplenteDTO> findInadimplentes() {
@@ -42,10 +43,6 @@ public class ClienteService {
                 cliente.getDesativado(),
                 cliente.getInadimplente()
         )).collect(Collectors.toList());
-    }
-
-    public Cliente findByEmailAndSenha(String email, String senha) {
-        return this.repository.findByEmailAndSenha(email, senha);
     }
 
     public Cliente save(Cliente cliente) {
@@ -66,83 +63,54 @@ public class ClienteService {
         }
     }
 
-    public boolean editarPerfil(String cpf, EditarPerfilDTO dto) {
-        Cliente cliente = this.repository.findByCpf(cpf);
+    public Cliente editarPerfil(String token, EditarPerfilDTO dto) {
+        Long id = this.jwtService.extractId(token);
+        Cliente cliente = repository.findById(id).get();
 
-        // Atualiza os campos preenchidos no DTO
-        if (!StringUtils.isBlank(dto.getNome())) {
-            cliente.setNome(dto.getNome());
-        }
-        if (!StringUtils.isBlank(dto.getEmail())) {
-            cliente.setEmail(dto.getEmail());
-        }
-        if (!StringUtils.isBlank(dto.getTelefone())) {
-            cliente.setTelefone(dto.getTelefone());
-        }
-        if (!StringUtils.isBlank(dto.getRua())) {
-            cliente.setRua(dto.getRua());
-        }
-        if (!StringUtils.isBlank(dto.getNumero())) {
-            cliente.setNumero(dto.getNumero());
-        }
-        if (!StringUtils.isBlank(dto.getComplemento())) {
-            cliente.setComplemento(dto.getComplemento());
-        }
-        if (!StringUtils.isBlank(dto.getCep())) {
-            cliente.setCep(dto.getCep());
-        }
-        if (!StringUtils.isBlank(dto.getSenha()) && !StringUtils.isBlank(dto.getSenhaRepetida())) {
-            if (!dto.getSenha().equals(dto.getSenhaRepetida())) {
-                throw new IllegalArgumentException("As senhas devem ser iguais");
-            }
-            cliente.setSenha(dto.getSenha());
-        }
+        cliente.setNome(dto.getNome());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setRua(dto.getRua());
+        cliente.setNumero(dto.getNumero());
+        cliente.setComplemento(dto.getComplemento());
+        cliente.setCep(dto.getCep());
 
-        this.repository.save(cliente);
-        return true;
+        return this.repository.save(cliente);
     }
 
-    public boolean desativarPerfil(String cpf) {
-        Cliente cliente = repository.findByCpf(cpf);
-
-        if (cliente.getDesativado()) {
-            throw new IllegalArgumentException("Cliente já desativado");
-        }
+    public boolean desativarPerfil(String token) {
+        Long id = this.jwtService.extractId(token);
+        Cliente cliente = repository.findById(id).get();
 
         cliente.setDesativado(true);
         repository.save(cliente);
         return true;
     }
 
-    public ClienteDTO recuperaInformacoesAlteracao(String cpf) {
-        Cliente cliente = repository.findByCpf(cpf);
+    public ClienteDTO recuperaInformacoesAlteracao(String token) {
+        Long id = this.jwtService.extractId(token);
+        Cliente cliente = repository.findById(id).get();
 
-        if (cliente.getDesativado()) {
-            throw new IllegalArgumentException("Cliente já desativado");
-        }
-
-        return new ClienteDTO(
-            cliente.getEmail(),
-            cliente.getTelefone(),
-            cliente.getNome(),
-            cliente.getRua(),
-            cliente.getNumero(),
-            cliente.getComplemento(),
-            cliente.getCep()
-        );
+        return ClienteDTO.builder()
+                .email(cliente.getEmail())
+                .telefone(cliente.getTelefone())
+                .nome(cliente.getNome())
+                .rua(cliente.getRua())
+                .numero(cliente.getNumero())
+                .complemento(cliente.getComplemento())
+                .cep(cliente.getCep())
+                .cpf(cliente.getCpf())
+                .build();
     }
 
-    public ClientePerfilDTO recuperaInformacoesPerfil(String cpf) {
-        Cliente cliente = repository.findByCpf(cpf);
+    public ClientePerfilDTO recuperaInformacoesPerfil(String token) {
+        Long id = this.jwtService.extractId(token);
+        Cliente cliente = repository.findById(id).get();
 
-        if (cliente.getDesativado()) {
-            throw new IllegalArgumentException("Cliente já desativado");
-        }
-
-        return new ClientePerfilDTO(
-            cliente.getNome(),
-            cliente.getEmail()
-        );
+        return ClientePerfilDTO.builder()
+                .nome(cliente.getNome())
+                .email(cliente.getEmail())
+                .telefone(cliente.getTelefone())
+                .build();
     }
 
     public Lembrete adicionaLembrete(String token, LocalDate dataLembrete) {
@@ -151,5 +119,17 @@ public class ClienteService {
 
         Lembrete lembrete = new Lembrete(dataLembrete, cliente);
         return this.lembreteRepository.save(lembrete);
+    }
+
+    public void trocarSenha(String token, TrocarSenhaDTO dto) {
+        Long id = this.jwtService.extractId(token);
+        Cliente cliente = repository.findById(id).get();
+
+        if (passwordEncoder.matches(dto.getSenhaAtual(), cliente.getSenha())) {
+            cliente.setSenha(passwordEncoder.encode(dto.getNovaSenha()));
+            repository.save(cliente);
+        } else {
+            throw new IllegalArgumentException("Senha atual incorreta");
+        }
     }
 }

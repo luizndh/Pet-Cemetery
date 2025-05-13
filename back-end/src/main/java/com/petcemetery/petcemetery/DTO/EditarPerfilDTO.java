@@ -7,10 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class EditarPerfilDTO {
-    @Email
-    private String email;
-    private String senha;
-    private String senhaRepetida;
     private String cep;
     private String rua;
     private String numero;

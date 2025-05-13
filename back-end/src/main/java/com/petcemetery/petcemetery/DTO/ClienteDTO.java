@@ -1,10 +1,11 @@
 package com.petcemetery.petcemetery.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class ClienteDTO {
-
     private String email;
     private String telefone;
     private String nome;
@@ -12,14 +13,5 @@ public class ClienteDTO {
     private String numero;
     private String complemento;
     private String cep;
-
-    public ClienteDTO(String email, String telefone, String nome, String rua, String numero, String complemento, String cep) {
-        this.email = email;
-        this.telefone = telefone;
-        this.nome = nome;
-        this.rua = rua;
-        this.numero = numero;
-        this.complemento = complemento;
-        this.cep = cep;
-    }
+    private String cpf;
 }

@@ -29,12 +29,14 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
     // Constructor injection for required dependencies
     public SecurityConfig(JwtAuthFilter jwtAuthFilter,
-                          UserDetailsService userDetailsService) {
+                          UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /*
@@ -53,8 +55,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
 
                         // endpoints que precisam de permissão
-                        .requestMatchers("/api/cliente/**").hasAuthority("ROLE_CLIENTE")
-                        .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/api/cliente/**").hasAuthority("CLIENTE")
+                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 
                         // todos os outros endpoints necessitam de autenticação
                         .anyRequest().authenticated()
@@ -85,14 +87,7 @@ public class SecurityConfig {
         return source;
     }
 
-    /*
-     * Password encoder bean (uses BCrypt hashing)
-     * Critical for secure password storage
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     /*
      * Authentication provider configuration
@@ -102,7 +97,7 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
+        provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 

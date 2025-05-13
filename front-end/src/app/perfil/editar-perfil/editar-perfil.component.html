@@ -1,0 +1,68 @@
+<div class="main">
+    <h1 class="title mb-8">Editar Perfil</h1>
+    <form [formGroup]="editarPerfilForm" (ngSubmit)="onSubmit()"
+        class="flex flex-col gap-6 items-center w-full max-w-4xl">
+
+        <!-- Email e CPF -->
+        <div class="flex flex-col sm:flex-row gap-4 w-full">
+            <div class="flex flex-col w-full">
+                <label class="text-white font-medium mb-2" for="email">Email</label>
+                <input formControlName="email" type="email" id="email" name="email"
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-gray-400 border border-gray-600 focus:outline-none">
+            </div>
+            <div class="flex flex-col w-full">
+                <label class="text-white font-medium mb-2" for="cpf">CPF</label>
+                <input formControlName="cpf" type="text" id="cpf" name="cpf"
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-gray-400 border border-gray-600 focus:outline-none">
+            </div>
+        </div>
+
+        <!-- Nome e Telefone -->
+        <div class="flex flex-col sm:flex-row gap-4 w-full">
+            <div class="flex flex-col w-full">
+                <label class="text-white font-medium mb-2" for="nome">Nome</label>
+                <input formControlName="nome" type="text" id="nome" name="nome" required
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+
+            <div class="flex flex-col w-full">
+                <label class="text-white font-medium mb-2" for="telefone">Telefone</label>
+                <input formControlName="telefone" type="text" id="telefone" name="telefone" required
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+        </div>
+
+        <!-- Endereço -->
+        <div class="flex flex-wrap gap-4 w-full">
+            <div class="flex flex-col w-full sm:w-1/4">
+                <label class="text-white font-medium mb-2" for="cep">CEP</label>
+                <input formControlName="cep" type="text" id="cep" name="cep" required
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+            <div class="flex flex-col w-full sm:w-1/3">
+                <label class="text-white font-medium mb-2" for="rua">Rua</label>
+                <input formControlName="rua" type="text" id="rua" name="rua" required
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+            <div class="flex flex-col w-full sm:w-1/6">
+                <label class="text-white font-medium mb-2" for="numero">Número</label>
+                <input formControlName="numero" type="text" id="numero" name="numero" required
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+            <div class="flex flex-col w-full sm:w-1/6">
+                <label class="text-white font-medium mb-2" for="complemento">Complemento</label>
+                <input formControlName="complemento" type="text" id="complemento" name="complemento"
+                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+        </div>
+
+        <!-- Div de alertas -->
+        <app-alert [form]="editarPerfilForm"></app-alert>
+
+        <!-- Botão Salvar -->
+        <div class="w-full">
+            <button type="submit" class="btn-primario w-full" [class.cursor-not-allowed]="editarPerfilForm.invalid || editarPerfilForm.pristine">Salvar
+                Alterações</button>
+        </div>
+    </form>
+</div>

@@ -8,6 +8,9 @@ import { ContatoComponent } from './info-navbar/contato/contato.component';
 import { HomeComponent } from './home/home.component';import { PaginaDoacaoComponent } from './doacoes/pagina-doacao/pagina-doacao.component';
 import { MapaJazigoComponent } from './compra/mapa-jazigo/mapa-jazigo.component';
 import { LembreteVisitaComponent } from './lembrete-visita/lembrete-visita.component';
+import { ExibirPerfilComponent } from './perfil/exibir-perfil/exibir-perfil.component';
+import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.component';
+import { EditarSenhaComponent } from './perfil/editar-senha/editar-senha.component';
 
 
 export const routes: Routes = [
@@ -50,6 +53,18 @@ export const routes: Routes = [
     {
         path: 'home/lembrete-visita',
         component: LembreteVisitaComponent
+    },
+    {
+        path: 'home/perfil',
+        component: ExibirPerfilComponent
+    },
+    {
+        path: 'home/perfil/editar',
+        component: EditarPerfilComponent
+    },
+    {
+        path: 'home/perfil/editar-senha',
+        component: EditarSenhaComponent
     },
 
 

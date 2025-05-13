@@ -16,7 +16,9 @@ export class NavbarComponent implements OnInit{
     constructor(private tokenService: LocalStorageService, private router: Router) { }
 
     ngOnInit(): void {
-        this.usuarioLogado = this.tokenService.hasToken();
+        this.tokenService.usuarioLogado$.subscribe(
+            logado => this.usuarioLogado = logado
+        );
     }
 
     logout() {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { jwtDecode } from 'jwt-decode';
 import { PlatformService } from './platform.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,20 @@ export class LocalStorageService {
 
   private readonly TOKEN_KEY = 'jwt_token';
 
-  constructor(private platformService: PlatformService) { }
+  // Observable para o estado de login
+  private usuarioLogadoSubject: BehaviorSubject<boolean>;
+  usuarioLogado$;
+
+  constructor(private platformService: PlatformService) {
+    this.usuarioLogadoSubject = new BehaviorSubject<boolean>(this.hasToken());
+    this.usuarioLogado$ = this.usuarioLogadoSubject.asObservable();
+   }
 
   // Salva o token no Local Storage
   setToken(token: string): void {
     if(this.platformService.isBrowser()) {
         localStorage.setItem(this.TOKEN_KEY, token);
+        this.usuarioLogadoSubject.next(true);
     }
   }
 
@@ -30,6 +38,7 @@ export class LocalStorageService {
   removeToken(): void {
     if(this.platformService.isBrowser()) {
         localStorage.removeItem(this.TOKEN_KEY);
+        this.usuarioLogadoSubject.next(false);
     }
   }
 
