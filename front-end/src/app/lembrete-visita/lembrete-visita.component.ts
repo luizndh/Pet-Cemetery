@@ -13,15 +13,32 @@ export class LembreteVisitaComponent {
     clima?: Clima;
     modalAberto: boolean = false;
     dataSelecionada!: Date;
+    carregandoClima: boolean = false;
 
-    constructor(private service: LembreteVisitaService) { }
+    minDate: string;
+    maxDate: string;
+
+    constructor(private service: LembreteVisitaService) {
+        const today = new Date();
+        const min = new Date(today);
+        min.setDate(today.getDate() + 1);
+        const max = new Date(today);
+        max.setDate(today.getDate() + 14);
+
+        this.minDate = min.toISOString().split('T')[0];
+        this.maxDate = max.toISOString().split('T')[0];
+    }
 
     abrirModal() {
         this.modalAberto = true;
+        this.carregandoClima = true;
         this.service.recuperaDadosMeteorologicos(this.dataSelecionada!).subscribe(
             (response) => {
                 this.clima = response;
-                console.log(this.clima)
+                this.carregandoClima = false;
+            },
+            (error) => {
+                this.carregandoClima = false;
             }
         );
     }

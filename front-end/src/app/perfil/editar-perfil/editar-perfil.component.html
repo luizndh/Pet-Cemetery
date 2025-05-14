@@ -61,7 +61,7 @@
 
         <!-- Botão Salvar -->
         <div class="w-full">
-            <button type="submit" class="btn-primario w-full" [class.cursor-not-allowed]="editarPerfilForm.invalid || editarPerfilForm.pristine">Salvar
+            <button type="submit" class="btn-primario w-full" [disabled]="editarPerfilForm.invalid || editarPerfilForm.pristine" [class.cursor-not-allowed]="editarPerfilForm.invalid || editarPerfilForm.pristine">Salvar
                 Alterações</button>
         </div>
     </form>

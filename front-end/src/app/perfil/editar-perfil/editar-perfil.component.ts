@@ -32,8 +32,6 @@ export class EditarPerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Iniciando o componente de edição de perfil');
-
     this.perfilService.getPerfil().subscribe((perfil: DadosPerfil) => {
       this.editarPerfilForm.patchValue({
         nome: perfil.nome,

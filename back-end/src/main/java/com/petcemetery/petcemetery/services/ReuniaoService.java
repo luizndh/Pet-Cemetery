@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.petcemetery.petcemetery.config.JwtService;
+import com.petcemetery.petcemetery.dto.ReuniaoAdminDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +31,18 @@ public class ReuniaoService {
         this.jwtService = jwtService;
     }
 
-    public List<ReuniaoDTO> visualizarReunioes() {
+    public List<ReuniaoAdminDTO> visualizarReunioes() {
         List<Reuniao> reunioes = repository.findAllByOrderByDataAsc();
-        List<ReuniaoDTO> reunioesDTO = new ArrayList<>();
+        List<ReuniaoAdminDTO> reunioesDTO = new ArrayList<>();
 
         for (Reuniao reuniao : reunioes) {
-            ReuniaoDTO reuniaoDTO = new ReuniaoDTO(
-                reuniao.getCliente().getCpf(),
-                reuniao.getData().toString(),
-                reuniao.getAssunto()
-            );
+            ReuniaoAdminDTO reuniaoDTO = ReuniaoAdminDTO.builder()
+                    .cpf(reuniao.getCliente().getCpf())
+                    .email(reuniao.getCliente().getEmail())
+                    .data(reuniao.getData().toLocalDate().toString())
+                    .assunto(reuniao.getAssunto())
+                    .hora(reuniao.getData().toLocalTime().toString())
+                    .build();
 
             reunioesDTO.add(reuniaoDTO);
         }
@@ -49,10 +52,12 @@ public class ReuniaoService {
 
     public boolean agendarReuniao(String token, ReuniaoDTO reuniaoDTO) {
         Long id = jwtService.extractId(token);
+        System.out.println(reuniaoDTO);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Reuniao reuniao = new Reuniao();
         reuniao.setAssunto(reuniaoDTO.getAssunto());
-        reuniao.setData(LocalDateTime.parse(reuniaoDTO.getData(), formatter));
+        reuniao.setData(LocalDateTime.parse(reuniaoDTO.getData() + " " + reuniaoDTO.getHora(), formatter));
+
         // Verificando se a reunião está sendo agendada com uma antecedência de dois dias
         if(reuniao.getData().toLocalDate().isBefore(LocalDate.now().minusDays(2))) {
             throw new IllegalArgumentException("A reunião deve ser agendada com uma antecedência mínima de dois dias");

@@ -11,6 +11,7 @@ import { LembreteVisitaComponent } from './lembrete-visita/lembrete-visita.compo
 import { ExibirPerfilComponent } from './perfil/exibir-perfil/exibir-perfil.component';
 import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.component';
 import { EditarSenhaComponent } from './perfil/editar-senha/editar-senha.component';
+import { AgendarReuniaoComponent } from './reuniao/agendar-reuniao/agendar-reuniao.component';
 
 
 export const routes: Routes = [
@@ -65,6 +66,10 @@ export const routes: Routes = [
     {
         path: 'home/perfil/editar-senha',
         component: EditarSenhaComponent
+    },
+    {
+        path: 'home/reuniao',
+        component: AgendarReuniaoComponent
     },
 
 

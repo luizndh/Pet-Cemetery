@@ -2,14 +2,13 @@ package com.petcemetery.petcemetery.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @Builder
-@ToString
-public class ReuniaoDTO {
+public class ReuniaoAdminDTO {
     private String data;
     private String hora;
     private String assunto;
+    private String email;
+    private String cpf;
 }
