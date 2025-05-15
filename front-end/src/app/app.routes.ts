@@ -5,13 +5,15 @@ import { CadastroComponent } from './auth/cadastro/cadastro.component';
 import { QuemSomosComponent } from './info-navbar/quem-somos/quem-somos.component';
 import { PlanosComponent } from './info-navbar/planos/planos.component';
 import { ContatoComponent } from './info-navbar/contato/contato.component';
-import { HomeComponent } from './home/home.component';import { PaginaDoacaoComponent } from './doacoes/pagina-doacao/pagina-doacao.component';
+import { HomeComponent } from './home/home.component';
+import { PaginaDoacaoComponent } from './doacoes/pagina-doacao/pagina-doacao.component';
 import { MapaJazigoComponent } from './compra/mapa-jazigo/mapa-jazigo.component';
 import { LembreteVisitaComponent } from './lembrete-visita/lembrete-visita.component';
 import { ExibirPerfilComponent } from './perfil/exibir-perfil/exibir-perfil.component';
 import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.component';
 import { EditarSenhaComponent } from './perfil/editar-senha/editar-senha.component';
 import { AgendarReuniaoComponent } from './reuniao/agendar-reuniao/agendar-reuniao.component';
+import { PaginaHorarioComponent } from './info-navbar/horario-funcionamento/pagina-horario/pagina-horario.component';
 
 
 export const routes: Routes = [
@@ -38,6 +40,10 @@ export const routes: Routes = [
     {
         path: 'contato',
         component: ContatoComponent
+    },
+    {
+        path: 'horario-funcionamento',
+        component: PaginaHorarioComponent
     },
     {
         path: 'home',

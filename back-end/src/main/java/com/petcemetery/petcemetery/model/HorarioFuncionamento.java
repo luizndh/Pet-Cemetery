@@ -16,7 +16,7 @@ public class HorarioFuncionamento {
     @Id
     private Long id;
     private String diaSemana;
-    private LocalTime abertura;
-    private LocalTime fechamento;
+    private String abertura;
+    private String fechamento;
     private boolean fechado;
 }

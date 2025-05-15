@@ -1,0 +1,12 @@
+<div class="main">
+  <h1 class="title mb-8">Horário de Funcionamento</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-6 mt-15">
+    <app-card-horario
+      *ngFor="let horario of horarios"
+      [diaSemana]="horario.diaSemana"
+      [abertura]="horario.abertura"
+      [fechamento]="horario.fechamento"
+      [fechado]="horario.fechado"
+    ></app-card-horario>
+  </div>
+</div>

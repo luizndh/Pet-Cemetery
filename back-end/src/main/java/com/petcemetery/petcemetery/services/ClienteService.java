@@ -132,4 +132,8 @@ public class ClienteService {
             throw new IllegalArgumentException("Senha atual incorreta");
         }
     }
+
+    public List<Cliente> findAll() {
+        return this.repository.findAll();
+    }
 }

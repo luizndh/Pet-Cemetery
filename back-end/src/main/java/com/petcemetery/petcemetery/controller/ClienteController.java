@@ -21,7 +21,6 @@ import com.petcemetery.petcemetery.services.ContratoService;
 public class ClienteController {
 
     private final ClienteService clienteService;
-    private final LembreteRepository lembreteRepository;
     private final ContratoService contratoService;
 
     // Recebe as informações que o cliente deseja mudar, em JSON, e altera no banco de dados
@@ -69,6 +68,6 @@ public class ClienteController {
 
     @PutMapping("/trocar-senha")
     public void trocarSenha(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody TrocarSenhaDTO dto) {
-        clienteService.trocarSenha(authHeader.substring(7), dto);
+        this.clienteService.trocarSenha(authHeader.substring(7), dto);
     }
 }

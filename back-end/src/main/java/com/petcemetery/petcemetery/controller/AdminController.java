@@ -50,8 +50,6 @@ public class AdminController {
     @Autowired
     private ServicoService servicoService;
 
-    @Autowired
-    private HorarioFuncionamentoService horarioFuncionamentoService;
 
     @Autowired
     private ClienteService clienteService;
@@ -78,36 +76,6 @@ public class AdminController {
     @PutMapping("/servico/{nomeServico}")
     public boolean alterarServicos(@PathVariable String nomeServico, @RequestParam BigDecimal valor) {
         return this.servicoService.alterarServicos(nomeServico, valor);
-    }
-
-    // Altera o horário de funcionamento do cemitério de acordo com o horário passado no RequestBody. O front deve passar um body no formato:
-    // {
-    //  "segunda": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "false" }, "terca": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "false" },
-    // "quarta": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "false" }, "quinta": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "false" },
-    // "sexta": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "true" }, "sabado": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "false" },
-    // "domingo": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "true" }, "feriado": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "true" }
-    @PutMapping("/horarios")
-    public void alterarHorarioFuncionamento(@RequestBody Map<String, Map<String, Object>> body) {
-        List<HorarioFuncionamentoDTO> horarios = new ArrayList<>();
-
-        for (Entry<String, Map<String, Object>> entry : body.entrySet()) {
-            String diaSemana = entry.getKey();
-            Map<String, Object> horario = entry.getValue();
-            LocalTime abertura = LocalTime.parse((String) horario.get("abertura"));
-            LocalTime fechamento = LocalTime.parse((String) horario.get("fechamento"));
-            boolean fechado = (boolean) horario.get("fechado");
-
-            HorarioFuncionamentoDTO horarioDTO = new HorarioFuncionamentoDTO(diaSemana, abertura, fechamento, fechado);
-            horarios.add(horarioDTO);
-        }
-
-        adminService.alterarHorarioFuncionamento(horarios);
-    }
-
-    // Retorna todos os horários de funcionamento para serem exibidos quando o admin entrar na tela de Alterar Horário de Funcionamento
-    @GetMapping("/horarios")
-    public List<HorarioFuncionamentoDTO> getHorarios() {
-        return horarioFuncionamentoService.getHorarios();
     }
 
     // Visualizar clientes inadimplentes

@@ -22,23 +22,14 @@ import com.petcemetery.petcemetery.repositorio.HorarioFuncionamentoRepository;
 public class AdminService {
 
     private final JazigoService jazigoService;
-    private final HorarioFuncionamentoService horarioFuncionamentoService;
-    private final EmailService emailService;
-    private final ClienteRepository clienteRepository;
-    private final HorarioFuncionamentoRepository horarioFuncionamentoRepository;
     private final AdminRepository repository;
 
     public AdminService(JazigoService jazigoService,
-                        HorarioFuncionamentoService horarioFuncionamentoService,
                         EmailService emailService,
                         ClienteRepository clienteRepository,
                         HorarioFuncionamentoRepository horarioFuncionamentoRepository,
                         AdminRepository repository) {
         this.jazigoService = jazigoService;
-        this.horarioFuncionamentoService = horarioFuncionamentoService;
-        this.emailService = emailService;
-        this.clienteRepository = clienteRepository;
-        this.horarioFuncionamentoRepository = horarioFuncionamentoRepository;
         this.repository = repository;
     }
 
@@ -56,36 +47,6 @@ public class AdminService {
         }
 
         return historico;
-    }
-
-    public void alterarHorarioFuncionamento(List<HorarioFuncionamentoDTO> horarios) {
-        this.horarioFuncionamentoService.alterarHorarioFuncionamento(horarios);
-        this.notificaClientes();
-    }
-
-
-    // Método que é chamado depois que o admin altera o horário de funcionamento do cemitério, e envia para todos os clientes os novos horários.
-    @Async
-    private void notificaClientes() {
-        List<Cliente> clientes = clienteRepository.findAll();
-        String[] emails = new String[clientes.size()];
-        for(Cliente cliente : clientes) {
-            emails[clientes.indexOf(cliente)] = cliente.getEmail();
-        }
-
-        String subject = "Horário de funcionamento do cemitério alterado";
-        String body = "Olá! Os horários de funcionamento do cemítério foram alterados para essa semana. Seguem os novos horários:\n" +
-                "Segunda: " + horarioFuncionamentoRepository.findByDiaSemana("segunda").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("segunda").getFechamento() + "\n" +
-                "Terça: " + horarioFuncionamentoRepository.findByDiaSemana("terca").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("terca").getFechamento() + "\n" +
-                "Quarta: " + horarioFuncionamentoRepository.findByDiaSemana("quarta").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("quarta").getFechamento() + "\n" +
-                "Quinta: " + horarioFuncionamentoRepository.findByDiaSemana("quinta").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("quinta").getFechamento() + "\n" +
-                "Sexta: " + horarioFuncionamentoRepository.findByDiaSemana("sexta").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("sexta").getFechamento() + "\n" +
-                "Sábado: " + horarioFuncionamentoRepository.findByDiaSemana("sabado").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("sabado").getFechamento() + "\n" +
-                "Domingo: " + horarioFuncionamentoRepository.findByDiaSemana("domingo").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("domingo").getFechamento() + "\n" +
-                "Feriado: " + horarioFuncionamentoRepository.findByDiaSemana("feriado").getAbertura() + " - " + horarioFuncionamentoRepository.findByDiaSemana("feriado").getFechamento() + "\n" +
-                "Atenciosamente, Pet Cemetery.";
-
-        emailService.sendEmail(emails, subject, body);
     }
 
     public Admin findById(Long id) {
