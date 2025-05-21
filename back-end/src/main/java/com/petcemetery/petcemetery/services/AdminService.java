@@ -4,34 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.petcemetery.petcemetery.dto.HistoricoJazigoDTO;
-import com.petcemetery.petcemetery.dto.HorarioFuncionamentoDTO;
 import com.petcemetery.petcemetery.model.Admin;
-import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Jazigo;
 import com.petcemetery.petcemetery.model.Pet;
 import com.petcemetery.petcemetery.repositorio.AdminRepository;
-import com.petcemetery.petcemetery.repositorio.ClienteRepository;
-import com.petcemetery.petcemetery.repositorio.HorarioFuncionamentoRepository;
 
 @Service
+@RequiredArgsConstructor
 public class AdminService {
 
     private final JazigoService jazigoService;
     private final AdminRepository repository;
-
-    public AdminService(JazigoService jazigoService,
-                        EmailService emailService,
-                        ClienteRepository clienteRepository,
-                        HorarioFuncionamentoRepository horarioFuncionamentoRepository,
-                        AdminRepository repository) {
-        this.jazigoService = jazigoService;
-        this.repository = repository;
-    }
 
     public List<HistoricoJazigoDTO> visualizarHistorico(Long id) {
         Jazigo jazigo = this.jazigoService.findById(id);

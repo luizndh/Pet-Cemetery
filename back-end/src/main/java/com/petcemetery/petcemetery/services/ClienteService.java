@@ -50,7 +50,8 @@ public class ClienteService {
     }
 
     public Cliente findByEmail(String email) {
-        return this.repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+        Optional<Cliente> optCliente = this.repository.findByEmail(email);
+        return optCliente.orElse(null);
     }
 
     public Cliente findById(Long id) {

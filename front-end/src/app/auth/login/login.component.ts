@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { LocalStorageService } from '../../shared/service/local-storage.service';
 import { AlertComponent } from "../../shared/component/alert/alert.component";
 import { ErrorMessageComponent } from '../../shared/component/error-message/error-message.component';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +28,18 @@ export class LoginComponent {
         this.authService.login(this.loginForm.value).subscribe(
             (response: any) => {
                 this.tokenService.setToken(response.token);
-                // atualiza o estado da nav-bar, para que o usuário logado apareça
-                this.router.navigate(['/home']).then(() => window.location.reload());
+
+                // Decodifica o token para pegar as roles
+                const decoded: any = jwtDecode(response.token);
+
+                if (decoded.roles && decoded.roles.some((role: any) => role.authority === "CLIENTE")) {
+                    this.router.navigate(['/home']);
+                } else if (decoded.roles && decoded.roles.some((role: any) => role.authority === "ADMIN")) {
+                    this.router.navigate(['/admin/home']);
+                }
+                else {
+                    this.router.navigate(['/']);
+                }
             },
             (error) => {
                 console.log(error)

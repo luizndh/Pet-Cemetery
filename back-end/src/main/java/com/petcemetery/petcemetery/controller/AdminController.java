@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import com.petcemetery.petcemetery.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,11 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.petcemetery.petcemetery.dto.ClienteInadimplenteDTO;
-import com.petcemetery.petcemetery.dto.ContratoDTO;
-import com.petcemetery.petcemetery.dto.HistoricoJazigoDTO;
-import com.petcemetery.petcemetery.dto.HorarioFuncionamentoDTO;
-import com.petcemetery.petcemetery.dto.JazigoDTO;
 import com.petcemetery.petcemetery.model.Servico;
 import com.petcemetery.petcemetery.outros.VerificadorData;
 import com.petcemetery.petcemetery.services.AdminService;

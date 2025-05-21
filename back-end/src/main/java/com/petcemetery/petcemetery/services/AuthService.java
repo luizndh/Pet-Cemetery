@@ -4,9 +4,10 @@ import com.petcemetery.petcemetery.config.JwtService;
 import com.petcemetery.petcemetery.dto.AuthResponseDTO;
 import com.petcemetery.petcemetery.dto.CadastroRequestDTO;
 import com.petcemetery.petcemetery.dto.LoginRequestDTO;
+import com.petcemetery.petcemetery.model.Admin;
 import com.petcemetery.petcemetery.model.Role;
+import com.petcemetery.petcemetery.model.Usuario;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,10 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.petcemetery.petcemetery.model.Admin;
 import com.petcemetery.petcemetery.model.Cliente;
 
-import io.micrometer.common.util.StringUtils;
 
 import java.util.Collections;
 
@@ -28,16 +27,29 @@ public class AuthService {
     private final ClienteService clienteService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final AdminService adminService;
 
     public AuthResponseDTO login(LoginRequestDTO loginRequest) {
+        System.out.println("alooo");
+        System.out.println(loginRequest);
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
                         loginRequest.getSenha())
         );
+        System.out.println("alooo");
 
-        var cliente = clienteService.findByEmail(loginRequest.getEmail());
-        var jwtToken = jwtService.createToken(cliente.getEmail(), cliente.getId());
+        Usuario usuario = clienteService.findByEmail(loginRequest.getEmail());
+        if (usuario == null) {
+            usuario = adminService.findByEmail(loginRequest.getEmail());
+            System.out.println("aloooooo");
+            System.out.println(usuario);
+            if (usuario == null) {
+                throw new UsernameNotFoundException("Usuário não encontrado com o email: " + loginRequest.getEmail());
+            }
+        }
+
+        String jwtToken = jwtService.createToken(usuario.getEmail(), usuario.getId(), usuario.getAuthorities());
         return new AuthResponseDTO(jwtToken);
     }
 
@@ -61,7 +73,7 @@ public class AuthService {
                 .build();
 
         var novoCliente = clienteService.save(cliente);
-        var jwtToken = jwtService.createToken(novoCliente.getEmail(), novoCliente.getId());
+        var jwtToken = jwtService.createToken(novoCliente.getEmail(), novoCliente.getId(), novoCliente.getAuthorities());
         return new AuthResponseDTO(jwtToken);
     }
 

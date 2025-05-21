@@ -5,22 +5,23 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
     public static final String SECRET = "5367566859703373367639792F423F452848284D6251655468576D5A71347437";
 
-    public String createToken(String email, Long id) { // Use id as username
+    public String createToken(String email, Long id, Collection<? extends GrantedAuthority> authorities) { // Use id as username
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", id);
+        claims.put("roles", authorities);
         return createToken(claims, email);
     }
 
@@ -29,7 +30,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(String.valueOf(id))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

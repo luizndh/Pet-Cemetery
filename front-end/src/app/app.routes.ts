@@ -14,6 +14,8 @@ import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.comp
 import { EditarSenhaComponent } from './perfil/editar-senha/editar-senha.component';
 import { AgendarReuniaoComponent } from './reuniao/agendar-reuniao/agendar-reuniao.component';
 import { PaginaHorarioComponent } from './info-navbar/horario-funcionamento/pagina-horario/pagina-horario.component';
+import { PainelAdminComponent } from './admin/painel-admin/painel-admin.component';
+import { AuthGuard } from './shared/guard/auth-guard';
 
 
 export const routes: Routes = [
@@ -48,35 +50,59 @@ export const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
     {
         path: 'home/doacao',
         component: PaginaDoacaoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
     {
         path: 'home/mapa-jazigos',
-        component: MapaJazigoComponent
+        component: MapaJazigoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
+
     },
     {
         path: 'home/lembrete-visita',
-        component: LembreteVisitaComponent
+        component: LembreteVisitaComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
     {
         path: 'home/perfil',
-        component: ExibirPerfilComponent
+        component: ExibirPerfilComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
     {
         path: 'home/perfil/editar',
-        component: EditarPerfilComponent
+        component: EditarPerfilComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
     {
         path: 'home/perfil/editar-senha',
-        component: EditarSenhaComponent
+        component: EditarSenhaComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
     {
         path: 'home/reuniao',
-        component: AgendarReuniaoComponent
+        component: AgendarReuniaoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
+    {
+        path: 'admin/home',
+        component: PainelAdminComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
+
 
 
     {
