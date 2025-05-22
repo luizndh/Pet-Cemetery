@@ -1,0 +1,18 @@
+<div class="main">
+  <h1 class="title mb-8">Alterar Horário de Funcionamento</h1>
+  <form>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-6 mt-15">
+      <app-card-horario
+        *ngFor="let horario of horarios; let i = index"
+        [diaSemana]="horario.diaSemana"
+        [(abertura)]="horario.abertura"
+        [(fechamento)]="horario.fechamento"
+        [(fechado)]="horario.fechado"
+        [editavel]="true"
+      ></app-card-horario>
+    </div>
+    <div class="flex justify-end mt-8">
+      <button type="button" (click)="salvarAlteracoes()" class="btn-primario px-8">Salvar Alterações</button>
+    </div>
+  </form>
+</div>

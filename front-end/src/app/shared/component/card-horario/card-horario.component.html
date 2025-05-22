@@ -1,0 +1,46 @@
+<div class="bg-neutral-700 p-6 shadow-lg flex flex-col items-center w-48 h-70">
+  <h3 class="text-lg font-bold text-white mb-2">{{ diaSemana }}</h3>
+  <div class="flex flex-col items-center mb-4">
+    <span class="text-white font-semibold">Abertura</span>
+    <ng-container *ngIf="!editavel; else editAbertura">
+      <span class="text-white text-3xl">{{ abertura }}</span>
+    </ng-container>
+    <ng-template #editAbertura>
+      <input
+        type="time"
+        [(ngModel)]="abertura"
+        (ngModelChange)="onAberturaChange($event)"
+        class="text-white text-2xl border border-neutral-800 rounded px-2 py-1 mt-1 w-full"
+      />
+    </ng-template>
+  </div>
+  <div class="flex flex-col items-center mb-4">
+    <span class="text-white font-semibold">Fechamento</span>
+    <ng-container *ngIf="!editavel; else editFechamento">
+      <span class="text-white text-3xl">{{ fechamento }}</span>
+    </ng-container>
+    <ng-template #editFechamento>
+      <input
+        type="time"
+        [(ngModel)]="fechamento"
+        (ngModelChange)="onFechamentoChange($event)"
+        class="text-white text-2xl border border-neutral-800 rounded px-2 py-1 mt-1 w-full"
+      />
+    </ng-template>
+  </div>
+  <div class="flex items-center gap-2 mt-2">
+    <ng-container *ngIf="!editavel">
+      <label *ngIf="fechado" class="text-red-600 font-medium select-none">Fechado</label>
+    </ng-container>
+    <ng-container *ngIf="editavel">
+      <input
+        type="checkbox"
+        [(ngModel)]="fechado"
+        (ngModelChange)="onFechadoChange($event)"
+        class="accent-black w-5 h-5 cy"
+        id="fechado-{{ diaSemana }}"
+      />
+      <label [for]="'fechado-' + diaSemana" class="text-white font-medium select-none">Fechado</label>
+    </ng-container>
+  </div>
+</div>

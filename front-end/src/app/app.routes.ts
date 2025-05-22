@@ -16,6 +16,7 @@ import { AgendarReuniaoComponent } from './reuniao/agendar-reuniao/agendar-reuni
 import { PaginaHorarioComponent } from './info-navbar/horario-funcionamento/pagina-horario/pagina-horario.component';
 import { PainelAdminComponent } from './admin/painel-admin/painel-admin.component';
 import { AuthGuard } from './shared/guard/auth-guard';
+import { AlterarHorarioFuncionamentoComponent } from './admin/alterar-horario-funcionamento/alterar-horario-funcionamento.component';
 
 
 export const routes: Routes = [
@@ -99,6 +100,12 @@ export const routes: Routes = [
     {
         path: 'admin/home',
         component: PainelAdminComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
+    {
+        path: 'admin/home/alterar-horario',
+        component: AlterarHorarioFuncionamentoComponent,
         canActivate: [AuthGuard],
         data: { role: 'ADMIN' }
     },

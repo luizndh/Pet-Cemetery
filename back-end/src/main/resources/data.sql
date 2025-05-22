@@ -1,5 +1,5 @@
 INSERT INTO cliente (nome, cpf, telefone, email, senha, desativado, inadimplente, cep, complemento, numero, role, rua) VALUES
-('Luiz', '12345678901', '21987654321', 'luiz.ndh@gmail.com', '$2a$10$RWoPzUSLL5khMI9087L/mOkr1YkqkpwM0mMhpIlzu5Q4BS3wvtIMy', false, false, '12345678', 'Apto 101', '123', 'CLIENTE', 'Rua A');
+('Luiz', '12345678901', '21987654321', 'teste@gmail.com', '$2a$10$RWoPzUSLL5khMI9087L/mOkr1YkqkpwM0mMhpIlzu5Q4BS3wvtIMy', false, false, '12345678', 'Apto 101', '123', 'CLIENTE', 'Rua A');
 
 INSERT INTO administrador (nome, cpf, telefone, email, senha, role, rua, numero, complemento, cep) VALUES
 ('petcemetery', '98765432100', '21987654321', 'petcemetery@gmail.com', '$2a$10$RWoPzUSLL5khMI9087L/mOkr1YkqkpwM0mMhpIlzu5Q4BS3wvtIMy', 'ADMIN', 'Rua B', '456', 'Apto 202', '87654321');

@@ -34,6 +34,13 @@ p {
     color: white;
 }
 
+input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+input {
+    color-scheme: dark;
+}
 
 .btn-primario {
     @apply font-normal text-neutral-200 bg-neutral-800 rounded-2xl p-3 border border-gray-700;

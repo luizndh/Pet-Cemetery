@@ -29,20 +29,7 @@ public class HorarioFuncionamentoController {
     // "sexta": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "true" }, "sabado": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "false" },
     // "domingo": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "true" }, "feriado": {"abertura": "HH:MM", "fechamento": "HH:MM", "fechado": "true" }
     @PutMapping("")
-    public void alterarHorarioFuncionamento(@RequestBody Map<String, Map<String, Object>> body) {
-        List<HorarioFuncionamentoDTO> horarios = new ArrayList<>();
-
-        for (Map.Entry<String, Map<String, Object>> entry : body.entrySet()) {
-            String diaSemana = entry.getKey();
-            Map<String, Object> horario = entry.getValue();
-            String abertura = (String) horario.get("abertura");
-            String fechamento = (String) horario.get("fechamento");
-            boolean fechado = (boolean) horario.get("fechado");
-
-            HorarioFuncionamentoDTO horarioDTO = new HorarioFuncionamentoDTO(diaSemana, abertura, fechamento, fechado);
-            horarios.add(horarioDTO);
-        }
-
+    public void alterarHorarioFuncionamento(@RequestBody List<HorarioFuncionamentoDTO> horarios) {
         this.horarioFuncionamentoService.alterarHorarioFuncionamento(horarios);
     }
 }

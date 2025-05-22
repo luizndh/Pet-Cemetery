@@ -30,20 +30,15 @@ public class AuthService {
     private final AdminService adminService;
 
     public AuthResponseDTO login(LoginRequestDTO loginRequest) {
-        System.out.println("alooo");
-        System.out.println(loginRequest);
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
                         loginRequest.getSenha())
         );
-        System.out.println("alooo");
 
         Usuario usuario = clienteService.findByEmail(loginRequest.getEmail());
         if (usuario == null) {
             usuario = adminService.findByEmail(loginRequest.getEmail());
-            System.out.println("aloooooo");
-            System.out.println(usuario);
             if (usuario == null) {
                 throw new UsernameNotFoundException("Usuário não encontrado com o email: " + loginRequest.getEmail());
             }

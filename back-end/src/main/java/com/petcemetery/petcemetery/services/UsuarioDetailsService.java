@@ -17,11 +17,8 @@ public class UsuarioDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("entrou no user details service");
         Usuario usuario = clienteService.findByEmail(email);
-        System.out.println("encontrou cliente?: " + usuario);
         usuario = (usuario != null) ? usuario : adminService.findByEmail(email);
-        System.out.println("encontrou admin?: " + usuario);
 
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuário não encontrado com o email: " + email);

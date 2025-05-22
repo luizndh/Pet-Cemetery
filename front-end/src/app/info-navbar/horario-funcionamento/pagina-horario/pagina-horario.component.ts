@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CardHorarioComponent } from '../card-horario/card-horario.component';
+import { CardHorarioComponent } from '../../../shared/component/card-horario/card-horario.component';
 import { HorarioFuncionamento } from '../model/horario-funcionamento.model';
 import { NgFor } from '@angular/common';
-import { HorarioFuncionamentoService } from '../horario-funcionamento.service';
-
+import { HorarioFuncionamentoService } from '../../../shared/service/horario-funcionamento.service';
 @Component({
   selector: 'app-pagina-horario',
   imports: [CardHorarioComponent, NgFor],
