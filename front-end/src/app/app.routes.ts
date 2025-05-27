@@ -109,6 +109,13 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { role: 'ADMIN' }
     },
+    {
+        path: 'admin/home/mapa-jazigos',
+        component: MapaJazigoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+
+    },
 
 
 

@@ -2,23 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { Jazigo } from '../../shared/model/jazigo.model';
 import { NgFor, NgIf } from '@angular/common';
 import { JazigoService } from '../../shared/jazigo.service';
+import { LocalStorageService } from '../../shared/service/local-storage.service';
 
 @Component({
   selector: 'app-mapa-jazigo',
   imports: [NgFor, NgIf],
-  templateUrl: './mapa-jazigo.component.html',
-  styleUrl: './mapa-jazigo.component.css'
+  templateUrl: './mapa-jazigo.component.html'
 })
 export class MapaJazigoComponent implements OnInit {
     jazigos: Jazigo[] = [];
 
-    constructor(private service: JazigoService) {}
+    isAdmin: boolean = false;
+
+    constructor(private service: JazigoService, private tokenService: LocalStorageService) {}
 
     ngOnInit(): void {
         this.service.getMapaJazigos().subscribe((response: Jazigo[]) => {
             this.jazigos = response;
-            console.log(this.jazigos);
         })
+        this.tokenService.isAdmin$.subscribe(
+            isAdmin => this.isAdmin = isAdmin
+        );
     }
 
     jazigoSelecionado: Jazigo | null = null;

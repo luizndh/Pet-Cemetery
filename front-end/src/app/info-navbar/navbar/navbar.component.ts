@@ -13,12 +13,17 @@ import { jwtDecode } from 'jwt-decode';
 export class NavbarComponent implements OnInit{
 
     usuarioLogado: boolean = false;
+    isAdmin: boolean = false;
 
     constructor(private tokenService: LocalStorageService, private router: Router) { }
 
     ngOnInit(): void {
         this.tokenService.usuarioLogado$.subscribe(
             logado => this.usuarioLogado = logado
+        );
+
+        this.tokenService.isAdmin$.subscribe(
+            isAdmin => this.isAdmin = isAdmin
         );
     }
 

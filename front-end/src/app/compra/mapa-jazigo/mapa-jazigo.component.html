@@ -1,11 +1,11 @@
 <div class="main">
     <h1 class="title">Mapa de Jazigos</h1>
-    <p class="text-white text-2xl my-3 text-center">Selecione um jazigo</p>
-    <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4 w-full max-w-6xl mx-auto">
+    <p *ngIf="!isAdmin" class="text-white text-2xl my-3 text-center">Selecione um jazigo</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4 w-full max-w-6xl mx-auto mt-10">
         <div class="col flex items-center justify-center rounded-full hover:bg-neutral-700 transition p-2"
-            *ngFor="let jazigo of jazigos" [class.cursor-pointer]="jazigo.status === 'DISPONIVEL'"
-            [class.cursor-not-allowed]="jazigo.status !== 'DISPONIVEL'"
-            (click)="jazigo.status === 'DISPONIVEL' && selecionarJazigo(jazigo)">
+            *ngFor="let jazigo of jazigos" [class.cursor-pointer]="jazigo.status === 'DISPONIVEL' && !isAdmin"
+            [class.cursor-not-allowed]="jazigo.status !== 'DISPONIVEL' || isAdmin"
+            (click)="jazigo.status === 'DISPONIVEL' && !isAdmin && selecionarJazigo(jazigo)">
             <img *ngIf="jazigo.status === 'DISPONIVEL'" class="rounded-lg" src="/assets/jverde.png"
                 [style.width.px]="50" [style.height.px]="50" alt="Jazigo" />
             <img *ngIf="jazigo.status === 'OCUPADO'" class="rounded-lg" src="/assets/jvermelho.png"

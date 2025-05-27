@@ -23,10 +23,6 @@ export class AlterarHorarioFuncionamentoComponent {
     }
 
     salvarAlteracoes() {
-        this.service.alterarHorariosFuncionamento(this.horarios).subscribe(
-            () => {
-                console.log("Horários de funcionamento alterados com sucesso!");
-            }
-        );
+        this.service.alterarHorariosFuncionamento(this.horarios);
     }
 }

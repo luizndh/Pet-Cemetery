@@ -7,8 +7,7 @@ import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-home',
   imports: [RouterLink, NgIf, NgFor],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit{
 

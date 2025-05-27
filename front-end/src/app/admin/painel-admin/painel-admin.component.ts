@@ -4,8 +4,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-painel-admin',
   imports: [RouterLink],
-  templateUrl: './painel-admin.component.html',
-  styleUrl: './painel-admin.component.css'
+  templateUrl: './painel-admin.component.html'
 })
 export class PainelAdminComponent {
 

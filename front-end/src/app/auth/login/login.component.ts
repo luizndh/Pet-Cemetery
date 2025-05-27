@@ -6,6 +6,7 @@ import { LocalStorageService } from '../../shared/service/local-storage.service'
 import { AlertComponent } from "../../shared/component/alert/alert.component";
 import { ErrorMessageComponent } from '../../shared/component/error-message/error-message.component';
 import { jwtDecode } from 'jwt-decode';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent {
                 if (decoded.roles && decoded.roles.some((role: any) => role.authority === "CLIENTE")) {
                     this.router.navigate(['/home']);
                 } else if (decoded.roles && decoded.roles.some((role: any) => role.authority === "ADMIN")) {
+                    this.tokenService.setAdmin(true);
                     this.router.navigate(['/admin/home']);
                 }
                 else {
