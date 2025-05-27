@@ -1,7 +1,7 @@
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ReuniaoService } from '../reuniao.service';
+import { ReuniaoService } from '../../shared/service/reuniao.service';
 import { Router } from '@angular/router';
 
 @Component({

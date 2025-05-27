@@ -17,6 +17,7 @@ import { PaginaHorarioComponent } from './info-navbar/horario-funcionamento/pagi
 import { PainelAdminComponent } from './admin/painel-admin/painel-admin.component';
 import { AuthGuard } from './shared/guard/auth-guard';
 import { AlterarHorarioFuncionamentoComponent } from './admin/alterar-horario-funcionamento/alterar-horario-funcionamento.component';
+import { VisualizarReunioesComponent } from './admin/reuniao/visualizar-reunioes/visualizar-reunioes.component';
 
 
 export const routes: Routes = [
@@ -114,7 +115,12 @@ export const routes: Routes = [
         component: MapaJazigoComponent,
         canActivate: [AuthGuard],
         data: { role: 'ADMIN' }
-
+    },
+    {
+        path: 'admin/home/reunioes',
+        component: VisualizarReunioesComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
     },
 
 

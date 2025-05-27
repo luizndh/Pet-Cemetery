@@ -1,0 +1,15 @@
+<div class="main">
+  <h1 class="title mb-8">Reuniões Agendadas</h1>
+  <div *ngIf="carregando" class="flex justify-center items-center h-40">
+    <svg class="animate-spin h-8 w-8 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+    </svg>
+  </div>
+  <div *ngIf="!carregando && reunioes.length === 0" class="text-gray-400 text-lg mt-8">
+    Nenhuma reunião agendada.
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
+    <app-card-reuniao *ngFor="let reuniao of reunioes" [reuniao]="reuniao"></app-card-reuniao>
+  </div>
+</div>
