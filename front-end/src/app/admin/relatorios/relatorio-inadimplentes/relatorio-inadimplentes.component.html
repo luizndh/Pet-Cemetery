@@ -1,0 +1,28 @@
+<div class="main">
+  <h1 class="title mb-8">Clientes Inadimplentes</h1>
+  <div class="flex gap-4 mb-4">
+    <button class="btn-primario" (click)="exportarCSV()">Exportar CSV</button>
+    <button class="btn-primario" (click)="exportarPDF()">Exportar PDF</button>
+  </div>
+  <div *ngIf="carregando" class="text-white">Carregando...</div>
+  <table *ngIf="!carregando" class="w-full text-white bg-neutral-800 rounded-lg">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Desativado</th>
+        <th>Inadimplente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clientes">
+        <td>{{ c.nome }}</td>
+        <td>{{ c.email }}</td>
+        <td>{{ c.telefone }}</td>
+        <td>{{ c.desativado ? 'Sim' : 'Não' }}</td>
+        <td>{{ c.inadimplente ? 'Sim' : 'Não' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

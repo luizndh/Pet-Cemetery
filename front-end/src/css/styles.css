@@ -77,3 +77,7 @@ input {
         @apply text-black bg-neutral-700 border-neutral-400;
     }
 }
+
+th, td {
+    text-align: center;
+}

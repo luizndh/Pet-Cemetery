@@ -18,6 +18,11 @@ import { PainelAdminComponent } from './admin/painel-admin/painel-admin.componen
 import { AuthGuard } from './shared/guard/auth-guard';
 import { AlterarHorarioFuncionamentoComponent } from './admin/alterar-horario-funcionamento/alterar-horario-funcionamento.component';
 import { VisualizarReunioesComponent } from './admin/reuniao/visualizar-reunioes/visualizar-reunioes.component';
+import { PainelRelatoriosComponent } from './admin/relatorios/painel-relatorios/painel-relatorios.component';
+import { RelatorioOcupacaoComponent } from './admin/relatorios/relatorio-ocupacao/relatorio-ocupacao.component';
+import { RelatorioExumacoesComponent } from './admin/relatorios/relatorio-exumacoes/relatorio-exumacoes.component';
+import { RelatorioEnterrosComponent } from './admin/relatorios/relatorio-enterros/relatorio-enterros.component';
+import { RelatorioInadimplentesComponent } from './admin/relatorios/relatorio-inadimplentes/relatorio-inadimplentes.component';
 
 
 export const routes: Routes = [
@@ -119,6 +124,37 @@ export const routes: Routes = [
     {
         path: 'admin/home/reunioes',
         component: VisualizarReunioesComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
+    {
+        path: 'admin/home/relatorios',
+        component: PainelRelatoriosComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
+
+    {
+        path: 'admin/home/relatorios/ocupacao',
+        component: RelatorioOcupacaoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
+    {
+        path: 'admin/home/relatorios/exumacoes',
+        component: RelatorioExumacoesComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
+    {
+        path: 'admin/home/relatorios/enterros',
+        component: RelatorioEnterrosComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
+    {
+        path: 'admin/home/relatorios/inadimplentes',
+        component: RelatorioInadimplentesComponent,
         canActivate: [AuthGuard],
         data: { role: 'ADMIN' }
     },

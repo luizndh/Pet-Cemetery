@@ -138,7 +138,7 @@ public class AdminController {
 
     // Relatório de jazigos
     @GetMapping("/jazigos")
-    public List<JazigoDTO> getJazigos(){
+    public List<OcupacaoJazigoDTO> getJazigos(){
         return this.jazigoService.getJazigos();
     }
 
@@ -146,7 +146,7 @@ public class AdminController {
     @GetMapping("/jazigos/pdf")
     public ResponseEntity<byte[]> gerarPDFJazigos() {
         // Pega o retorno do método acima
-        List<JazigoDTO> jazigos = this.jazigoService.getJazigos();
+        List<OcupacaoJazigoDTO> jazigos = this.jazigoService.getJazigos();
 
         if (jazigos == null) {
             throw new NoSuchElementException("Não existem jazigos na nossa base de dados");

@@ -64,39 +64,27 @@ public class JazigoService {
         return repository.findById(id).orElse(null);
     }
 
-    public List<JazigoDTO> getJazigos() {
+    public List<OcupacaoJazigoDTO> getJazigos() {
         List<Jazigo> jazigos = repository.findAllByOrderByIdAsc();
-        List<JazigoDTO> jazigosDTO = new ArrayList<>();
+        List<OcupacaoJazigoDTO> jazigosDTO = new ArrayList<>();
 
         for (Jazigo jazigo : jazigos) {
-            JazigoDTO jazigoDto;
+            OcupacaoJazigoDTO jazigoDto = OcupacaoJazigoDTO.builder()
+                    .jazigo(jazigo.getEndereco())
+                    .build();
 
-            if(jazigo.getPetEnterrado() != null) { // Caso tenha pet enterrado
-                jazigoDto = JazigoDTO.builder()
-                        .nomePet(jazigo.getPetEnterrado().getNome())
-                        .dataEnterro(jazigo.getPetEnterrado().getDataEnterro().toLocalDate())
-                        .dataNascimento(jazigo.getPetEnterrado().getDataNascimento())
-                        .especie(jazigo.getPetEnterrado().getEspecie())
-                        .endereco(jazigo.getEndereco())
-                        .id(jazigo.getId())
-                        .mensagem(jazigo.getMensagem())
-                        .plano(jazigo.getPlano().toString())
-                        .idCliente(jazigo.getProprietario().getId())
-                        .build();
-            } else if(jazigo.getProprietario() != null) { // Caso não tenha pet enterrado mas tenha proprietario
-                jazigoDto = JazigoDTO.builder()
-                        .endereco(jazigo.getEndereco())
-                        .id(jazigo.getId())
-                        .mensagem(jazigo.getMensagem())
-                        .plano(jazigo.getPlano().toString())
-                        .idCliente(jazigo.getProprietario().getId())
-                        .build();
-            } else { // Caso não tenha pet enterrado nem proprietario
-                jazigoDto = JazigoDTO.builder()
-                        .endereco(jazigo.getEndereco())
-                        .id(jazigo.getId())
-                        .mensagem(jazigo.getMensagem())
-                        .build();
+            if(jazigo.getProprietario() != null) {
+                jazigoDto.setCpf(jazigo.getProprietario().getCpf());
+            }
+
+            if(jazigo.getPetEnterrado() != null) {
+                jazigoDto.setPet(jazigo.getPetEnterrado().getNome());
+                jazigoDto.setEspecie(jazigo.getPetEnterrado().getEspecie());
+                jazigoDto.setDataEnterro(jazigo.getPetEnterrado().getDataEnterro().toString());
+            }
+
+            if(jazigo.getPlano() != null) {
+                jazigoDto.setPlano(jazigo.getPlano().toString());
             }
 
             jazigosDTO.add(jazigoDto);
@@ -105,7 +93,7 @@ public class JazigoService {
         return jazigosDTO;
     }
 
-    public byte[] gerarPDFJazigos(List<JazigoDTO> jazigos) {
+    public byte[] gerarPDFJazigos(List<OcupacaoJazigoDTO> jazigos) {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             Document document = new Document();
             PdfWriter writer = PdfWriter.getInstance(document, outputStream);
@@ -132,23 +120,17 @@ public class JazigoService {
             table.addCell(new PdfPCell(new Phrase("PLANO", font)));
             table.addCell(new PdfPCell(new Phrase("CPF CLIENTE", font)));
 
-            for (JazigoDTO jazigo : jazigos) {
-                table.addCell(jazigo.getNomePet());
+            for (OcupacaoJazigoDTO jazigo : jazigos) {
+                table.addCell(jazigo.getPet());
                 if(jazigo.getDataEnterro() == null) {
                     table.addCell("");
                 } else {
-                    table.addCell(jazigo.getDataEnterro().toString());
+                    table.addCell(jazigo.getDataEnterro());
                 }
-                table.addCell(jazigo.getEndereco());
-                table.addCell(jazigo.getId().toString());
-                if(jazigo.getDataNascimento() == null) {
-                    table.addCell("");
-                } else {
-                    table.addCell(jazigo.getDataNascimento().toString());
-                }
+                table.addCell(jazigo.getJazigo());
                 table.addCell(jazigo.getEspecie());
                 table.addCell(jazigo.getPlano());
-                table.addCell(new PdfPCell(new Phrase(String.valueOf(jazigo.getIdCliente()), font)));
+                table.addCell(new PdfPCell(new Phrase(String.valueOf(jazigo.getCpf()), font)));
             }
 
             document.add(table);
