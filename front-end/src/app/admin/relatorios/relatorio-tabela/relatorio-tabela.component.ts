@@ -26,17 +26,33 @@ export class RelatorioTabelaComponent {
     a.click();
     window.URL.revokeObjectURL(url);
   }
+exportarPDF() {
+  Promise.all([
+    import('jspdf'),
+    import('jspdf-autotable')
+  ]).then(([jsPDFModule, autoTableModule]) => {
+    const jsPDF = jsPDFModule.jsPDF;
+    const autoTable = autoTableModule.default;
 
-  exportarPDF() {
-    import('jspdf').then(jsPDF => {
-      const doc = new jsPDF.jsPDF();
-      doc.text(this.titulo, 10, 10);
-      let y = 20;
-      this.dados.forEach(row => {
-        doc.text(this.colunas.map(c => row[c.campo]).join(' | '), 10, y);
-        y += 10;
-      });
-      doc.save(`${this.nomeArquivo}.pdf`);
+    const doc = new jsPDF({
+      orientation: this.colunas.length > 6 ? 'landscape' : 'portrait',
+      unit: 'pt',
+      format: 'a4'
     });
-  }
+
+    doc.setFontSize(16);
+    doc.text(this.titulo, doc.internal.pageSize.getWidth() / 2, 40, { align: 'center' });
+
+    autoTable(doc, {
+      head: [this.colunas.map(c => c.label)],
+      body: this.dados.map(row => this.colunas.map(c => row[c.campo])),
+      startY: 60,
+      styles: { fontSize: 10, halign: 'center' },
+      headStyles: { fillColor: [55, 65, 81] }, // Tailwind neutral-800
+      margin: { left: 20, right: 20 }
+    });
+
+    doc.save(`${this.nomeArquivo}.pdf`);
+  });
+}
 }
