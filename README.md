@@ -1,3 +1,78 @@
+# Resumo
+
+Pet Cemetery é uma plataforma web dedicada ao gerenciamento de um cemitério de pets, onde usuários clientes podem adquirir jazigos e contratar diversos serviços como enterro, exumação e ornamentação, marcar reuniões, lembretes de visita, dentre outros. Já administradores possuem funcionalidades para visualizar clientes com pagamentos atrasados, montar relatórios CSV ou PDF contendo diversas informações, alterar o horário de funcionamento do cemitério, dentre outras.
+
+## Tecnologias Utilizadas
+
+Este projeto utiliza um conjunto moderno de tecnologias para garantir robustez, escalabilidade e uma ótima experiência de desenvolvimento e uso. Abaixo estão as principais tecnologias e integrações empregadas:
+
+### Back-end
+
+- **Java 20**  
+  Linguagem principal para desenvolvimento do back-end.
+
+- **Spring Boot 3.4.3**  
+  Framework para construção de aplicações Java, facilitando a configuração, segurança, persistência e integração.
+
+- **Spring Data JPA**  
+  Abstração para acesso a bancos de dados relacionais.
+
+- **Spring Data MongoDB**  
+  Integração com banco de dados NoSQL MongoDB.
+
+- **Spring Security**  
+  Gerenciamento de autenticação e autorização.
+
+- **Spring Boot Mail**  
+  Envio de e-mails automáticos.
+
+- **JWT (jjwt 0.11.5)**  
+  Autenticação baseada em tokens JWT.
+
+- **PostgreSQL**  
+  Banco de dados relacional utilizado em produção.
+
+- **MongoDB**  
+  Banco de dados NoSQL para funcionalidades específicas.
+
+- **Lombok**  
+  Redução de boilerplate no código Java.
+
+### Front-end
+
+- **Angular 19.2.2**  
+  Framework para desenvolvimento de aplicações web SPA.
+
+- **TypeScript**  
+  Superset do JavaScript, trazendo tipagem estática ao front-end.
+
+- **Tailwind CSS 4.1.4**  
+  Framework utilitário para estilização rápida e responsiva.
+
+- **RxJS 7.8.0**  
+  Programação reativa no Angular.
+
+- **jsPDF 3.0.1 & jspdf-autotable 5.0.2**  
+  Geração de relatórios PDF no front-end.
+
+- **jwt-decode 4.0.0**  
+  Decodificação de tokens JWT no front-end.
+
+### Integrações
+
+- **WeatherAPI**  
+  Previsão do tempo utilizando dados meteorológicos.
+
+- **Google Auth**  
+Possibilidade de autenticação via conta google. - _EM PROGRESSO_
+  
+  
+---
+
+> Consulte o arquivo `pom.xml` para detalhes das dependências do back-end e `package.json` para as do front-end.
+
+
+
 # Minimundo
 
 Pet Cemetery é uma plataforma online inovadora dedicada ao gerenciamento de jazigos que permite os donos de pets falecidos escolherem e administrarem seus jazigos com facilidade. Cada jazigo possui um número único e uma localização específica dentro do cemitério, facilitando a localização e a identificação das sepulturas. Os clientes podem adquirir jazigos mesmo que não tenham pets para enterro. Todo jazigo tem um histórico.
