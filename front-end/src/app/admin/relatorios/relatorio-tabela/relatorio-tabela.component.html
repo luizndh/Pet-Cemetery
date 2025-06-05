@@ -1,0 +1,36 @@
+<div class="mx-auto w-fit">
+    <div class="flex gap-4 justify-end mb-4">
+        <button
+            class="flex items-center gap-2 px-4 py-2 rounded bg-green-700 hover:bg-green-800 text-white font-semibold shadow transition"
+            (click)="exportarCSV()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17l4 4m0 0l4-4m-4 4V3" />
+            </svg>
+            Exportar CSV
+        </button>
+        <button
+            class="flex items-center gap-2 px-4 py-2 rounded bg-red-700 hover:bg-red-800 text-white font-semibold shadow transition"
+            (click)="exportarPDF()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Exportar PDF
+        </button>
+    </div>
+    <table class="text-white bg-neutral-800 rounded-lg border border-neutral-700 table-auto">
+        <thead>
+            <tr class="bg-neutral-700 border border-neutral-600">
+                <th class="border border-neutral-600 px-3 py-2 whitespace-nowrap" *ngFor="let c of colunas">{{ c.label
+                    }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of dados">
+                <td class="border border-neutral-700 px-3 py-2 whitespace-nowrap" *ngFor="let c of colunas">{{
+                    row[c.campo] }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

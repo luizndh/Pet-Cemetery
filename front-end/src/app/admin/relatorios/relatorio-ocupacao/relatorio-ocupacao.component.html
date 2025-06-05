@@ -1,46 +1,9 @@
 <div class="main">
   <h1 class="title mb-8">Ocupação dos Jazigos</h1>
-  <div class="flex gap-4 justify-end w-4/5 mb-4">
-    <button
-      class="flex items-center gap-2 px-4 py-2 rounded bg-green-700 hover:bg-green-800 text-white font-semibold shadow transition"
-      (click)="exportarCSV()"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17l4 4m0 0l4-4m-4 4V3" />
-      </svg>
-      Exportar CSV
-    </button>
-    <button
-      class="flex items-center gap-2 px-4 py-2 rounded bg-red-700 hover:bg-red-800 text-white font-semibold shadow transition"
-      (click)="exportarPDF()"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      Exportar PDF
-    </button>
-  </div>
-  <div *ngIf="carregando" class="text-white">Carregando...</div>
-  <table *ngIf="!carregando" class="w-4/5 text-white bg-neutral-800 rounded-lg border border-neutral-700">
-    <thead>
-      <tr class="bg-neutral-700 border border-neutral-600">
-        <th class="border border-neutral-600">Jazigo</th>
-        <th class="border border-neutral-600">CPF</th>
-        <th class="border border-neutral-600">Plano</th>
-        <th class="border border-neutral-600">Pet</th>
-        <th class="border border-neutral-600">Espécie</th>
-        <th class="border border-neutral-600">Data de Enterro</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let j of jazigos">
-        <td class="border border-neutral-700 ">{{ j.jazigo }}</td>
-        <td class="border border-neutral-700">{{ j.cpf }}</td>
-        <td class="border border-neutral-700">{{ j.plano }}</td>
-        <td class="border border-neutral-700">{{ j.pet }}</td>
-        <td class="border border-neutral-700">{{ j.especie }}</td>
-        <td class="border border-neutral-700">{{ j.dataEnterro }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <app-relatorio-tabela
+    [colunas]="colunas"
+    [dados]="jazigos"
+    titulo="Relatório de Ocupação dos Jazigos"
+    nomeArquivo="relatorio_ocupacao_jazigos"
+    ></app-relatorio-tabela>
 </div>

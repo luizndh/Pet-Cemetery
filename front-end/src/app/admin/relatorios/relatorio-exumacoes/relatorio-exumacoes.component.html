@@ -1,28 +1,9 @@
 <div class="main">
-  <h1 class="title mb-8">Últimas 30 Exumações</h1>
-  <div class="flex gap-4 mb-4">
-    <button class="btn-primario" (click)="exportarCSV()">Exportar CSV</button>
-    <button class="btn-primario" (click)="exportarPDF()">Exportar PDF</button>
-  </div>
-  <div *ngIf="carregando" class="text-white">Carregando...</div>
-  <table *ngIf="!carregando" class="w-full text-white bg-neutral-800 rounded-lg">
-    <thead>
-      <tr>
-        <th>Jazigo</th>
-        <th>CPF Cliente</th>
-        <th>Nome do Pet</th>
-        <th>Espécie do Pet</th>
-        <th>Data da Exumação</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let e of exumacoes">
-        <td>{{ e.jazigo }}</td>
-        <td>{{ e.cpf }}</td>
-        <td>{{ e.nomePet }}</td>
-        <td>{{ e.especie }}</td>
-        <td>{{ e.dataExumacao }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <h1 class="title mb-8">Exumações</h1>
+  <app-relatorio-tabela
+    [colunas]="colunas"
+    [dados]="exumacoes"
+    titulo="Relatório de Exumacões"
+    nomeArquivo="relatorio_exumações"
+    ></app-relatorio-tabela>
 </div>
