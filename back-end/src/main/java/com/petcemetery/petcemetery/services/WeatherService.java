@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Service
 public class WeatherService {
 
-    @Value("${WEATHER_KEY}")
+    @Value("${weather.key}")
     private String WEATHER_API_KEY;
     private final String CIDADE = "Rio de Janeiro";
     private final int Q = 1;
