@@ -17,6 +17,6 @@ export class LembreteVisitaService {
     }
 
     agendaLembreteVisita(data: Date): Observable<any> {
-        return this.http.post<any>(`${this.prefixoApi}/cliente/lembrerte`, data);
+        return this.http.post<any>(`${this.prefixoApi}/cliente/lembrete`, data);
     }
 }
