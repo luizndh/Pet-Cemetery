@@ -3,6 +3,7 @@ import { CardHorarioComponent } from '../../shared/component/card-horario/card-h
 import { HorarioFuncionamento } from '../../info-navbar/horario-funcionamento/model/horario-funcionamento.model';
 import { NgFor } from '@angular/common';
 import { HorarioFuncionamentoService } from '../../shared/service/horario-funcionamento.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-alterar-horario-funcionamento',
@@ -12,7 +13,7 @@ import { HorarioFuncionamentoService } from '../../shared/service/horario-funcio
 export class AlterarHorarioFuncionamentoComponent {
     horarios: HorarioFuncionamento[] = [];
 
-    constructor(private service: HorarioFuncionamentoService) { }
+    constructor(private service: HorarioFuncionamentoService, private router: Router) { }
 
     ngOnInit(): void {
         this.service.getHorariosFuncionamento().subscribe(
@@ -23,6 +24,7 @@ export class AlterarHorarioFuncionamentoComponent {
     }
 
     salvarAlteracoes() {
-        this.service.alterarHorariosFuncionamento(this.horarios);
+        this.service.alterarHorariosFuncionamento(this.horarios).subscribe();
+        this.router.navigate(['/admin/home']);
     }
 }
