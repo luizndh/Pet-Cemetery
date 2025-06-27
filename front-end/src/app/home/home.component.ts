@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { JazigoService } from '../shared/jazigo.service';
 import { Jazigo } from '../shared/model/jazigo.model';
 import { NgFor, NgIf } from '@angular/common';
+import { JazigoService } from '../shared/service/jazigo.service';
 
 @Component({
   selector: 'app-home',

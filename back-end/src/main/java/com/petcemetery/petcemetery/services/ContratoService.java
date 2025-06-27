@@ -4,9 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.petcemetery.petcemetery.config.JwtService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.Chunk;
@@ -16,11 +13,14 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.petcemetery.petcemetery.config.JwtService;
 import com.petcemetery.petcemetery.dto.ContratoDTO;
 import com.petcemetery.petcemetery.dto.VisualizarDespesasDTO;
 import com.petcemetery.petcemetery.model.Contrato;
 import com.petcemetery.petcemetery.model.Servico.ServicoEnum;
 import com.petcemetery.petcemetery.repositorio.ContratoRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

@@ -1,7 +1,6 @@
 package com.petcemetery.petcemetery.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,14 +36,14 @@ public class Pet {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_enterro")
-    private LocalDateTime dataEnterro;
+    private java.util.Date dataEnterro;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_exumacao")
-    private LocalDateTime dataExumacao;
+    private Date dataExumacao;
 
     @Column(name = "data_nascimento")
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
 
     @Column(name = "especie")
     private String especie;
@@ -54,24 +53,24 @@ public class Pet {
         this.especie = especie;
         this.proprietario = proprietario;
     }
-    public Pet(String nome, LocalDate dataNascimento, String especie, Cliente proprietario) {
+    public Pet(String nome, Date dataNascimento, String especie, Cliente proprietario) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.especie = especie;
         this.proprietario = proprietario;
     }
-    public Pet(LocalDateTime data, Cliente proprietario) {
+    public Pet(Date data, Cliente proprietario) {
         this.dataEnterro = data;
         this.proprietario = proprietario;
     }
-    public Pet(String nome, LocalDateTime dataEnterro, LocalDate dataNascimento, String especie, Cliente proprietario) {
+    public Pet(String nome, Date dataEnterro, Date dataNascimento, String especie, Cliente proprietario) {
         this.nome = nome;
         this.dataEnterro = dataEnterro;
         this.dataNascimento = dataNascimento;
         this.especie = especie;
         this.proprietario = proprietario;
     }
-    public Pet(String nome, LocalDateTime dataEnterro, LocalDate dataNascimento, String especie, Cliente proprietario, LocalDateTime dataExumacao) {
+    public Pet(String nome, Date dataEnterro, Date dataNascimento, String especie, Cliente proprietario, Date dataExumacao) {
         this.nome = nome;
         this.dataEnterro = dataEnterro;
         this.dataNascimento = dataNascimento;

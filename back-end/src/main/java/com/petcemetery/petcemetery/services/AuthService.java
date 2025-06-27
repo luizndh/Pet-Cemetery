@@ -1,13 +1,7 @@
 package com.petcemetery.petcemetery.services;
 
-import com.petcemetery.petcemetery.config.JwtService;
-import com.petcemetery.petcemetery.dto.AuthResponseDTO;
-import com.petcemetery.petcemetery.dto.CadastroRequestDTO;
-import com.petcemetery.petcemetery.dto.LoginRequestDTO;
-import com.petcemetery.petcemetery.model.Admin;
-import com.petcemetery.petcemetery.model.Role;
-import com.petcemetery.petcemetery.model.Usuario;
-import lombok.RequiredArgsConstructor;
+import java.util.Collections;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,10 +9,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.petcemetery.petcemetery.config.JwtService;
+import com.petcemetery.petcemetery.dto.AuthResponseDTO;
+import com.petcemetery.petcemetery.dto.CadastroRequestDTO;
+import com.petcemetery.petcemetery.dto.LoginRequestDTO;
 import com.petcemetery.petcemetery.model.Cliente;
+import com.petcemetery.petcemetery.model.Role;
+import com.petcemetery.petcemetery.model.Usuario;
 
-
-import java.util.Collections;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

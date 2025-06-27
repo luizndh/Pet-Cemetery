@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Jazigo } from './model/jazigo.model';
+import { Jazigo } from '../model/jazigo.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

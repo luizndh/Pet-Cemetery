@@ -1,20 +1,19 @@
 package com.petcemetery.petcemetery.services;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.petcemetery.petcemetery.model.Cliente;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.petcemetery.petcemetery.dto.HorarioFuncionamentoDTO;
+import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.HorarioFuncionamento;
 import com.petcemetery.petcemetery.repositorio.HorarioFuncionamentoRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

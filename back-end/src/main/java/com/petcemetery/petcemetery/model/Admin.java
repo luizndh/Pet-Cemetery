@@ -8,8 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
-
 @Entity(name = "Administrador")
 @Table(name = "Administrador")
 @NoArgsConstructor

@@ -1,6 +1,5 @@
 package com.petcemetery.petcemetery.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.petcemetery.petcemetery.model.Pet;

@@ -3,14 +3,9 @@ package com.petcemetery.petcemetery.controller;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
-import com.petcemetery.petcemetery.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,17 +16,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.petcemetery.petcemetery.dto.ClienteInadimplenteDTO;
+import com.petcemetery.petcemetery.dto.ContratoDTO;
+import com.petcemetery.petcemetery.dto.HistoricoJazigoDTO;
+import com.petcemetery.petcemetery.dto.OcupacaoJazigoDTO;
 import com.petcemetery.petcemetery.model.Servico;
 import com.petcemetery.petcemetery.outros.VerificadorData;
 import com.petcemetery.petcemetery.services.AdminService;
 import com.petcemetery.petcemetery.services.ClienteService;
 import com.petcemetery.petcemetery.services.ContratoService;
-import com.petcemetery.petcemetery.services.HorarioFuncionamentoService;
 import com.petcemetery.petcemetery.services.JazigoService;
 import com.petcemetery.petcemetery.services.ServicoService;
 

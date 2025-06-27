@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.petcemetery.petcemetery.dto.HistoricoJazigoDTO;
@@ -13,6 +11,8 @@ import com.petcemetery.petcemetery.model.Admin;
 import com.petcemetery.petcemetery.model.Jazigo;
 import com.petcemetery.petcemetery.model.Pet;
 import com.petcemetery.petcemetery.repositorio.AdminRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

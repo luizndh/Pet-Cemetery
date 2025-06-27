@@ -6,11 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.petcemetery.petcemetery.config.JwtService;
-import com.petcemetery.petcemetery.dto.ReuniaoAdminDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.petcemetery.petcemetery.config.JwtService;
+import com.petcemetery.petcemetery.dto.ReuniaoAdminDTO;
 import com.petcemetery.petcemetery.dto.ReuniaoDTO;
 import com.petcemetery.petcemetery.model.Cliente;
 import com.petcemetery.petcemetery.model.Reuniao;

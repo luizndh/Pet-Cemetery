@@ -1,6 +1,5 @@
 package com.petcemetery.petcemetery.dto;
 
-import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Data;
 

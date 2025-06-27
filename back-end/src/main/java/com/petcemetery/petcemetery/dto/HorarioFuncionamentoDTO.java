@@ -1,7 +1,5 @@
 package com.petcemetery.petcemetery.dto;
 
-import java.time.LocalTime;
-
 import lombok.Data;
 
 @Data

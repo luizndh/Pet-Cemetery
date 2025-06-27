@@ -2,6 +2,7 @@ package com.petcemetery.petcemetery.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 import com.petcemetery.petcemetery.model.Contrato;
 
@@ -11,8 +12,8 @@ import lombok.Data;
 public class VisualizarDespesasDTO {
     private String tipoServico;
     private BigDecimal valor;
-    private LocalDate ultimoPagamento;
-    private LocalDate dataVencimento;
+    private Date ultimoPagamento;
+    private Date dataVencimento;
 
     // Retorna para o front uma lista de despesas, com o tipo de servico, valor. Caso seja um aluguel ou manutenção, também retornará data de vencimento e data do ultimo pagamento.
     public VisualizarDespesasDTO(Contrato contratos){

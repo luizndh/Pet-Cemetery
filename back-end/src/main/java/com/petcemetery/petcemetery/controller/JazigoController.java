@@ -1,6 +1,7 @@
  package com.petcemetery.petcemetery.controller;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.List;
 
 import com.petcemetery.petcemetery.dto.*;
@@ -30,8 +31,7 @@ public class JazigoController {
 
     // Envia para o front uma lista dos jazigos do proprietário, contendo o nome do pet e a data do enterro, ou "Vazio" e null caso não tenha pet enterrado.
     @GetMapping("/cliente")
-    public ResponseEntity<List<JazigoDTO>> recuperaJazigosProprietario(@RequestHeader("Authorization") String authHeader) {
-        // passa apenas o token, sem o "Bearer "
+    public ResponseEntity<List<JazigoProprietarioDTO>> recuperaJazigosProprietario(@RequestHeader("Authorization") String authHeader) {
         return ResponseEntity.ok(this.jazigoService.recuperaJazigosProprietario(authHeader.substring(7)));
     }
 
@@ -75,7 +75,7 @@ public class JazigoController {
     // Cria um novo pet e um novo servico de enterro
     @PostMapping("/{id}/enterro")
     public Boolean agendarEnterro(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data, @RequestParam String hora,
-        @RequestParam String nomePet, @RequestParam String especie, @RequestParam String dataNascimento) {
+        @RequestParam String nomePet, @RequestParam String especie, @RequestParam String dataNascimento) throws ParseException {
 
         return this.jazigoService.agendarEnterro(authHeader.substring(7), id, data, hora, nomePet, especie, dataNascimento);
     }
@@ -83,12 +83,12 @@ public class JazigoController {
     // Recebe os parâmetros data (yyyy-mm-dd) e hora (hh-mm) da exumacao, no formato correto, e salva no banco
     // Não estamos utilizando o cpf pra nada :D - utiliza sim, p saber se o jazigo é do kra ou nao
     @PostMapping("/{id}/exumacao")
-    public Boolean agendarExumacao(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data, @RequestParam String hora) {
+    public Boolean agendarExumacao(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data, @RequestParam String hora) throws ParseException {
         return this.jazigoService.agendarExumacao(authHeader.substring(7), id, data, hora);
     }
 
     @PostMapping("/{id}/manutencao")
-    public Boolean agendarManutencao(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data) {
+    public Boolean agendarManutencao(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestParam String data) throws ParseException {
         return this.jazigoService.agendarManutencao(authHeader.substring(7), id, data);
     }
 
