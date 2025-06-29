@@ -2,12 +2,10 @@ package com.petcemetery.petcemetery.services;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -63,8 +61,8 @@ public class JazigoService {
         this.jwtService = jwtService;
     }
 
-    private final static SimpleDateFormat dataFormatter = new SimpleDateFormat("yyyy-MM-dd");
-    private final static SimpleDateFormat dataHoraFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter dataHoraFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public Jazigo findById(Long id) {
         return repository.findById(id).orElse(null);
@@ -226,7 +224,7 @@ public class JazigoService {
                         .valor(valor)
                         .cliente(cliente)
                         .jazigo(jazigo)
-                        .dataServico(new Date())
+                        .dataServico(LocalDateTime.now())
                         .servico(Servico.builder()
                                 .tipoServico(ServicoEnum.PERSONALIZACAO)
                                 .valor(valor)
@@ -244,7 +242,7 @@ public class JazigoService {
     }
 
     public boolean agendarEnterro(String token, Long id, String data, String hora, String nomePet, String especie,
-            String dataNascimento) throws ParseException {
+            String dataNascimento) {
 
         Optional<Jazigo> jazigoOpt = repository.findById(id);
         if(jazigoOpt.isEmpty()) throw new NoSuchElementException("Esse jazigo não existe");
@@ -262,7 +260,9 @@ public class JazigoService {
 
         jazigo.setStatus(StatusEnum.OCUPADO);
 
-        Pet pet = new Pet(nomePet, dataHoraFormatter.parse(data + " " + hora), dataFormatter.parse(dataNascimento), especie, cliente);
+        LocalDateTime dataEnterro = LocalDateTime.parse(data + " " + hora, dataHoraFormatter);
+
+        Pet pet = new Pet(nomePet, dataEnterro, LocalDate.parse(dataNascimento, dataFormatter), especie, cliente);
         petService.save(pet); //! o pet é setado no banco mesmo q o kra nao pague o enterro e n prossiga c nada, vao ter pets setados sem estar no cemiterio
 
         Contrato enterroServico = Contrato.builder()
@@ -270,7 +270,7 @@ public class JazigoService {
                 .cliente(cliente)
                 .jazigo(jazigo)
                 .pet(pet)
-                .dataServico(dataHoraFormatter.parse(data))
+                .dataServico(dataEnterro)
                 .servico(Servico.builder()
                         .tipoServico(ServicoEnum.ENTERRO)
                         .valor(valor)
@@ -281,7 +281,7 @@ public class JazigoService {
         return true;
     }
 
-    public boolean agendarExumacao(String token, Long id, String data, String hora) throws ParseException {
+    public boolean agendarExumacao(String token, Long id, String data, String hora) {
         Optional<Jazigo> jazigoOpt = repository.findById(id);
         if(jazigoOpt.isEmpty()) throw new NoSuchElementException("Esse jazigo não existe");
         Jazigo jazigo = jazigoOpt.get();
@@ -290,7 +290,7 @@ public class JazigoService {
 
         BigDecimal valor = servicoService.findByTipoServico(ServicoEnum.EXUMACAO).getValor();
 
-        pet.setDataExumacao(dataHoraFormatter.parse(data + " " + hora));
+        pet.setDataExumacao(LocalDateTime.parse(data + " " + hora));
         petService.save(pet);
 
         Long idCliente = jwtService.extractId(token);
@@ -301,7 +301,7 @@ public class JazigoService {
                 .cliente(cliente)
                 .jazigo(jazigo)
                 .pet(pet)
-                .dataServico(dataHoraFormatter.parse(data + " " + hora))
+                .dataServico(LocalDateTime.parse(data + " " + hora, dataHoraFormatter))
                 .servico(Servico.builder()
                         .tipoServico(ServicoEnum.EXUMACAO)
                         .valor(valor)
@@ -311,7 +311,7 @@ public class JazigoService {
         return true;
     }
 
-    public boolean agendarManutencao(String token, Long id, String data) throws ParseException {
+    public boolean agendarManutencao(String token, Long id, String data) {
         Optional<Jazigo> optJazigo = repository.findById(id);
         if(optJazigo.isEmpty()) {
             throw new NoSuchElementException("Jazigo não encontrado");
@@ -328,7 +328,7 @@ public class JazigoService {
                 .cliente(cliente)
                 .jazigo(jazigo)
                 .pet(jazigo.getPetEnterrado())
-                .dataServico(dataHoraFormatter.parse(data + "T00:00:00"))
+                .dataServico(LocalDateTime.parse(data + " 00:00", dataHoraFormatter))
                 .servico(Servico.builder()
                         .tipoServico(ServicoEnum.MANUTENCAO)
                         .valor(valor)
@@ -362,7 +362,7 @@ public class JazigoService {
                     .cliente(cliente)
                     .jazigo(jazigo)
                     .pet(jazigo.getPetEnterrado())
-                    .dataServico(new Date())
+                    .dataServico(LocalDateTime.now())
                     .servico(plano)
                     .build();
             contratoService.save(contratos);
@@ -388,7 +388,7 @@ public class JazigoService {
                     .cliente(cliente)
                     .jazigo(jazigo)
                     .pet(pet)
-                    .dataServico(new Date())
+                    .dataServico(LocalDateTime.now())
                     .servico(Servico.builder()
                             .tipoServico(servico)
                             .valor(carrinhoDTO.getValor())

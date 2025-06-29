@@ -1,6 +1,6 @@
 package com.petcemetery.petcemetery.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ public class Lembrete {
     private Long id;
 
     @Column(name = "data")
-    private Date data;
+    private LocalDate data;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
@@ -35,7 +35,7 @@ public class Lembrete {
     @Column(name = "enviado")
     private Boolean enviado;
 
-    public Lembrete (Date data, Cliente cliente) {
+    public Lembrete (LocalDate data, Cliente cliente) {
         this.data = data;
         this.cliente = cliente;
         this.enviado = false;

@@ -3,7 +3,6 @@ package com.petcemetery.petcemetery.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,7 +43,7 @@ public class Contrato {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_servico")
-    private Date dataServico;
+    private LocalDateTime dataServico;
 
     @OneToOne
     @JoinColumn(name = "id")
@@ -55,10 +54,10 @@ public class Contrato {
     private Cliente cliente;
 
     @Column(name = "primeiro_pagamento")
-    private Date primeiroPagamento;
+    private LocalDateTime primeiroPagamento;
 
     @Column(name = "ultimo_pagamento")
-    private Date ultimoPagamento;
+    private LocalDateTime ultimoPagamento;
 
     @OneToOne
     @JoinColumn(name = "tipo_servico")

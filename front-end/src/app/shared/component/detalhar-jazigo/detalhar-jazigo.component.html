@@ -1,0 +1,38 @@
+<!-- src/app/shared/detalhar-jazigo/detalhar-jazigo.component.html -->
+<div class="main" *ngIf="jazigo">
+  <h1 class="title mb-8">Detalhamento do Jazigo</h1>
+  <div class="bg-neutral-800 rounded-xl shadow-lg p-8 flex flex-col gap-6 max-w-2xl mx-auto">
+    <div>
+      <span class="font-bold text-cyan-400">Endereço:</span>
+      <span class="text-white">{{ jazigo.endereco }}</span>
+    </div>
+    <div>
+      <span class="font-bold text-cyan-400">Plano:</span>
+      <span class="text-white">{{ jazigo.plano }}</span>
+    </div>
+    <div>
+      <span class="font-bold text-cyan-400">Status:</span>
+      <span class="text-white">{{ jazigo.status === 'OCUPADO' ? 'Ocupado' : 'Disponível' }}</span>
+    </div>
+    <div *ngIf="jazigo.nomePet">
+      <h2 class="text-lg font-bold text-cyan-300 mb-2">Pet Enterrado</h2>
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <img *ngIf="jazigo.foto" [src]="jazigo.foto" alt="Foto do Pet" class="w-32 h-32 rounded-lg object-cover border border-neutral-700" />
+        <div>
+          <div><span class="font-bold">Nome:</span> {{ jazigo.nomePet }}</div>
+          <div><span class="font-bold">Espécie:</span> {{ jazigo.especie }}</div>
+          <div><span class="font-bold">Nascimento:</span> {{ jazigo.dataNascimento | date:'dd/MM/yyyy' }}</div>
+          <div><span class="font-bold">Enterro:</span> {{ jazigo.dataEnterro | date:'dd/MM/yyyy' }}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!jazigo.nomePet">
+      <span class="text-gray-400">Nenhum pet enterrado neste jazigo.</span>
+    </div>
+    <div>
+      <span class="font-bold text-cyan-400">Mensagem na Lápide:</span>
+      <span class="text-white">{{ jazigo.mensagem || 'Nenhuma mensagem.' }}</span>
+    </div>
+  </div>
+</div>
+<div *ngIf="carregando" class="text-center text-white mt-10">Carregando...</div>

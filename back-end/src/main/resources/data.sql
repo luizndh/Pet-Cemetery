@@ -1,12 +1,15 @@
 INSERT INTO cliente (nome, cpf, telefone, email, senha, desativado, inadimplente, cep, complemento, numero, role, rua) VALUES
 ('Luiz', '12345678901', '21987654321', 'teste@gmail.com', '$2a$10$RWoPzUSLL5khMI9087L/mOkr1YkqkpwM0mMhpIlzu5Q4BS3wvtIMy', false, false, '12345678', 'Apto 101', '123', 'CLIENTE', 'Rua A');
 
+INSERT INTO pet (id, id_cliente, especie, nome, data_exumacao, data_enterro, data_nascimento) values
+(1, 1, 'Gato', 'Mimi', null, '2023-10-02', '2018-05-20');
+
 INSERT INTO administrador (nome, cpf, telefone, email, senha, role, rua, numero, complemento, cep) VALUES
 ('petcemetery', '98765432100', '21987654321', 'petcemetery@gmail.com', '$2a$10$RWoPzUSLL5khMI9087L/mOkr1YkqkpwM0mMhpIlzu5Q4BS3wvtIMy', 'ADMIN', 'Rua B', '456', 'Apto 202', '87654321');
 
 -- Initial data load for Jazigo table
 INSERT INTO Jazigo (id, endereco, id_proprietario, status, mensagem, foto, plano, id_pet_enterrado) VALUES
-(1, 'A-1', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL),
+(1, 'A-1', 1, 'OCUPADO', 'Descanse em paz', NULL, 'BASIC', 1),
 (2, 'A-2', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL),
 (3, 'A-3', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL),
 (4, 'A-4', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL),

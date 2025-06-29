@@ -1,4 +1,3 @@
-import { Pet } from "./pet.model";
 
 export interface Jazigo {
     id: number;
@@ -6,7 +5,10 @@ export interface Jazigo {
     idJazigo: number;
     mensagem: string | null;
     foto: any;
-    petEnterrado: Pet;
+    nomePet: string;
+    dataNascimento: Date;
+    dataEnterro: Date;
+    especie: string;
     status: string;
     plano: string;
 }

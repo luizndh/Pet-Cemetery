@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Jazigo } from '../shared/model/jazigo.model';
-import { NgFor, NgIf } from '@angular/common';
 import { JazigoService } from '../shared/service/jazigo.service';
+import { Jazigo } from '../shared/model/jazigo.model';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, NgIf, NgFor],
+  imports: [RouterLink, NgIf, NgFor, DatePipe],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit{
@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit{
 
     ngOnInit(): void {
         this.jazigoService.getJazigosDoCliente().subscribe((response: Jazigo[]) => {
+            console.log('Jazigos do cliente:', response);
+
             this.jazigos = response;
         })
     }

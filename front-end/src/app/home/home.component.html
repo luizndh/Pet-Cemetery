@@ -5,7 +5,7 @@
       <!-- Coluna Meus Jazigos -->
       <div class="flex flex-col items-center bg-neutral-800 rounded-lg shadow-lg p-6 w-full lg:w-1/2">
         <p class="text-2xl font-bold mb-4">Meus Jazigos</p>
-        <button *ngFor="let jazigo of jazigos" class="btn-secundario w-full mb-4 border">{{ jazigo.petEnterrado == null ? 'JAZIGO VAZIO' : jazigo.petEnterrado.nome + jazigo.petEnterrado.dataEnterro}}</button>
+        <button *ngFor="let jazigo of jazigos" [routerLink]="['/home/jazigo', jazigo.id]" class="btn-secundario w-full mb-4 border">{{ jazigo.nomePet == null ? 'JAZIGO VAZIO' : jazigo.nomePet + ' - ' + (jazigo.dataEnterro | date:'dd/MM/yyyy') }}</button>
         <p *ngIf="jazigos.length == 0" class="text-center text-gray-400">Você ainda não possui nenhum jazigo.</p>
       </div>
 

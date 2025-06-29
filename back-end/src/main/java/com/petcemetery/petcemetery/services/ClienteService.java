@@ -1,6 +1,6 @@
 package com.petcemetery.petcemetery.services;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,7 +9,9 @@ import com.petcemetery.petcemetery.config.JwtService;
 import com.petcemetery.petcemetery.dto.*;
 import com.petcemetery.petcemetery.model.Lembrete;
 import com.petcemetery.petcemetery.repositorio.LembreteRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -107,7 +109,7 @@ public class ClienteService {
                 .build();
     }
 
-    public Lembrete adicionaLembrete(String token, Date dataLembrete) {
+    public Lembrete adicionaLembrete(String token, LocalDate dataLembrete) {
         Long id = this.jwtService.extractId(token);
         Cliente cliente = this.findById(id);
 

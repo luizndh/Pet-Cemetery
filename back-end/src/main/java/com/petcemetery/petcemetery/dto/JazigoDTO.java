@@ -1,6 +1,9 @@
 package com.petcemetery.petcemetery.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +13,13 @@ import lombok.Data;
 public class JazigoDTO {
     private String nomePet;
     private Long idCliente;
-    private LocalDate dataEnterro;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dataEnterro;
     private String endereco;
     private Long id;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
     private String especie;
     private String mensagem;

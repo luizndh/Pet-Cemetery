@@ -2,12 +2,15 @@ package com.petcemetery.petcemetery.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.petcemetery.petcemetery.dto.*;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,9 +56,9 @@ public class ClienteController {
     // Recebe uma data no formato YYYY-mm-dd do front quando o cliente adiciona um novo lembrete de visita e adiciona no banco de dados com seu authHeader.substring(7) e data.
     @PostMapping("/lembrete")
     public ResponseEntity<Lembrete> adicionarLembrete(@RequestHeader("Authorization") String authHeader, @RequestBody String dataStr) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date data = dateFormat.parse(dataStr);
-        if (new Date().after(data)) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate data = LocalDate.parse(dataStr, dateFormat);
+        if (LocalDate.now().isAfter(data)) {
             throw new IllegalArgumentException("A data informada não pode ser no passado");
         }
 

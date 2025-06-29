@@ -23,6 +23,7 @@ import { RelatorioOcupacaoComponent } from './admin/relatorios/relatorio-ocupaca
 import { RelatorioExumacoesComponent } from './admin/relatorios/relatorio-exumacoes/relatorio-exumacoes.component';
 import { RelatorioEnterrosComponent } from './admin/relatorios/relatorio-enterros/relatorio-enterros.component';
 import { RelatorioInadimplentesComponent } from './admin/relatorios/relatorio-inadimplentes/relatorio-inadimplentes.component';
+import { DetalharJazigoComponent } from './shared/component/detalhar-jazigo/detalhar-jazigo.component';
 
 
 export const routes: Routes = [
@@ -158,9 +159,17 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { role: 'ADMIN' }
     },
-
-
-
+    {
+        path: 'home/jazigo/:id',
+        component: DetalharJazigoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
+    },
+    { path: 'admin/home/jazigo/:id',
+        component: DetalharJazigoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'ADMIN' }
+    },
     {
         path: '**',
         redirectTo: '',

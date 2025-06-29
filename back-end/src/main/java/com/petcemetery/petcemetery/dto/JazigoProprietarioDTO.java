@@ -1,6 +1,8 @@
 package com.petcemetery.petcemetery.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,5 +11,7 @@ import lombok.Data;
 @Builder
 public class JazigoProprietarioDTO {
     private String nomePet;
-    private Date dataEnterro;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dataEnterro;
 }

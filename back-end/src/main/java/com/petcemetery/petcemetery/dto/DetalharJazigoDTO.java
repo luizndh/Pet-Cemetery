@@ -8,15 +8,15 @@ import lombok.Data;
 
 @Data
 public class DetalharJazigoDTO{
-    String nomePet;
-    String dataNascimento;
-    String especiePet;
-    String nomeProrietario;
-    String enderecoJazigo;
-    String dataEnterro;
-    String ornamentacao;
-    String mensagemLapide;
-    String urlImagem;
+    private String nomePet;
+    private String dataNascimento;
+    private String especiePet;
+    private String nomeProrietario;
+    private String enderecoJazigo;
+    private String dataEnterro;
+    private String plano;
+    private String mensagemLapide;
+    private String urlImagem;
 
 
     public DetalharJazigoDTO(Pet pet, Jazigo jazigo){
@@ -34,10 +34,10 @@ public class DetalharJazigoDTO{
         }
 
         if (jazigo.getPlano() == null){
-            this.ornamentacao = null;
+            this.plano = null;
         }
         else{
-            this.ornamentacao = jazigo.getPlano().toString();
+            this.plano = jazigo.getPlano().toString();
         }
 
         this.nomeProrietario = jazigo.getProprietario().getNome();

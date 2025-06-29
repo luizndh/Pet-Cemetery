@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Jazigo } from '../../shared/model/jazigo.model';
 import { NgFor, NgIf } from '@angular/common';
-import { JazigoService } from '../../shared/jazigo.service';
+import { JazigoService } from '../../shared/service/jazigo.service';
 import { LocalStorageService } from '../../shared/service/local-storage.service';
 
 @Component({

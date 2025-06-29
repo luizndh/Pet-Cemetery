@@ -20,4 +20,8 @@ export class JazigoService {
         return this.http.get<Jazigo[]>(`${this.prefixoApi}/mapa`);
     }
 
+    detalharJazigo(id: number): Observable<Jazigo> {
+        return this.http.get<Jazigo>(`${this.prefixoApi}/${id}/detalhe`);
+    }
+
 }
