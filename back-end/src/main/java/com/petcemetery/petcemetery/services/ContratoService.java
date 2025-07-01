@@ -137,8 +137,7 @@ public class ContratoService {
         }
     }
 
-    public List<VisualizarDespesasDTO> visualizarDespesas(String token) {
-        Long id = tokenService.extractId(token);
+    public List<VisualizarDespesasDTO> visualizarDespesas(Long id) {
         List<Contrato> contratos = repository.findAllByClienteId(id);
 
         List<VisualizarDespesasDTO> despesasDTO = new ArrayList<>();

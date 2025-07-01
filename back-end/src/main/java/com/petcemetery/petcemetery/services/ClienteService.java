@@ -59,8 +59,7 @@ public class ClienteService {
         }
     }
 
-    public Cliente editarPerfil(String token, EditarPerfilDTO dto) {
-        Long id = this.jwtService.extractId(token);
+    public Cliente editarPerfil(Long id, EditarPerfilDTO dto) {
         Cliente cliente = repository.findById(id).get();
 
         cliente.setNome(dto.getNome());
@@ -73,8 +72,7 @@ public class ClienteService {
         return this.repository.save(cliente);
     }
 
-    public boolean desativarPerfil(String token) {
-        Long id = this.jwtService.extractId(token);
+    public boolean desativarPerfil(Long id) {
         Cliente cliente = repository.findById(id).get();
 
         cliente.setDesativado(true);
@@ -82,8 +80,7 @@ public class ClienteService {
         return true;
     }
 
-    public ClienteDTO recuperaInformacoesAlteracao(String token) {
-        Long id = this.jwtService.extractId(token);
+    public ClienteDTO recuperaInformacoesAlteracao(Long id) {
         Cliente cliente = repository.findById(id).get();
 
         return ClienteDTO.builder()
@@ -98,8 +95,7 @@ public class ClienteService {
                 .build();
     }
 
-    public ClientePerfilDTO recuperaInformacoesPerfil(String token) {
-        Long id = this.jwtService.extractId(token);
+    public ClientePerfilDTO recuperaInformacoesPerfil(Long id) {
         Cliente cliente = repository.findById(id).get();
 
         return ClientePerfilDTO.builder()
@@ -109,16 +105,14 @@ public class ClienteService {
                 .build();
     }
 
-    public Lembrete adicionaLembrete(String token, LocalDate dataLembrete) {
-        Long id = this.jwtService.extractId(token);
+    public Lembrete adicionaLembrete(Long id, LocalDate dataLembrete) {
         Cliente cliente = this.findById(id);
 
         Lembrete lembrete = new Lembrete(dataLembrete, cliente);
         return this.lembreteRepository.save(lembrete);
     }
 
-    public void trocarSenha(String token, TrocarSenhaDTO dto) {
-        Long id = this.jwtService.extractId(token);
+    public void trocarSenha(Long id, TrocarSenhaDTO dto) {
         Cliente cliente = repository.findById(id).get();
 
         if (passwordEncoder.matches(dto.getSenhaAtual(), cliente.getSenha())) {
