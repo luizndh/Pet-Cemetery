@@ -1,35 +1,48 @@
-<div class="main">
-    <h1 class="title mb-8">Login</h1>
-    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="flex flex-col items-center gap-2 w-full max-w-md">
-        <!-- Campo Email -->
-        <div class="w-full mb-4">
-            <label for="email" class="block text-white font-medium mb-2">Email</label>
-            <input type="email" id="email" name="email" required email formControlName="email"
-                class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-        </div>
+<div class="main py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <h1 class="title">Login</h1>
 
-        <!-- Campo Senha -->
-        <div class="w-full mb-6">
-            <label for="senha" class="block text-white font-medium mb-2">Senha</label>
-            <input type="password" id="senha" name="senha" required formControlName="senha"
-                class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-        </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm"
+      class="bg-neutral-800 rounded-2xl shadow-2xl p-8 md:p-10 flex flex-col gap-6 w-full border border-neutral-700 mx-auto">
 
-        <!-- Div de alerta caso haja erro de input -->
-        <app-alert [form]="loginForm"></app-alert>
+      <!-- Campo Email -->
+      <div class="flex flex-col w-full">
+        <label for="email" class="text-white font-medium mb-2">Email</label>
+        <input type="email" id="email" name="email" required email formControlName="email"
+          class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+      </div>
 
-        <!-- Botões Login e Cadastro -->
-        <div class="flex justify-between w-full mb-4">
-            <button class="btn-primario w-[48%]" type="submit">Entrar</button>
-            <button class="btn-primario w-[48%]" routerLink="/cadastro">Cadastro</button>
-        </div>
+      <!-- Campo Senha -->
+      <div class="flex flex-col w-full">
+        <label for="senha" class="text-white font-medium mb-2">Senha</label>
+        <input type="password" id="senha" name="senha" required formControlName="senha"
+          class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+      </div>
 
-        <!-- Botão Entrar com Google -->
-        <div class="w-full">
-            <button class="btn-primario w-full" routerLink="/home">Entrar com Google</button>
-        </div>
+      <!-- Div de alerta -->
+      <app-alert [form]="loginForm"></app-alert>
 
-        <!-- Componente de mensagens de erro -->
-        <app-error-message [errorMessage]="errorMessage"></app-error-message>
+      <!-- Botões Login e Cadastro -->
+      <div class="flex flex-col sm:flex-row justify-between gap-4 w-full mt-2">
+        <button type="submit"
+          class="btn-primario flex-1">
+          Entrar
+        </button>
+        <button routerLink="/cadastro"
+          class="btn-primario flex-1">
+          Cadastro
+        </button>
+      </div>
+
+      <!-- Botão Entrar com Google -->
+      <div class="w-full mt-1">
+        <button routerLink="/home"
+          class="btn-primario w-full">
+          <i class="fab fa-google mr-3"></i> Entrar com Google
+        </button>
+      </div>
+
+      <app-error-message [errorMessage]="errorMessage"></app-error-message>
     </form>
+  </div>
 </div>

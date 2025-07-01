@@ -8,8 +8,7 @@ import { AlertComponent } from "../../shared/component/alert/alert.component";
 @Component({
   selector: 'app-cadastro',
   imports: [ReactiveFormsModule, AlertComponent],
-  templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.css'
+  templateUrl: './cadastro.component.html'
 })
 export class CadastroComponent {
     cadastroForm: FormGroup;

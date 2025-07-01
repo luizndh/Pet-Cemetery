@@ -8,8 +8,7 @@ import { DadosPerfil } from '../model/dados-perfil.model';
 @Component({
   selector: 'app-exibir-perfil',
   imports: [NgIf, RouterLink],
-  templateUrl: './exibir-perfil.component.html',
-  styleUrl: './exibir-perfil.component.css'
+  templateUrl: './exibir-perfil.component.html'
 })
 export class ExibirPerfilComponent implements OnInit {
 

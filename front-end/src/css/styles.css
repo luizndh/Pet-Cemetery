@@ -17,13 +17,12 @@
 }
 
 .main {
-    @apply w-full flex flex-col items-center gap-2 bg-neutral-900 min-h-screen py-8;
+    @apply w-full flex flex-col items-center gap-2 bg-neutral-900 min-h-screen justify-center;
     padding-top: var(--navbar-height);
 }
 
 .title {
-    @apply text-7xl font-bold mt-15 text-white;
-    font-family: 'Montserrat', sans-serif;
+    @apply text-4xl font-extrabold text-white text-center mb-10 tracking-tight;
 }
 
 hr {

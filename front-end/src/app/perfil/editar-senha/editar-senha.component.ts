@@ -7,8 +7,7 @@ import { PerfilService } from '../perfil.service';
 @Component({
     selector: 'app-editar-senha',
     imports: [ReactiveFormsModule],
-    templateUrl: './editar-senha.component.html',
-    styleUrl: './editar-senha.component.css'
+    templateUrl: './editar-senha.component.html'
 })
 export class EditarSenhaComponent {
 

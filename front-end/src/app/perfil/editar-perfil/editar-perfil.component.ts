@@ -8,8 +8,7 @@ import { DadosPerfil } from '../model/dados-perfil.model';
 @Component({
   selector: 'app-editar-perfil',
   imports: [ReactiveFormsModule, AlertComponent],
-  templateUrl: './editar-perfil.component.html',
-  styleUrl: './editar-perfil.component.css'
+  templateUrl: './editar-perfil.component.html'
 })
 export class EditarPerfilComponent implements OnInit {
   editarPerfilForm: FormGroup;

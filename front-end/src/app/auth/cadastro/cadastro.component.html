@@ -1,18 +1,21 @@
-<div class="main">
-    <h1 class="title mb-8">Cadastro</h1>
-    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6 items-center w-full max-w-4xl">
+<div class="main py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl w-full space-y-8">
+    <h1 class="title">Cadastro</h1>
+
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()"
+      class="bg-neutral-800 rounded-2xl shadow-2xl p-8 md:p-10 flex flex-col gap-6 w-full border border-neutral-700 mx-auto">
 
       <!-- Nome e Email -->
       <div class="flex flex-col sm:flex-row gap-4 w-full">
         <div class="flex flex-col w-full">
           <label class="text-white font-medium mb-2" for="nome">Nome</label>
           <input formControlName="nome" type="text" id="nome" name="nome" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
         <div class="flex flex-col w-full">
           <label class="text-white font-medium mb-2" for="email">Email</label>
           <input formControlName="email" type="email" id="email" name="email" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
       </div>
 
@@ -21,12 +24,12 @@
         <div class="flex flex-col w-full">
           <label class="text-white font-medium mb-2" for="cpf">CPF</label>
           <input formControlName="cpf" type="text" id="cpf" name="cpf" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
         <div class="flex flex-col w-full">
           <label class="text-white font-medium mb-2" for="telefone">Telefone</label>
           <input formControlName="telefone" type="text" id="telefone" name="telefone" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
       </div>
 
@@ -35,22 +38,22 @@
         <div class="flex flex-col w-full sm:w-1/4">
           <label class="text-white font-medium mb-2" for="cep">CEP</label>
           <input formControlName="cep" type="text" id="cep" name="cep" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
-        <div class="flex flex-col w-full sm:w-1/3">
+        <div class="flex flex-col w-full sm:flex-1"> <!-- sm:flex-1 para ocupar o espaço restante -->
           <label class="text-white font-medium mb-2" for="rua">Rua</label>
           <input formControlName="rua" type="text" id="rua" name="rua" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
         <div class="flex flex-col w-full sm:w-1/6">
           <label class="text-white font-medium mb-2" for="numero">Número</label>
           <input formControlName="numero" type="text" id="numero" name="numero" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
         <div class="flex flex-col w-full sm:w-1/6">
           <label class="text-white font-medium mb-2" for="complemento">Complemento</label>
           <input formControlName="complemento" type="text" id="complemento" name="complemento"
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
       </div>
 
@@ -59,22 +62,27 @@
         <div class="flex flex-col w-full">
           <label class="text-white font-medium mb-2" for="senha">Senha</label>
           <input formControlName="senha" type="password" id="senha" name="senha" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
         <div class="flex flex-col w-full">
           <label class="text-white font-medium mb-2" for="senhaRepetida">Repita a senha</label>
           <input formControlName="senhaRepetida" type="password" id="senhaRepetida" name="senhaRepetida" required
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full px-4 py-2 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
         </div>
       </div>
+
       <!-- Div de alertas -->
       <app-alert [form]="cadastroForm"></app-alert>
 
       <!-- Botão Cadastrar -->
       <div class="w-full">
-        <button type="submit" class="btn-primario w-full" [disabled]="cadastroForm.invalid">Cadastrar-se</button>
+        <button type="submit"
+          class="btn-primario w-full bg-cyan-600 text-white hover:bg-cyan-700 focus:ring-cyan-500 focus:ring-offset-neutral-800 shadow-lg"
+          [disabled]="cadastroForm.invalid">
+          Cadastrar-se
+        </button>
       </div>
 
-
     </form>
+  </div>
 </div>

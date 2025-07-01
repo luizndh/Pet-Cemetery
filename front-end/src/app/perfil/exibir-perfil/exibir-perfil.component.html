@@ -1,47 +1,57 @@
-<div class="main">
+<div class="main py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-sm w-full space-y-8">
     <h1 class="title">Perfil</h1>
-    <div class="flex flex-col gap-8 justify-center items-center w-full mt-5">
-        <div class="flex flex-col items-center rounded-lg p-6 md:w-1/2 sm:w-4/5 w-full">
-            <div class="flex flex-col md:w-1/2 w-full mb-4">
-                <label class="text-white font-medium mb-2" for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" disabled
-                    [value]="usuarioLogado?.nome"
-                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-            </div>
-            <div class="flex flex-col md:w-1/2 w-full mb-4">
-                <label class="text-white font-medium mb-2" for="email">Email</label>
-                <input type="text" id="email" name="email" disabled
-                    [value]="usuarioLogado?.email"
-                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-            </div>
-            <div class="flex flex-col md:w-1/2 w-full mb-4">
-                <label class="text-white font-medium mb-2" for="telefone">Telefone</label>
-                <input type="text" id="telefone" name="telefone" disabled
-                    [value]="usuarioLogado?.telefone"
-                    class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-            </div>
-            <div class="flex flex-col mt-4 justify-center items-center md:w-1/3 sm:w-4/5 w-full">
-                <button class="btn-primario w-full mt-4" routerLink="editar">EDITAR PERFIL</button>
-                <button class="btn-primario w-full mt-4" routerLink="editar-senha">TROCAR SENHA</button>
-                <button class="btn-danger w-full mt-4" (click)="this.modalAberto = true">DESATIVAR PERFIL</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal desativar perfil -->
-    <div *ngIf="modalAberto"
-        class="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-        <div class="bg-neutral-800 rounded-lg shadow-lg p-6 w-full max-w-md flex flex-col items-center">
-            <h2 class="text-xl font-bold mb-4 text-white">Deseja realmente desativar sua conta?</h2>
-            <p>Você só conseguirá reativar sua conta caso entre em contato com a nossa administração.</p>
-            <div class="flex justify-between mt-5 w-full">
-                <button class="btn-danger w-[48%]" (click)="desativarPerfil()">
-                    Desativar
-                </button>
-                <button class="btn-primario w-[48%]" (click)="this.modalAberto = false">
-                    Cancelar
-                </button>
-            </div>
+    <div class="bg-neutral-800 rounded-2xl shadow-2xl p-8 md:p-10 flex flex-col gap-6 w-full border border-neutral-700 mx-auto">
+
+      <div class="grid grid-cols-1 gap-6">
+        <div class="flex flex-col">
+          <label class="text-white font-medium mb-2" for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" disabled
+            [value]="usuarioLogado?.nome"
+            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-gray-400 border border-gray-600 focus:outline-none cursor-not-allowed">
         </div>
+        <div class="flex flex-col">
+          <label class="text-white font-medium mb-2" for="email">Email</label>
+          <input type="text" id="email" name="email" disabled
+            [value]="usuarioLogado?.email"
+            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-gray-400 border border-gray-600 focus:outline-none cursor-not-allowed">
+        </div>
+        <div class="flex flex-col">
+          <label class="text-white font-medium mb-2" for="telefone">Telefone</label>
+          <input type="text" id="telefone" name="telefone" disabled
+            [value]="usuarioLogado?.telefone"
+            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-gray-400 border border-gray-600 focus:outline-none cursor-not-allowed">
+        </div>
+        </div>
+
+      <div class="border-t border-neutral-700 pt-6 mt-6 flex flex-col gap-4 w-full">
+        <button class="btn-primario w-full bg-cyan-600 text-white hover:bg-cyan-700 focus:ring-cyan-500 focus:ring-offset-neutral-800 shadow-lg" routerLink="editar">
+          Editar Perfil
+        </button>
+        <button class="btn-primario w-full bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-neutral-800 shadow-lg" routerLink="editar-senha">
+          Trocar Senha
+        </button>
+        <button class="btn-danger w-full shadow-lg" (click)="this.modalAberto = true">
+          Desativar Perfil
+        </button>
+      </div>
     </div>
+  </div>
+
+  <div *ngIf="modalAberto"
+    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div class="bg-neutral-800 rounded-xl shadow-2xl p-6 w-full max-w-md flex flex-col items-center border border-neutral-700">
+      <h2 class="text-2xl font-bold mb-4 text-white text-center">Deseja realmente desativar sua conta?</h2>
+      <p class="text-gray-300 text-center mb-6">Você só conseguirá reativar sua conta caso entre em contato com a nossa administração.</p>
+      <div class="flex flex-col sm:flex-row justify-between gap-4 w-full">
+        <button class="btn-danger flex-1 shadow-lg" (click)="desativarPerfil()">
+          Desativar
+        </button>
+        <button class="btn-primario flex-1 bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-neutral-800 shadow-lg" (click)="this.modalAberto = false">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
