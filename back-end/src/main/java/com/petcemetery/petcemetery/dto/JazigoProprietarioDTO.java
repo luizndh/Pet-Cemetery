@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 @Builder
 public class JazigoProprietarioDTO {
+    private Long id;
     private String nomePet;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

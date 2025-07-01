@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Jazigo } from '../../model/jazigo.model';
 import { ActivatedRoute } from '@angular/router';
 import { JazigoService } from '../../service/jazigo.service';
 import { DatePipe, NgIf } from '@angular/common';
+import { DetalheJazigo } from './detalhe-jazigo.model';
 
 @Component({
     selector: 'app-detalhar-jazigo',
@@ -10,7 +10,7 @@ import { DatePipe, NgIf } from '@angular/common';
     templateUrl: './detalhar-jazigo.component.html'
 })
 export class DetalharJazigoComponent implements OnInit {
-    jazigo?: Jazigo;
+    jazigoDetalhado?: DetalheJazigo;
     carregando = true;
 
     constructor(
@@ -22,7 +22,7 @@ export class DetalharJazigoComponent implements OnInit {
         const id = Number(this.route.snapshot.paramMap.get('id'));
         this.jazigoService.detalharJazigo(id).subscribe({
             next: (jazigo) => {
-                this.jazigo = jazigo;
+                this.jazigoDetalhado = jazigo;
                 this.carregando = false;
             },
             error: () => this.carregando = false

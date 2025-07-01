@@ -1,38 +1,107 @@
 <!-- src/app/shared/detalhar-jazigo/detalhar-jazigo.component.html -->
-<div class="main" *ngIf="jazigo">
-  <h1 class="title mb-8">Detalhamento do Jazigo</h1>
-  <div class="bg-neutral-800 rounded-xl shadow-lg p-8 flex flex-col gap-6 max-w-2xl mx-auto">
-    <div>
-      <span class="font-bold text-cyan-400">Endereço:</span>
-      <span class="text-white">{{ jazigo.endereco }}</span>
-    </div>
-    <div>
-      <span class="font-bold text-cyan-400">Plano:</span>
-      <span class="text-white">{{ jazigo.plano }}</span>
-    </div>
-    <div>
-      <span class="font-bold text-cyan-400">Status:</span>
-      <span class="text-white">{{ jazigo.status === 'OCUPADO' ? 'Ocupado' : 'Disponível' }}</span>
-    </div>
-    <div *ngIf="jazigo.nomePet">
-      <h2 class="text-lg font-bold text-cyan-300 mb-2">Pet Enterrado</h2>
-      <div class="flex flex-col md:flex-row gap-4 items-center">
-        <img *ngIf="jazigo.foto" [src]="jazigo.foto" alt="Foto do Pet" class="w-32 h-32 rounded-lg object-cover border border-neutral-700" />
-        <div>
-          <div><span class="font-bold">Nome:</span> {{ jazigo.nomePet }}</div>
-          <div><span class="font-bold">Espécie:</span> {{ jazigo.especie }}</div>
-          <div><span class="font-bold">Nascimento:</span> {{ jazigo.dataNascimento | date:'dd/MM/yyyy' }}</div>
-          <div><span class="font-bold">Enterro:</span> {{ jazigo.dataEnterro | date:'dd/MM/yyyy' }}</div>
+<!-- Componente Angular para exibir detalhes de um jazigo, com design aprimorado usando Tailwind CSS. -->
+
+<!-- Container principal que só é exibido se houver dados do jazigo -->
+<div class="main" *ngIf="jazigoDetalhado">
+  <!-- Título principal do detalhamento do jazigo -->
+  <div class="max-w-4xl w-full space-y-8">
+    <h1 class="title">
+      Detalhamento do Jazigo
+    </h1>
+
+    <!-- Cartão principal com os detalhes do jazigo -->
+    <div class="bg-neutral-800 rounded-2xl shadow-2xl p-8 md:p-10 flex flex-col gap-8 border border-neutral-700">
+
+      <!-- Seção de Informações Gerais do Jazigo -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <!-- Endereço -->
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-1">Endereço</span>
+          <span class="text-white text-lg">{{ jazigoDetalhado!.enderecoJazigo }}</span>
+        </div>
+        <!-- Plano -->
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-1">Plano</span>
+          <span class="text-white text-lg">{{ jazigoDetalhado!.plano }}</span>
+        </div>
+        <!-- Status -->
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-1">Status</span>
+          <span class="text-white text-lg">
+            {{ jazigoDetalhado!.status }}
+          </span>
         </div>
       </div>
-    </div>
-    <div *ngIf="!jazigo.nomePet">
-      <span class="text-gray-400">Nenhum pet enterrado neste jazigo.</span>
-    </div>
-    <div>
-      <span class="font-bold text-cyan-400">Mensagem na Lápide:</span>
-      <span class="text-white">{{ jazigo.mensagem || 'Nenhuma mensagem.' }}</span>
+
+      <!-- Seção de Detalhes do Pet Enterrado (condicional) -->
+      <div *ngIf="jazigoDetalhado.nomePet" class="border-t border-neutral-700 pt-8 mt-8">
+        <h2 class="text-2xl font-bold text-cyan-300 mb-6 text-center">
+          <i class="fas fa-paw mr-2"></i> Pet Enterrado
+        </h2>
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+          <!-- Foto do Pet -->
+          <div class="flex-shrink-0">
+            <img
+              *ngIf="jazigoDetalhado!.urlImagem"
+              [src]="jazigoDetalhado!.urlImagem"
+              alt="Foto do Pet"
+              class="w-40 h-40 rounded-full object-cover border-4 border-neutral-700 shadow-lg"
+              onerror="this.onerror=null; this.src='https:\/\/placehold.co/160x160/262626/a3a3a3?text=Sem+Foto';"
+            />
+            <!-- Placeholder para quando não há foto ou a foto falha -->
+            <img
+              *ngIf="!jazigoDetalhado.urlImagem"
+              src="https://placehold.co/160x160/262626/a3a3a3?text=Sem+Foto"
+              alt="Sem Foto do Pet"
+              class="w-40 h-40 rounded-full object-cover border-4 border-neutral-700 shadow-lg"
+            />
+          </div>
+
+          <!-- Informações do Pet -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow text-white">
+            <div class="flex flex-col">
+              <span class="font-semibold text-neutral-400 text-sm">Nome:</span>
+              <span class="text-lg">{{ jazigoDetalhado.nomePet }}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-semibold text-neutral-400 text-sm">Espécie:</span>
+              <span class="text-lg">{{ jazigoDetalhado.especiePet }}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-semibold text-neutral-400 text-sm">Nascimento:</span>
+              <span class="text-lg">{{ jazigoDetalhado.dataNascimento | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-semibold text-neutral-400 text-sm">Enterro:</span>
+              <span class="text-lg">{{ jazigoDetalhado.dataEnterro | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensagem para quando não há pet enterrado -->
+      <div *ngIf="!jazigoDetalhado.nomePet" class="border-t border-neutral-700 pt-8 mt-8 text-center">
+        <p class="text-gray-400 text-lg">Nenhum pet enterrado neste jazigo.</p>
+      </div>
+
+      <!-- Seção de Mensagem na Lápide -->
+      <div class="border-t border-neutral-700 pt-8 mt-8">
+        <h2 class="text-2xl font-bold text-cyan-300 mb-4 text-center">
+          <i class="fas fa-scroll mr-2"></i> Mensagem na Lápide
+        </h2>
+        <div class="bg-neutral-700 p-6 rounded-lg shadow-inner">
+          <p class="text-white text-lg italic text-center">
+            "{{ jazigoDetalhado.mensagemLapide || 'Nenhuma mensagem definida para este jazigo.' }}"
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
-<div *ngIf="carregando" class="text-center text-white mt-10">Carregando...</div>
+
+<!-- Indicador de carregamento -->
+<div *ngIf="carregando" class="text-center text-white mt-10 text-xl animate-pulse">Carregando detalhes do jazigo...</div>
+
+<!-- Adicione Font Awesome para ícones (se ainda não tiver no seu projeto) -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
