@@ -14,6 +14,9 @@ export class MapaJazigoComponent implements OnInit {
 
     isAdmin: boolean = false;
 
+    rows: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
+    cols: number[] = Array.from({ length: 12 }, (_, i) => i + 1); // Cria um array de 1 a 12
+
     constructor(private service: JazigoService, private tokenService: LocalStorageService) {}
 
     ngOnInit(): void {
