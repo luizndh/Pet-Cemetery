@@ -63,6 +63,22 @@ export class LocalStorageService {
         return !!this.getToken();
     }
 
+    isExpired(): boolean {
+        const token = this.getToken();
+        if (!token) return true;
+
+        try {
+            const decoded: any = jwtDecode(token);
+            const exp = decoded.exp;
+            if (!exp) return true; // Se não houver exp, consideramos expirado
+
+            const now = Math.floor(Date.now() / 1000); // Tempo atual em segundos
+            return exp < now; // Retorna true se o token estiver expirado
+        } catch (error) {
+            return true; // Se ocorrer um erro, consideramos o token expirado
+        }
+    }
+
     // Método para verificar se o token (ou o atual) é de admin
     isUsuarioAdmin(token?: string): boolean {
         const jwt = token
