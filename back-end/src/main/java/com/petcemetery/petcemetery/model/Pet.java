@@ -19,7 +19,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Pet")
+@Entity
 @Table(name = "Pet")
 public class Pet {
 

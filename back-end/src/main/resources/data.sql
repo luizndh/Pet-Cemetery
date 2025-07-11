@@ -80,3 +80,14 @@ INSERT INTO Jazigo (id, endereco, id_proprietario, status, mensagem, foto, plano
 (70, 'F-10', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL),
 (71, 'F-11', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL),
 (72, 'F-12', NULL, 'DISPONIVEL', NULL, NULL, NULL, NULL);
+
+INSERT INTO servicos (tipo_servico, valor) VALUES
+('ENTERRO', 200.00),
+('EXUMACAO', 200.00),
+('COMPRA', 3000.00),
+('ALUGUEL', 400.00),
+('PERSONALIZACAO', 20.00),
+('MANUTENCAO', 200.00),
+('BASIC', 1.00),
+('SILVER', 50.00),
+('GOLD', 80.00);

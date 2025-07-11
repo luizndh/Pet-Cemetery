@@ -5,8 +5,7 @@ import { NavbarComponent } from "./info-navbar/navbar/navbar.component";
 @Component({
     selector: 'app-root',
     imports: [RouterOutlet, NavbarComponent],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+    templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = 'Pet Cemetery';

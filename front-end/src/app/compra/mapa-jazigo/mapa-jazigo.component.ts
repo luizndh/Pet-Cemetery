@@ -3,6 +3,9 @@ import { Jazigo } from '../../shared/model/jazigo.model';
 import { NgFor, NgIf } from '@angular/common';
 import { JazigoService } from '../../shared/service/jazigo.service';
 import { LocalStorageService } from '../../shared/service/local-storage.service';
+import { EscolhaJazigo } from '../escolha-jazigo.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ContratacaoStateService } from '../../shared/service/contratacao-state.service';
 
 @Component({
   selector: 'app-mapa-jazigo',
@@ -15,9 +18,14 @@ export class MapaJazigoComponent implements OnInit {
     isAdmin: boolean = false;
 
     rows: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
-    cols: number[] = Array.from({ length: 12 }, (_, i) => i + 1); // Cria um array de 1 a 12
+    cols: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    constructor(private service: JazigoService, private tokenService: LocalStorageService) {}
+    constructor(
+        private service: JazigoService,
+        private tokenService: LocalStorageService,
+        private router: Router,
+        private contratacaoService: ContratacaoStateService,
+        private activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.service.getMapaJazigos().subscribe((response: Jazigo[]) => {
@@ -38,13 +46,17 @@ export class MapaJazigoComponent implements OnInit {
         this.jazigoSelecionado = null;
     }
 
-    comprarJazigo(jazigo: Jazigo) {
-        console.log(`Comprar jazigo: ${jazigo.endereco}`);
+    selecionarOpcao(jazigo: Jazigo, tipo: 'COMPRA' | 'ALUGUEL') {
         this.fecharModal();
-    }
 
-    alugarJazigo(jazigo: Jazigo) {
-        console.log(`Alugar jazigo: ${jazigo.endereco}`);
-        this.fecharModal();
+        const escolhaJazigo: EscolhaJazigo = {
+            enderecoJazigo: jazigo.endereco,
+            idJazigo: jazigo.id,
+            compraOuAluguel: { valor: 0, tipoServico: tipo },
+            planoEscolhido: null
+        };
+
+        this.contratacaoService.setEscolhaJazigo(escolhaJazigo);
+        this.router.navigate(['ornamentacao'], { relativeTo: this.activatedRoute });
     }
 }

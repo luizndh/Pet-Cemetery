@@ -24,6 +24,7 @@ import { RelatorioExumacoesComponent } from './admin/relatorios/relatorio-exumac
 import { RelatorioEnterrosComponent } from './admin/relatorios/relatorio-enterros/relatorio-enterros.component';
 import { RelatorioInadimplentesComponent } from './admin/relatorios/relatorio-inadimplentes/relatorio-inadimplentes.component';
 import { DetalharJazigoComponent } from './shared/component/detalhar-jazigo/detalhar-jazigo.component';
+import { OrnamentacaoComponent } from './compra/ornamentacao/ornamentacao.component';
 
 
 export const routes: Routes = [
@@ -73,6 +74,12 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { role: 'CLIENTE' }
 
+    },
+    {
+        path: 'home/mapa-jazigos/ornamentacao',
+        component: OrnamentacaoComponent,
+        canActivate: [AuthGuard],
+        data: { role: 'CLIENTE' }
     },
     {
         path: 'home/lembrete-visita',
@@ -165,11 +172,13 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { role: 'CLIENTE' }
     },
-    { path: 'admin/home/jazigo/:id',
+    {
+        path: 'admin/home/jazigo/:id',
         component: DetalharJazigoComponent,
         canActivate: [AuthGuard],
         data: { role: 'ADMIN' }
     },
+
     {
         path: '**',
         redirectTo: '',

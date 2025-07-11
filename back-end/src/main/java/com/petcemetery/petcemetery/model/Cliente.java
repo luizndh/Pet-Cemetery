@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Entity(name = "Cliente")
+@Entity
 @Table(name = "Cliente")
 @NoArgsConstructor
 @Getter

@@ -22,7 +22,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "Contrato")
+@Entity
 @Table(name = "Contrato")
 @AllArgsConstructor
 @NoArgsConstructor

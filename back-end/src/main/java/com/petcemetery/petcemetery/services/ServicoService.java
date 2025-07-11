@@ -38,11 +38,16 @@ public class ServicoService {
     }
 
     public List<Servico> listarPlanos() {
-        Servico basic = repository.findByTipoServico(ServicoEnum.BASIC);
-        Servico silver = repository.findByTipoServico(ServicoEnum.SILVER);
-        Servico gold = repository.findByTipoServico(ServicoEnum.GOLD);
+        return repository.findPlanos();
+    }
 
-        return Arrays.asList(basic, silver, gold);
+    public List<Servico> buscarServicosParaOrnamentacao(String compraOuAluguel) {
+    List<ServicoEnum> tipos = Arrays.asList(
+            ServicoEnum.valueOf(compraOuAluguel.toUpperCase()),
+            ServicoEnum.BASIC,
+            ServicoEnum.SILVER,
+            ServicoEnum.GOLD);
+        return repository.findServicosByTipos(tipos);
     }
 
 

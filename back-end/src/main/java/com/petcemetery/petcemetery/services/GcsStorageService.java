@@ -42,11 +42,7 @@ public class GcsStorageService {
                             new FileInputStream(serviceAccountKeyPath)))
                     .build()
                     .getService();
-            System.out.println("GCS Storage client inicializado com sucesso para o bucket: " + bucketName);
         } catch (IOException e) {
-            // Em um ambiente de produção, você deve usar um logger (ex: SLF4J)
-            // para registrar este erro e talvez relançar uma exceção de tempo de execução.
-            System.err.println("Erro ao inicializar o cliente GCS Storage: " + e.getMessage());
             throw new RuntimeException("Falha ao inicializar o GCS Storage Service", e);
         }
     }

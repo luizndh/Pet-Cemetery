@@ -43,12 +43,6 @@ public class JazigoController {
         return this.jazigoService.comprarJazigo(id, tipo);
     }
 
-    // Envia para o front os precos dos planos atuais do sistema, para ser exibido na tela de seleção de planos
-    @GetMapping("/planos")
-    public List<Servico> listarPlanos() {
-        return this.servicoService.listarPlanos();
-    }
-
     // //adiciona no carrinho o jazigo selecionado pelo cliente
     // // TODO: alterar OU excluir metodo que caiu em desuso ao excluir carrinho (tem varios nessa classe assim)
     @PostMapping("/finalizar-compra") //tipo == COMPRA ou ALUGUEL

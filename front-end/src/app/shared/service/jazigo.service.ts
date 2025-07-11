@@ -24,5 +24,4 @@ export class JazigoService {
     detalharJazigo(id: number): Observable<DetalheJazigo> {
         return this.http.get<DetalheJazigo>(`${this.prefixoApi}/${id}/detalhe`);
     }
-
 }

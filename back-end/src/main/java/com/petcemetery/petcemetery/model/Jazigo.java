@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name = "Jazigo")
+@Entity
 @Table(name = "Jazigo")
 @Getter
 @Setter

@@ -67,7 +67,7 @@ public class JazigoService {
     }
 
     public List<OcupacaoJazigoDTO> getJazigos() {
-        List<Jazigo> jazigos = repository.findAllByOrderByIdAsc();
+        List<Jazigo> jazigos = repository.findAllByOrderByIdAsc(Jazigo.class);
         List<OcupacaoJazigoDTO> jazigosDTO = new ArrayList<>();
 
         for (Jazigo jazigo : jazigos) {
@@ -146,9 +146,8 @@ public class JazigoService {
         }
     }
 
-    // TODO: consertar essa merda
     public List<JazigoMapaDTO> getMapaJazigos() {
-        return this.repository.findMapaJazigo();
+        return this.repository.findAllByOrderByIdAsc(JazigoMapaDTO.class);
     }
 
     public List<JazigoProprietarioDTO> recuperaJazigosProprietario(Long id) {
