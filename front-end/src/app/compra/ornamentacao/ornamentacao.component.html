@@ -8,18 +8,13 @@
       </div>
     </div>
 
-    <!-- Seção de Título dos Planos -->
     <div class="text-center w-full">
       <h1 class="title">Escolha um Plano de Ornamentação</h1>
       <p class="mx-auto mt-6 max-w-2xl text-center text-lg text-white sm:text-xl">Adicione uma homenagem especial ao seu eterno companheiro com um de nossos planos de ornamentação.</p>
     </div>
 
-    <!--
-      Grid de Planos Dinâmico
-    -->
     <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-y-8 sm:mt-20 lg:max-w-4xl lg:grid-cols-3 lg:gap-x-8 w-full">
 
-      <!-- Card de Plano Dinâmico -->
       <div *ngFor="let plano of planos"
            (click)="selecionarPlano(plano)"
            [ngClass]="{
@@ -43,12 +38,14 @@
             </svg>
             Mensagem
           </li>
+
           <li class="flex gap-x-3">
             <svg class="h-6 w-5 flex-shrink-0 text-green-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
             </svg>
             Foto
           </li>
+
           <li class="flex gap-x-3">
             <svg *ngIf="plano.tipoServico != 'BASIC'" class="h-6 w-5 flex-shrink-0 text-green-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
@@ -58,6 +55,7 @@
             </svg>
             Flores
           </li>
+
           <li class="flex gap-x-3">
             <svg *ngIf="plano.tipoServico == 'GOLD'" class="h-6 w-5 flex-shrink-0 text-green-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
@@ -67,13 +65,11 @@
             </svg>
             Catavento
           </li>
+
         </ul>
       </div>
     </div>
 
-    <!--
-      Seção de Confirmação
-    -->
     <div *ngIf="planoSelecionado" class="mt-16 text-center w-full">
       <div class="bg-neutral-800 rounded-2xl p-6 max-w-2xl mx-auto shadow-lg">
           <h3 class="text-2xl font-bold text-white">Resumo Final</h3>
@@ -85,7 +81,8 @@
           <p class="text-3xl font-bold text-white">
               Total: {{ valorTotal | currency:'BRL' }}
           </p>
-          <button class="btn-primario mt-6 w-full max-w-xs mx-auto bg-green-600 text-white font-bold py-3 px-6 hover:bg-green-500 active:bg-cyan-400">
+          <button class="btn-primario mt-6 w-full max-w-xs mx-auto bg-green-600 text-white font-bold py-3 px-6 hover:bg-green-500 active:bg-cyan-400"
+            (click)="adicionaAoCarrinho()">
               Confirmar e Adicionar ao Carrinho
           </button>
       </div>

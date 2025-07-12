@@ -4,6 +4,8 @@ import { EscolhaJazigo } from '../escolha-jazigo.model';
 import { Servico } from '../../shared/model/servico.model';
 import { ServicosService } from '../../shared/service/servicos.service';
 import { CommonModule } from '@angular/common';
+import { CarrinhoService } from '../../shared/service/carrinho.service';
+import { ItemCarrinho } from '../../shared/model/item-carrinho.model';
 
 @Component({
   selector: 'app-ornamentacao',
@@ -17,7 +19,7 @@ export class OrnamentacaoComponent implements OnInit {
     planoSelecionado: Servico | null = null;
     valorTotal: number = 0;
 
-    constructor(private contratacaoService: ContratacaoStateService, private servicosService: ServicosService) {}
+    constructor(private contratacaoService: ContratacaoStateService, private servicosService: ServicosService, private carrinhoService: CarrinhoService) {}
 
     ngOnInit(): void {
         this.contratacaoService.escolhaJazigo$.subscribe(escolha => {
@@ -50,5 +52,18 @@ export class OrnamentacaoComponent implements OnInit {
         } else {
             this.valorTotal = this.escolhaRecebida!.compraOuAluguel.valor;
         }
+    }
+
+    adicionaAoCarrinho(): void {
+        const itemCarrinho = new ItemCarrinho(
+            this.escolhaRecebida!.idJazigo,
+            this.escolhaRecebida!.enderecoJazigo,
+            this.escolhaRecebida!.compraOuAluguel.tipoServico,
+            this.escolhaRecebida!.compraOuAluguel.valor,
+            this.planoSelecionado!.tipoServico,
+            this.planoSelecionado!.valor
+        );
+
+        this.carrinhoService.adicionarItemAoCarrinho(itemCarrinho).subscribe(() => {});
     }
 }
