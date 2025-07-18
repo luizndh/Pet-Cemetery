@@ -1,22 +1,22 @@
 <div class="main">
-    <h1 class="title mb-8">Agendar Reunião</h1>
-    <div class="flex flex-col items-center w-full max-w-md mx-auto">
-        <label for="data-reuniao" class="text-white text-lg font-medium mb-4">Escolha a data da reunião</label>
+    <h1 class="title">Agendar Reunião</h1>
+    <div class="flex flex-col items-center card max-w-md mx-auto gap-1">
+        <label for="data-reuniao" class="form-label w-full">Escolha a data da reunião</label>
         <input placeholder="Data da reunião" type="date" id="data-reuniao" name="data-reuniao"
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 mb-4"
+            class="w-full form-input mb-3"
             [(ngModel)]="dataSelecionada" [min]="minDate" [max]="maxDate" />
 
-        <label for="motivo" class="text-white text-lg font-medium mb-2 mt-2 w-full">Motivo da reunião</label>
+        <label for="motivo" class="form-label w-full">Motivo da reunião</label>
         <select id="motivo" name="motivo"
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 mb-4"
+            class="w-full form-input mb-3"
             [(ngModel)]="motivoSelecionado">
             <option value="" disabled selected>Selecione um motivo</option>
             <option *ngFor="let motivo of motivos" [value]="motivo">{{ motivo }}</option>
         </select>
 
-        <label for="horario" class="text-white text-lg font-medium mb-2 mt-2 w-full">Horário</label>
+        <label for="horario" class="form-label w-full">Horário</label>
         <select id="horario" name="horario"
-            class="w-full px-4 py-2 rounded-lg bg-neutral-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 mb-6"
+            class="w-full form-input mb-5"
             [(ngModel)]="horarioSelecionado">
             <option value="" disabled selected>Selecione um horário</option>
             <option *ngFor="let horario of horarios" [value]="horario">{{ horario }}</option>
@@ -30,12 +30,12 @@
 
     <!-- Modal de confirmação -->
     <div *ngIf="modalAberto" class="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-        <div class="bg-neutral-800 rounded-lg shadow-lg p-6 w-full max-w-md">
+        <div class="bg-foreground rounded-lg shadow-lg p-6 w-full max-w-md">
             <h2 class="text-xl font-bold mb-4 text-white">Confirmar Agendamento</h2>
-            <p class="mb-2 text-white">Data: {{ dataSelecionada | date: 'dd/MM/yyyy' }}</p>
-            <p class="mb-2 text-white">Motivo: {{ motivoSelecionado }}</p>
-            <p class="mb-6 text-white">Horário: {{ horarioSelecionado }}</p>
-            <div class="flex justify-between">
+            <p class="form-label">Data: {{ dataSelecionada | date: 'dd/MM/yyyy' }}</p>
+            <p class="form-label">Motivo: {{ motivoSelecionado }}</p>
+            <p class="form-label">Horário: {{ horarioSelecionado }}</p>
+            <div class="flex justify-between mt-5">
                 <button class="btn-primario border border-gray-700 w-[48%]" (click)="confirmarReuniao()">
                     Confirmar
                 </button>

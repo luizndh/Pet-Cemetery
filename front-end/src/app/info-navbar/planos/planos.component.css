@@ -1,9 +1,9 @@
-p.text-black {
-    color: black
+.card-text {
+    color: var(--color-text-terciary);
 }
 
-p.text-white {
-    color: white
+p.subtitle {
+    color: var(--color-text-primary)
 }
 
 .card {

@@ -7,8 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink, NgIf],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit{
 

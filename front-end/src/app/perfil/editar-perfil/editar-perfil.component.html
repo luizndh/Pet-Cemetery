@@ -1,58 +1,55 @@
-<div class="main py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-4xl w-full space-y-8">
+<div class="main">
     <h1 class="title">Editar Perfil</h1>
-
     <form [formGroup]="editarPerfilForm" (ngSubmit)="onSubmit()"
-      class="bg-neutral-800 rounded-2xl shadow-2xl p-8 md:p-10 flex flex-col gap-6 w-full border border-neutral-700 mx-auto">
-
+      class="max-w-4xl card flex flex-col gap-5 w-full mx-auto">
       <div class="flex flex-col sm:flex-row gap-4 w-full">
         <div class="flex flex-col w-full">
-          <label class="text-white font-medium mb-2" for="email">Email</label>
+          <label class="form-label" for="email">Email</label>
           <input formControlName="email" type="email" id="email" name="email"
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-gray-400 border border-gray-600 focus:outline-none cursor-not-allowed"
+            class="w-full form-input-disabled focus:outline-none"
             readonly>
         </div>
         <div class="flex flex-col w-full">
-          <label class="text-white font-medium mb-2" for="cpf">CPF</label>
+          <label class="form-label" for="cpf">CPF</label>
           <input formControlName="cpf" type="text" id="cpf" name="cpf"
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-gray-400 border border-gray-600 focus:outline-none cursor-not-allowed"
+            class="w-full form-input-disabled focus:outline-none"
             readonly>
         </div>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-4 w-full">
         <div class="flex flex-col w-full">
-          <label class="text-white font-medium mb-2" for="nome">Nome</label>
+          <label class="form-label" for="nome">Nome</label>
           <input formControlName="nome" type="text" id="nome" name="nome" required
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+            class="w-full form-input">
         </div>
         <div class="flex flex-col w-full">
-          <label class="text-white font-medium mb-2" for="telefone">Telefone</label>
+          <label class="form-label" for="telefone">Telefone</label>
           <input formControlName="telefone" type="text" id="telefone" name="telefone" required
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+            class="w-full form-input">
         </div>
       </div>
 
       <div class="flex flex-wrap gap-4 w-full">
         <div class="flex flex-col w-full sm:w-1/4">
-          <label class="text-white font-medium mb-2" for="cep">CEP</label>
+          <label class="form-label" for="cep">CEP</label>
           <input formControlName="cep" type="text" id="cep" name="cep" required
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+            class="w-full form-input">
         </div>
         <div class="flex flex-col w-full sm:flex-1"> <!-- sm:flex-1 para ocupar o espaço restante -->
-          <label class="text-white font-medium mb-2" for="rua">Rua</label>
+          <label class="form-label" for="rua">Rua</label>
           <input formControlName="rua" type="text" id="rua" name="rua" required
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+            class="w-full form-input">
         </div>
         <div class="flex flex-col w-full sm:w-1/6">
-          <label class="text-white font-medium mb-2" for="numero">Número</label>
+          <label class="form-label" for="numero">Número</label>
           <input formControlName="numero" type="text" id="numero" name="numero" required
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+            class="w-full form-input">
         </div>
         <div class="flex flex-col w-full sm:w-1/6">
-          <label class="text-white font-medium mb-2" for="complemento">Complemento</label>
+          <label class="form-label" for="complemento">Complemento</label>
           <input formControlName="complemento" type="text" id="complemento" name="complemento"
-            class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+            class="w-full form-input">
         </div>
       </div>
 
@@ -60,12 +57,11 @@
 
       <div class="w-full mt-4">
         <button type="submit"
-          class="btn-primario w-full bg-cyan-600 text-white hover:bg-cyan-700 focus:ring-cyan-500 focus:ring-offset-neutral-800 shadow-lg"
+          class="btn-primario w-full bg-cyan-600 text-primary hover:bg-cyan-700 focus:ring-cyan-500 focus:ring-offset-neutral-800 shadow-lg"
           [disabled]="editarPerfilForm.invalid || editarPerfilForm.pristine"
           [class.cursor-not-allowed]="editarPerfilForm.invalid || editarPerfilForm.pristine">
           Salvar Alterações
         </button>
       </div>
     </form>
-  </div>
 </div>

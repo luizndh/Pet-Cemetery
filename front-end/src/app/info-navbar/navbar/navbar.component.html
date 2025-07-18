@@ -4,17 +4,17 @@
             <img src="/assets/logo.svg" class="h-14 w-14 cursor-pointer" alt="Logo" routerLink="/home" />
         </div>
         <div class="flex space-x-4 mx-auto">
-            <a class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" style="cursor: pointer" (click)="handleHome()">HOME</a>
-            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/quem-somos">QUEM SOMOS </a>
-            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/planos">PLANOS</a>
-            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/contato">CONTATO</a>
-            <a href="#" class="rounded-md px-5 py-4 text-sm font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" routerLink="/horario-funcionamento">HORÁRIOS</a>
+            <a class="hover:bg-accent-hover rounded-md px-5 py-4 text-sm font-medium" style="cursor: pointer;" (click)="handleHome()">HOME</a>
+            <a href="#" class="hover:bg-accent-hover rounded-md px-5 py-4 text-sm font-medium" routerLink="/quem-somos">QUEM SOMOS</a>
+            <a href="#" class="hover:bg-accent-hover rounded-md px-5 py-4 text-sm font-medium" routerLink="/planos">PLANOS</a>
+            <a href="#" class="hover:bg-accent-hover rounded-md px-5 py-4 text-sm font-medium" routerLink="/contato">CONTATO</a>
+            <a href="#" class="hover:bg-accent-hover rounded-md px-5 py-4 text-sm font-medium" routerLink="/horario-funcionamento">HORÁRIOS</a>
         </div>
         <div class="flex-1 flex justify-end space-x-4">
-            <a *ngIf="!usuarioLogado" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/login">LOGIN</a>
-            <a *ngIf="!usuarioLogado" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/cadastro">CADASTRO</a>
-            <a *ngIf="usuarioLogado && !isAdmin" class="bg-cyan-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-cyan-400 hover:text-black" routerLink="/home/perfil">PERFIL</a>
-            <a *ngIf="usuarioLogado" (click)="logout()" class="bg-red-500 rounded-md px-5 py-3 text-sm font-medium text-black hover:bg-red-400 hover:text-black cursor-pointer">LOGOUT</a>
+            <a *ngIf="!usuarioLogado" class="bg-accent rounded-md px-5 py-3 text-sm font-medium hover:bg-accent-hover" routerLink="/login">LOGIN</a>
+            <a *ngIf="!usuarioLogado" class="bg-accent rounded-md px-5 py-3 text-sm font-medium hover:bg-accent-hover" routerLink="/cadastro">CADASTRO</a>
+            <a *ngIf="usuarioLogado && !isAdmin" class="bg-accent rounded-md px-5 py-3 text-sm font-medium hover:bg-accent-hover" routerLink="/home/perfil">PERFIL</a>
+            <a *ngIf="usuarioLogado" (click)="logout()" class="bg-danger rounded-md px-5 py-3 text-sm font-medium hover:bg-danger-hover cursor-pointer">LOGOUT</a>
         </div>
     </div>
 </nav>

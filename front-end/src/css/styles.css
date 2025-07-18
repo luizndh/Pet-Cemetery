@@ -1,79 +1,221 @@
 @import "tailwindcss";
 
+/* Variáveis de cor */
+@theme {
+    --color-background: var(--color-background);
+    --color-foreground: var(--color-foreground);
+    --color-text-primary: var(--color-text-primary);
+    --color-text-secondary: var(--color-text-secondary);
+    --color-text-terciary: var(--color-text-terciary);
+    --color-accent: var(--color-accent);
+    --color-accent-hover: var(--color-accent-hover);
+    --color-accent-text: var(--color-accent-text);
+    --color-danger: var(--color-danger);
+    --color-danger-hover: var(--color-danger-hover);
+
+}
+
+/* Temas */
 @layer base {
     button:not(:disabled),
     [role="button"]:not(:disabled) {
-      cursor: pointer;
+        cursor: pointer;
+    }
+
+    [data-theme="serenidade"] {
+        --color-background: #222222;
+        --color-foreground: #2d2d2d;
+        --color-text-primary: #f8f8f8;
+        --color-text-secondary: #8b8589;
+        --color-text-terciary: black;
+        --color-accent: #556B2F;
+        --color-accent-hover: #6B8E23;
+        --color-accent-text: #f8f8f8;
+        --color-danger: #C04040;
+        --color-danger-hover: #D94A4A;
+    }
+
+    [data-theme="crepusculo"] {
+        --color-background: #191970;
+        --color-foreground: #1E1E82;
+        --color-text-primary: #FFFFFF;
+        --color-text-secondary: #C0C0C0;
+        --color-text-terciary: black;
+        --color-accent: #9370DB; /* Medium Purple */
+        --color-accent-hover: #A380E6;
+        --color-accent-text: #FFFFFF;
+        --color-danger: #E34234;
+        --color-danger-hover: #F35244;
+    }
+
+    [data-theme="minimalista"] {
+        --color-background: #F9F9F9;
+        --color-foreground: #FFFFFF;
+        --color-text-primary: #2F4F4F;
+        --color-text-secondary: #696969;
+        --color-text-terciary: black;
+        --color-accent: #008080;
+        --color-accent-hover: #009696;
+        --color-accent-text: #FFFFFF;
+        --color-danger: #CC5500;
+        --color-danger-hover: #E66000;
+    }
+
+    [data-theme="light"] {
+        --color-background: #F8F9FA;
+        --color-foreground: #E9ECEF;
+        --color-text-primary: #343a40;
+        --color-text-secondary: #5c6770;
+        --color-text-terciary: black;
+        --color-accent: #A8B8A0;
+        --color-accent-hover: #97a790;
+        --color-accent-text: #343a40;
+        --color-danger: #C06C84;
+        --color-danger-hover: #b15f75;
+    }
+
+    [data-theme="dark"] {
+        --color-background: #212529;
+        --color-foreground: #343a40;
+        --color-text-primary: #F8F9FA;
+        --color-text-secondary: #adb5bd;
+        --color-text-terciary: black;
+        --color-accent: #8e9e86;
+        --color-accent-hover: #A8B8A0;
+        --color-accent-text: #F8F9FA;
+        --color-danger: #a25266;
+        --color-danger-hover: #C06C84;
+    }
+
+    body {
+        background-color: var(--color-background);
+        color: var(--color-text-primary);
+        /* Adiciona uma transição suave ao mudar de tema */
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 }
+
 
 :root {
     --navbar-height: 5rem; /* Define a altura da navbar */
 }
 
 .navbar {
-    @apply fixed top-0 left-0 w-full bg-neutral-800 z-50;
+    @apply fixed top-0 left-0 w-full z-50;
+    background-color: var(--color-accent);
+    color: var(--color-accent-text);
     height: var(--navbar-height);
 }
 
 .main {
-    @apply w-full flex flex-col items-center gap-2 bg-neutral-900 min-h-screen justify-center;
+    @apply w-full flex flex-col items-center gap-2 min-h-screen justify-center p-10;
+    background-color: var(--color-background);
     padding-top: var(--navbar-height);
 }
 
 .title {
-    @apply text-4xl font-extrabold text-white text-center mb-10 tracking-tight;
+    @apply text-4xl font-extrabold text-center mb-10 tracking-tight;
+    color: var(--color-text-primary);
 }
 
 hr {
     border-width: 0.5px;
 }
 
-p {
-    color: white;
-}
 
 input[type="time"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 input {
     color-scheme: dark;
 }
 
+.form-input {
+    @apply px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+}
+
+.form-label {
+    @apply font-medium mb-2;
+    color: var(--color-text-primary);
+}
+
+.form-input-disabled {
+    @apply cursor-not-allowed;
+    background-color: var(--color-foreground);
+    color: var(--color-text-secondary);
+}
+
+.card {
+    @apply bg-foreground rounded-lg shadow-lg p-6 w-full mx-4;
+    color: var(--color-text-primary);
+}
+
+.text-primary {
+    color: var(--color-text-primary);
+}
+
+.text-secondary {
+    color: var(--color-text-secondary);
+}
+
+/*
+ * Botão principal
+ */
 .btn-primario {
-    @apply font-normal text-neutral-200 bg-neutral-800 rounded-2xl p-3 border border-gray-700;
+    @apply font-semibold rounded-lg p-3 border border-transparent transition-colors duration-200 ease-in-out;
+
+    background-color: var(--color-accent);
+    color: var(--color-accent-text);
 
     &:hover {
-        @apply text-neutral-200 bg-neutral-700;
+        background-color: var(--color-accent-hover);
     }
 
-    &:active {
-        @apply text-black bg-cyan-400 border-cyan-400;
+    &:active, &:focus {
+        @apply ring-2 ring-offset-2;
+        --tw-ring-color: var(--color-accent);
     }
 }
 
+/*
+ * Botão secundário
+ */
 .btn-secundario {
-    @apply font-normal text-cyan-500 bg-neutral-800 rounded-2xl p-2;
+    @apply font-semibold rounded-lg p-2 bg-transparent transition-colors duration-200 ease-in-out;
+
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
 
     &:hover {
-        @apply text-black bg-cyan-400 border-cyan-400;
+        background-color: var(--color-accent);
+        color: var(--color-accent-text);
     }
 
-    &:active {
-        @apply text-black bg-neutral-700 border-neutral-400;
+    &:active, &:focus {
+        @apply ring-2 ring-offset-2;
+        --tw-ring-color: var(--color-accent);
     }
 }
 
+/*
+ * Botão de perigo
+ */
 .btn-danger {
-    @apply font-normal text-black bg-red-500 rounded-2xl p-3 border border-gray-700;
+    @apply font-semibold rounded-lg p-3 border border-transparent transition-colors duration-200 ease-in-out;
+
+    background-color: var(--color-danger);
+    color: var(--color-text-primary);
 
     &:hover {
-        @apply text-black bg-red-400;
+        background-color: var(--color-danger-hover);
     }
 
-    &:active {
-        @apply text-black bg-neutral-700 border-neutral-400;
+    &:active, &:focus {
+        @apply ring-2 ring-offset-2;
+        --tw-ring-color: var(--color-danger);
     }
 }
 

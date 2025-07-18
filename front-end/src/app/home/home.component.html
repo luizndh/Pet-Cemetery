@@ -1,16 +1,16 @@
 <div class="main">
     <h1 class="title">Home</h1>
-    <div class="flex flex-col lg:flex-row gap-8 justify-center items-center w-full max-w-6xl mx-auto mt-10">
+    <div class="flex flex-col lg:flex-row gap-8 justify-center w-full max-w-6xl mx-auto mt-10">
 
       <!-- Coluna Meus Jazigos -->
-      <div class="flex flex-col items-center bg-neutral-800 rounded-lg shadow-lg p-6 w-full lg:w-1/2">
+      <div class="flex flex-col items-center bg-foreground rounded-lg shadow-lg p-6 w-full lg:w-1/2 h-fit">
         <p class="text-2xl font-bold mb-4">Meus Jazigos</p>
         <button *ngFor="let jazigo of jazigos" [routerLink]="['/home/jazigo', jazigo.id]" class="btn-secundario w-full mb-4 border">{{ jazigo.nomePet == null ? 'JAZIGO VAZIO' : jazigo.nomePet + ' - ' + (jazigo.dataEnterro | date:'dd/MM/yyyy') }}</button>
         <p *ngIf="jazigos.length == 0" class="text-center text-gray-400">Você ainda não possui nenhum jazigo.</p>
       </div>
 
       <!-- Coluna Ações -->
-      <div class="flex flex-col items-center bg-neutral-800 rounded-lg shadow-lg p-6 w-full lg:w-1/2 gap-4">
+      <div class="flex flex-col items-center bg-foreground rounded-lg shadow-lg p-6 w-full lg:w-1/2 gap-4">
         <p class="text-2xl font-bold">Ações</p>
         <button class="btn-primario w-full" routerLink="mapa-jazigos">ADQUIRIR JAZIGO</button>
         <button class="btn-primario w-full">VISUALIZAR DESPESAS</button>

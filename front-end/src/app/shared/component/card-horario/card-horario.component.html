@@ -1,19 +1,19 @@
-<div class="bg-neutral-700 p-6 shadow-lg flex flex-col items-center min-w-43 h-70 rounded-2xl">
-    <h3 class="text-lg font-bold text-white mb-2">{{ diaSemana }}</h3>
+<div class="card p-6 shadow-lg flex flex-col items-center min-w-43 h-70 rounded-2xl">
+    <h3 class="text-lg font-bold mb-2">{{ diaSemana }}</h3>
     <div class="flex flex-col items-center mb-4">
-        <span class="text-white font-semibold">Abertura</span>
+        <span class="font-semibold">Abertura</span>
         <ng-container *ngIf="!editavel; else editAbertura">
-            <span class="text-white text-3xl">{{ abertura }}</span>
+            <span class="text-3xl">{{ abertura }}</span>
         </ng-container>
         <ng-template #editAbertura>
             <input type="time" [(ngModel)]="abertura" (ngModelChange)="onAberturaChange($event)"
-                class="text-white text-2xl border border-neutral-800 rounded px-2 py-1 mt-1 w-full" />
+                class="text-2xl border border-neutral-800 rounded px-2 py-1 mt-1 w-full" />
         </ng-template>
     </div>
     <div class="flex flex-col items-center mb-4">
-        <span class="text-white font-semibold">Fechamento</span>
+        <span class="font-semibold">Fechamento</span>
         <ng-container *ngIf="!editavel; else editFechamento">
-            <span class="text-white text-3xl">{{ fechamento }}</span>
+            <span class="text-3xl">{{ fechamento }}</span>
         </ng-container>
         <ng-template #editFechamento>
             <input type="time" [(ngModel)]="fechamento" (ngModelChange)="onFechamentoChange($event)"

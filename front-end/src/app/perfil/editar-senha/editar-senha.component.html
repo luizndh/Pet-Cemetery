@@ -1,25 +1,25 @@
-<div class="main min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-neutral-900">
+<div class="main flex items-center justify-center">
   <div class="max-w-md w-full space-y-8">
-    <h1 class="text-4xl font-extrabold text-white text-center mb-10 tracking-tight">Trocar Senha</h1>
+    <h1 class="title">Trocar Senha</h1>
 
     <form [formGroup]="trocarSenhaForm" (ngSubmit)="onSubmit()"
-      class="bg-neutral-800 rounded-2xl shadow-2xl p-8 md:p-10 flex flex-col gap-6 w-full border border-neutral-700 mx-auto">
+      class="card flex flex-col gap-6 mx-auto">
       <div class="flex flex-col w-full">
-        <label class="text-white font-medium mb-2" for="senhaAtual">Senha Atual</label>
+        <label class="form-label" for="senhaAtual">Senha Atual</label>
         <input formControlName="senhaAtual" type="password" id="senhaAtual" name="senhaAtual" required
-          class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+          class="w-full form-input">
       </div>
 
       <div class="flex flex-col w-full">
-        <label class="text-white font-medium mb-2" for="novaSenha">Nova Senha</label>
+        <label class="form-label" for="novaSenha">Nova Senha</label>
         <input formControlName="novaSenha" type="password" id="novaSenha" name="novaSenha" required
-          class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+          class="w-full form-input">
       </div>
 
       <div class="flex flex-col w-full mb-5">
-        <label class="text-white font-medium mb-2" for="confirmarSenha">Confirmar Nova Senha</label>
+        <label class="form-label" for="confirmarSenha">Confirmar Nova Senha</label>
         <input formControlName="confirmarSenha" type="password" id="confirmarSenha" name="confirmarSenha" required
-          class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-neutral-500">
+          class="w-full form-input">
       </div>
 
       <button type="submit"
