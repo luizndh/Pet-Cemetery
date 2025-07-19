@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # 1. Serviço da sua Aplicação Spring Boot + Angular
+  app:
+    build: .
+    image: pet-cemetery
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./app.env
+    volumes:
+      # Mapeia o seu arquivo de chave do GCS para dentro do contêiner
+      # ATENÇÃO: Altere o caminho à esquerda para o local real do seu arquivo .json
+      - ./gcs-key.json:/app/gcs-key.json
+    depends_on:
+      - db-postgres
+      - db-mongo
+
+  # 2. Serviço do Banco de Dados PostgreSQL
+  db-postgres:
+    image: postgres:17-alpine
+    restart: always
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./database.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 3. Serviço do Banco de Dados MongoDB
+  db-mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file:
+      - ./mongo.env
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  postgres_data:
+  mongo_data:
