@@ -1,0 +1,15 @@
+package com.petcemetery.petcemetery.usuario.cliente.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class EditarPerfilDTO {
+    private String cep;
+    private String rua;
+    private String numero;
+    private String complemento;
+    private String nome;
+    private String telefone;
+}
