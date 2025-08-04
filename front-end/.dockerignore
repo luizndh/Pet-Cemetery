@@ -1,0 +1,10 @@
+# Dependências e saídas de build do Node
+node_modules
+dist
+.angular
+npm-debug.log*
+
+# Arquivos de IDE e SO
+.vscode
+.idea
+.DS_Store

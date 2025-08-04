@@ -1,24 +1,32 @@
-version: '3.8'
-
 services:
-  # 1. Serviço da sua Aplicação Spring Boot + Angular
-  app:
-    build: .
-    image: pet-cemetery
+  # NOVO: Serviço do Backend
+  back-end:
+    build:
+      context: ./back-end # Pasta onde está o Dockerfile do backend
+      dockerfile: Dockerfile
+    image: pet-cemetery-back-end
     restart: always
     ports:
-      - "8080:8080"
+      - "8080:8080" # Expõe a API na porta 8080
     env_file:
-      - ./app.env
-    volumes:
-      # Mapeia o seu arquivo de chave do GCS para dentro do contêiner
-      # ATENÇÃO: Altere o caminho à esquerda para o local real do seu arquivo .json
-      - ./gcs-key.json:/app/gcs-key.json
+      - ./back-end/src/main/resources/app.env # Usa as mesmas variáveis de ambiente de antes
     depends_on:
       - db-postgres
       - db-mongo
+    volumes:
+      - ./gcs-key/gcs-key.json:/app/gcs-key.json
 
-  # 2. Serviço do Banco de Dados PostgreSQL
+  # NOVO: Serviço do Frontend
+  front-end:
+    build:
+      context: ./front-end # Pasta onde está o Dockerfile do frontend
+      dockerfile: Dockerfile
+    image: pet-cemetery-front-end
+    restart: always
+    ports:
+      - "4200:80" # Mapeia a porta 4200 do seu PC para a porta 80 do Nginx
+
+  # Serviços de banco de dados permanecem os mesmos
   db-postgres:
     image: postgres:17-alpine
     restart: always
@@ -29,7 +37,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # 3. Serviço do Banco de Dados MongoDB
   db-mongo:
     image: mongo:latest
     restart: always
