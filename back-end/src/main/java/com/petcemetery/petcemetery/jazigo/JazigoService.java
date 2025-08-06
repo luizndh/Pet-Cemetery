@@ -1,6 +1,7 @@
 package com.petcemetery.petcemetery.jazigo;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import com.petcemetery.petcemetery.carrinho.dto.CarrinhoDTO;
 import com.petcemetery.petcemetery.contrato.ContratoService;
 import com.petcemetery.petcemetery.core.config.JwtService;
+import com.petcemetery.petcemetery.integracao.gcs.GcsStorageService;
 import com.petcemetery.petcemetery.jazigo.dto.*;
 import com.petcemetery.petcemetery.pagamento.PagamentoService;
 import com.petcemetery.petcemetery.pet.PetService;
@@ -47,6 +49,7 @@ public class JazigoService {
     private final ContratoService contratoService;
     private final PetService petService;
     private final PagamentoService pagamentoService;
+    private final GcsStorageService gcsStorageService;
 
     public JazigoService(JazigoRepository repository,
                          ServicoService servicoService,
@@ -54,13 +57,15 @@ public class JazigoService {
                          ContratoService contratoService,
                          PetService petService,
                          PagamentoService pagamentoService,
-                         JwtService jwtService) {
+                         JwtService jwtService,
+                         GcsStorageService gcsStorageService) {
         this.repository = repository;
         this.servicoService = servicoService;
         this.clienteService = clienteService;
         this.contratoService = contratoService;
         this.petService = petService;
         this.pagamentoService = pagamentoService;
+        this.gcsStorageService = gcsStorageService;
     }
 
     DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -335,11 +340,11 @@ public class JazigoService {
         return true;
     }
 
-    public DetalharJazigoDTO detalharJazigo(Long id) {
+    public DetalharJazigoDTO detalharJazigo(Long id) throws IOException {
         Jazigo jazigo = this.repository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Jazigo não encontrado"));
 
-        return new DetalharJazigoDTO(jazigo);
+        return new DetalharJazigoDTO(jazigo, this.obterUrlImagem(jazigo.getEndereco()));
     }
 
 
@@ -410,5 +415,9 @@ public class JazigoService {
         }
 
         return true;
+    }
+
+    private String obterUrlImagem(String enderecoJazigo) throws IOException {
+        return gcsStorageService.gerarUrlImagem(enderecoJazigo);
     }
 }

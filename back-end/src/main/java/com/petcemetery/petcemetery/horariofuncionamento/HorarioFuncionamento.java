@@ -18,7 +18,7 @@ import lombok.Setter;
 public class HorarioFuncionamento {
 
     @Id
-    private Long id;
+    private String id;
     private String diaSemana;
     private String abertura;
     private String fechamento;

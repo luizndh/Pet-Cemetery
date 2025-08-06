@@ -28,7 +28,7 @@ public class DetalharJazigoDTO{
     private String urlImagem;
 
 
-    public DetalharJazigoDTO(Jazigo jazigo){
+    public DetalharJazigoDTO(Jazigo jazigo, String urlImagem){
         if (jazigo.getPetEnterrado() != null) {
             Pet pet = jazigo.getPetEnterrado();
             this.nomePet = pet.getNome();
@@ -44,7 +44,7 @@ public class DetalharJazigoDTO{
         this.nomeProrietario = jazigo.getProprietario().getNome();
         this.enderecoJazigo = jazigo.getEndereco();
         this.mensagemLapide = jazigo.getMensagem();
-        this.urlImagem = jazigo.getFoto();
+        this.urlImagem = urlImagem;
         this.status = jazigo.getStatus() == Jazigo.StatusEnum.OCUPADO ? "Ocupado" : "Disponível";
     }
 

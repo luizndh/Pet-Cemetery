@@ -11,8 +11,11 @@ services:
     env_file:
       - ./back-end/src/main/resources/app.env # Usa as mesmas variáveis de ambiente de antes
     depends_on:
-      - db-postgres
-      - db-mongo
+      db-postgres:
+        condition: service_started
+      db-mongo:
+        condition: service_started
+
     volumes:
       - ./gcs-key/gcs-key.json:/app/gcs-key.json
 
@@ -46,6 +49,7 @@ services:
       - ./mongo.env
     volumes:
       - mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro # Monta o script de inicialização
 
 volumes:
   postgres_data:

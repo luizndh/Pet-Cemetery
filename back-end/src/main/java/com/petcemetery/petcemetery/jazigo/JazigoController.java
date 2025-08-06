@@ -1,5 +1,6 @@
  package com.petcemetery.petcemetery.jazigo;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
@@ -94,7 +95,7 @@ public class JazigoController {
 
     //retorna os detalhes do jazigo especificado para ser exibido na tela de visualizar detalhes de jazigo
     @GetMapping("/{id}/detalhe")
-    public DetalharJazigoDTO detalharJazigo(@PathVariable Long id){
+    public DetalharJazigoDTO detalharJazigo(@PathVariable Long id) throws IOException{
         return this.jazigoService.detalharJazigo(id);
     }
 

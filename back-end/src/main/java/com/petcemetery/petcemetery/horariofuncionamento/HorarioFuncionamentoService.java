@@ -75,7 +75,9 @@ public class HorarioFuncionamentoService {
     }
 
     public List<HorarioFuncionamentoDTO> getHorarios() {
+        System.out.println("entrei no getHorarios");
         List<HorarioFuncionamento> horarios = repository.findAll();
+        System.out.println("Horários de funcionamento: " + horarios);
         List<HorarioFuncionamentoDTO> horariosDTO = new ArrayList<>();
 
         for(HorarioFuncionamento horario : horarios) {
