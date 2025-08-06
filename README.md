@@ -63,6 +63,9 @@ Este projeto utiliza um conjunto moderno de tecnologias para garantir robustez, 
 - **WeatherAPI**  
   Previsão do tempo utilizando dados meteorológicos.
 
+- **Google Cloud Storage**
+  Armazenamento e recuperação de imagens.
+
 - **Google Auth**  
 Possibilidade de autenticação via conta google. - _EM PROGRESSO_
   
