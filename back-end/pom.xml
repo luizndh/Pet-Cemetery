@@ -10,11 +10,11 @@
 	</parent>
 	<groupId>com.petcemetery</groupId>
 	<artifactId>petcemetery</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>petcemetery</name>
 	<description>Pet Cemetery</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>21</java.version>
 		<jjwt.version>0.11.5</jjwt.version>
 	</properties>
 	<dependencies>

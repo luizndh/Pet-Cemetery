@@ -1,0 +1,43 @@
+# ==================================
+# Configurações do PostgreSQL
+# ==================================
+spring.jpa.hibernate.ddl-auto=create
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.defer-datasource-initialization=true
+spring.sql.init.mode=always
+
+# Database connection (local development)
+# Configure these values for your local environment
+spring.datasource.url=jdbc:postgresql://localhost:5433/pet_cemetery
+spring.datasource.username=YOUR_POSTGRES_USERNAME
+spring.datasource.password=YOUR_POSTGRES_PASSWORD
+
+# ==================================
+# Configurações do MongoDB
+# ==================================
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=pi2
+spring.data.mongodb.username=YOUR_MONGO_USERNAME
+spring.data.mongodb.password=YOUR_MONGO_PASSWORD
+
+# ==================================
+# Configurações de E-mail
+# ==================================
+spring.mail.host=smtp.gmail.com
+spring.mail.port=25
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.username=YOUR_EMAIL@gmail.com
+spring.mail.password=YOUR_EMAIL_APP_PASSWORD
+
+# ==================================
+# Configurações do Google Cloud Storage
+# ==================================
+gcs.bucket.name=pet-cemetery-fotos
+gcs.service.account.key.path=src/main/resources/gcs-key.json
+
+# ==================================
+# API Keys
+# ==================================
+weather.key=YOUR_WEATHER_API_KEY

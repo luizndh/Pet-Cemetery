@@ -10,6 +10,10 @@ services:
       - "8080:8080" # Expõe a API na porta 8080
     env_file:
       - ./back-end/src/main/resources/app.env # Usa as mesmas variáveis de ambiente de antes
+    environment:
+      # Override database hosts for Docker environment
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-postgres:5432/pet_cemetery
+      SPRING_DATA_MONGODB_HOST: db-mongo
     depends_on:
       db-postgres:
         condition: service_started
