@@ -13,7 +13,6 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.petcemetery.petcemetery.core.config.JwtService;
 import com.petcemetery.petcemetery.contrato.dto.ContratoDTO;
 import com.petcemetery.petcemetery.usuario.cliente.dto.VisualizarDespesasDTO;
 import com.petcemetery.petcemetery.servico.Servico.ServicoEnum;
@@ -25,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 public class ContratoService {
 
     private final ContratoRepository repository;
-    private final JwtService tokenService;
 
     public List<ContratoDTO> findEnterros() {
         List<Contrato> contratos = repository.findByServicoTipoServico(ServicoEnum.valueOf("ENTERRO"));
@@ -33,14 +31,13 @@ public class ContratoService {
 
         for (Contrato contrato : contratos) {
             ContratoDTO contratoDTO = new ContratoDTO(
-                contrato.getValor(),
-                contrato.getServico().getTipoServico(),
-                contrato.getJazigo().getEndereco(),
-                contrato.getJazigo().getId(),
-                contrato.getPet().getId(),
-                contrato.getPet().getDataEnterro().toString(),
-                contrato.getCliente().getCpf()
-            );
+                    contrato.getValor(),
+                    contrato.getServico().getTipoServico(),
+                    contrato.getJazigo().getEndereco(),
+                    contrato.getJazigo().getId(),
+                    contrato.getPet().getId(),
+                    contrato.getPet().getDataEnterro().toString(),
+                    contrato.getCliente().getCpf());
 
             enterros.add(contratoDTO);
         }
@@ -55,7 +52,8 @@ public class ContratoService {
             document.open();
 
             // Adicionando o título ao PDF
-            Paragraph paragraph = new Paragraph("Relatório de Enterros", FontFactory.getFont(FontFactory.HELVETICA, 30, Font.BOLD));
+            Paragraph paragraph = new Paragraph("Relatório de Enterros",
+                    FontFactory.getFont(FontFactory.HELVETICA, 30, Font.BOLD));
             paragraph.setAlignment(Element.ALIGN_CENTER);
             document.add(paragraph);
 
@@ -63,13 +61,19 @@ public class ContratoService {
             Chunk chunk = new Chunk("\n");
             document.add(chunk);
 
-            document.add(new Paragraph("        VALOR                    JAZIGO                    CPF                                     DATA ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
+            document.add(new Paragraph(
+                    "        VALOR                    JAZIGO                    CPF                                     DATA ",
+                    FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
             // Adicionando o conteúdo de cada objeto ao PDF
             for (ContratoDTO enterro : enterros) {
-                document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
-                document.add(new Paragraph("         " + String.valueOf(enterro.getValor()) + "                         " + enterro.getEnderecoJazigo() + "                    " + enterro.getCpfCliente() + "                       " + enterro.getDataServico()));
+                document.add(new Paragraph(
+                        "----------------------------------------------------------------------------------------------------------------------------------"));
+                document.add(new Paragraph("         " + String.valueOf(enterro.getValor())
+                        + "                         " + enterro.getEnderecoJazigo() + "                    "
+                        + enterro.getCpfCliente() + "                       " + enterro.getDataServico()));
             }
-            document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
+            document.add(new Paragraph(
+                    "----------------------------------------------------------------------------------------------------------------------------------"));
             document.close();
             writer.close();
 
@@ -87,14 +91,13 @@ public class ContratoService {
 
         for (Contrato contrato : contratos) {
             ContratoDTO contratoDTO = new ContratoDTO(
-                contrato.getValor(),
-                contrato.getServico().getTipoServico(),
-                contrato.getJazigo().getEndereco(),
-                contrato.getJazigo().getId(),
-                contrato.getPet().getId(),
-                contrato.getPet().getDataEnterro().toString(),
-                contrato.getCliente().getCpf()
-            );
+                    contrato.getValor(),
+                    contrato.getServico().getTipoServico(),
+                    contrato.getJazigo().getEndereco(),
+                    contrato.getJazigo().getId(),
+                    contrato.getPet().getId(),
+                    contrato.getPet().getDataEnterro().toString(),
+                    contrato.getCliente().getCpf());
 
             exumacoes.add(contratoDTO);
         }
@@ -109,7 +112,8 @@ public class ContratoService {
             document.open();
 
             // Adicionando o título ao PDF
-            Paragraph paragraph = new Paragraph("Relatório de Exumações", FontFactory.getFont(FontFactory.HELVETICA, 30, Font.BOLD));
+            Paragraph paragraph = new Paragraph("Relatório de Exumações",
+                    FontFactory.getFont(FontFactory.HELVETICA, 30, Font.BOLD));
             paragraph.setAlignment(Element.ALIGN_CENTER);
             document.add(paragraph);
 
@@ -117,13 +121,19 @@ public class ContratoService {
             Chunk chunk = new Chunk("\n");
             document.add(chunk);
 
-            document.add(new Paragraph("        VALOR                    JAZIGO                    CPF                                     DATA ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
+            document.add(new Paragraph(
+                    "        VALOR                    JAZIGO                    CPF                                     DATA ",
+                    FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
             // Adicionando o conteúdo de cada objeto ao PDF
             for (ContratoDTO exumacao : exumacoes) {
-                document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
-                document.add(new Paragraph("         " + String.valueOf(exumacao.getValor()) + "                         " + exumacao.getEnderecoJazigo() + "                    " + exumacao.getCpfCliente() + "                       " + exumacao.getDataServico()));
+                document.add(new Paragraph(
+                        "----------------------------------------------------------------------------------------------------------------------------------"));
+                document.add(new Paragraph("         " + String.valueOf(exumacao.getValor())
+                        + "                         " + exumacao.getEnderecoJazigo() + "                    "
+                        + exumacao.getCpfCliente() + "                       " + exumacao.getDataServico()));
             }
-            document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
+            document.add(new Paragraph(
+                    "----------------------------------------------------------------------------------------------------------------------------------"));
             document.close();
             writer.close();
 
@@ -140,7 +150,7 @@ public class ContratoService {
 
         List<VisualizarDespesasDTO> despesasDTO = new ArrayList<>();
 
-        for (Contrato c : contratos){
+        for (Contrato c : contratos) {
             VisualizarDespesasDTO despesaDTO = new VisualizarDespesasDTO(c);
             despesasDTO.add(despesaDTO);
         }

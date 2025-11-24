@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.petcemetery.petcemetery.core.config.JwtService;
 import com.petcemetery.petcemetery.lembrete.Lembrete;
 import com.petcemetery.petcemetery.lembrete.LembreteRepository;
 
@@ -20,10 +19,8 @@ import org.springframework.stereotype.Service;
 public class ClienteService {
 
     private final ClienteRepository repository;
-    private final JwtService jwtService;
     private final LembreteRepository lembreteRepository;
     private final PasswordEncoder passwordEncoder;
-
 
     public List<ClienteInadimplenteDTO> findInadimplentes() {
         List<Cliente> clientesInadimplentes = repository.findByInadimplenteTrue();
@@ -33,8 +30,7 @@ public class ClienteService {
                 cliente.getTelefone(),
                 cliente.getNome(),
                 cliente.getDesativado(),
-                cliente.getInadimplente()
-        )).collect(Collectors.toList());
+                cliente.getInadimplente())).collect(Collectors.toList());
     }
 
     public Cliente save(Cliente cliente) {
