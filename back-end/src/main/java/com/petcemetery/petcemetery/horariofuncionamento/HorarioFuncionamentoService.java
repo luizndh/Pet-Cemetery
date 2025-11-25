@@ -14,7 +14,9 @@ import com.petcemetery.petcemetery.horariofuncionamento.dto.HorarioFuncionamento
 import com.petcemetery.petcemetery.usuario.cliente.Cliente;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class HorarioFuncionamentoService {
@@ -24,10 +26,10 @@ public class HorarioFuncionamentoService {
     private final EmailService emailService;
     private final HorarioFuncionamentoRepository horarioFuncionamentoRepository;
 
-    public void alterarHorarioFuncionamento(List<HorarioFuncionamentoDTO> horarios) {
-        for (HorarioFuncionamentoDTO horarioDTO : horarios) {
-
+    public void alterarHorarioFuncionamento(List<HorarioFuncionamentoDTO> horariosDTO) {
+        for (HorarioFuncionamentoDTO horarioDTO : horariosDTO) {
             HorarioFuncionamento horario = repository.findByDiaSemana(horarioDTO.getDiaSemana());
+
             horario.setAbertura(horarioDTO.getAbertura());
             horario.setFechamento(horarioDTO.getFechamento());
             horario.setFechado(horarioDTO.isFechado());
@@ -42,7 +44,7 @@ public class HorarioFuncionamentoService {
     private void notificaClientes() {
         List<Cliente> clientes = clienteService.findAll();
         String[] emails = new String[clientes.size()];
-        for(Cliente cliente : clientes) {
+        for (Cliente cliente : clientes) {
             emails[clientes.indexOf(cliente)] = cliente.getEmail();
         }
 
@@ -52,7 +54,8 @@ public class HorarioFuncionamentoService {
         Map<String, HorarioFuncionamento> horarioMap = horarios.stream()
                 .collect(Collectors.toMap(HorarioFuncionamento::getDiaSemana, h -> h));
 
-        String body = "Olá! Os horários de funcionamento do cemítério foram alterados para essa semana. Seguem os novos horários:\n" +
+        String body = "Olá! Os horários de funcionamento do cemítério foram alterados para essa semana. Seguem os novos horários:\n"
+                +
                 "Segunda: " + getHorario(horarioMap, "Segunda-Feira") + "\n" +
                 "Terça: " + getHorario(horarioMap, "Terça-Feira") + "\n" +
                 "Quarta: " + getHorario(horarioMap, "Quarta-Feira") + "\n" +
@@ -80,8 +83,9 @@ public class HorarioFuncionamentoService {
         System.out.println("Horários de funcionamento: " + horarios);
         List<HorarioFuncionamentoDTO> horariosDTO = new ArrayList<>();
 
-        for(HorarioFuncionamento horario : horarios) {
-            HorarioFuncionamentoDTO horarioDTO = new HorarioFuncionamentoDTO(horario.getDiaSemana(), horario.getAbertura(), horario.getFechamento(), horario.isFechado());
+        for (HorarioFuncionamento horario : horarios) {
+            HorarioFuncionamentoDTO horarioDTO = new HorarioFuncionamentoDTO(horario.getDiaSemana(),
+                    horario.getAbertura(), horario.getFechamento(), horario.isFechado());
             horariosDTO.add(horarioDTO);
         }
 

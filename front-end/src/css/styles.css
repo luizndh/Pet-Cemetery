@@ -17,6 +17,7 @@
 
 /* Temas */
 @layer base {
+
     button:not(:disabled),
     [role="button"]:not(:disabled) {
         cursor: pointer;
@@ -41,7 +42,7 @@
         --color-text-primary: #FFFFFF;
         --color-text-secondary: #C0C0C0;
         --color-text-terciary: black;
-        --color-accent: #9370DB; /* Medium Purple */
+        --color-accent: #9370DB;
         --color-accent-hover: #A380E6;
         --color-accent-text: #FFFFFF;
         --color-danger: #E34234;
@@ -90,14 +91,13 @@
     body {
         background-color: var(--color-background);
         color: var(--color-text-primary);
-        /* Adiciona uma transição suave ao mudar de tema */
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 }
 
 
 :root {
-    --navbar-height: 5rem; /* Define a altura da navbar */
+    --navbar-height: 5rem;
 }
 
 .navbar {
@@ -174,7 +174,8 @@ input {
         background-color: var(--color-accent-hover);
     }
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
         @apply ring-2 ring-offset-2;
         --tw-ring-color: var(--color-accent);
     }
@@ -194,7 +195,8 @@ input {
         color: var(--color-accent-text);
     }
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
         @apply ring-2 ring-offset-2;
         --tw-ring-color: var(--color-accent);
     }
@@ -213,12 +215,14 @@ input {
         background-color: var(--color-danger-hover);
     }
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
         @apply ring-2 ring-offset-2;
         --tw-ring-color: var(--color-danger);
     }
 }
 
-th, td {
+th,
+td {
     text-align: center;
 }

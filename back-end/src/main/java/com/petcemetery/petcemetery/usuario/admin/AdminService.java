@@ -1,18 +1,18 @@
 package com.petcemetery.petcemetery.usuario.admin;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.petcemetery.petcemetery.core.exceptions.ResourceNotFoundException;
 import com.petcemetery.petcemetery.jazigo.JazigoService;
-import org.springframework.stereotype.Service;
-
 import com.petcemetery.petcemetery.jazigo.dto.HistoricoJazigoDTO;
 import com.petcemetery.petcemetery.jazigo.Jazigo;
-import com.petcemetery.petcemetery.pet.Pet;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminService {
@@ -21,32 +21,30 @@ public class AdminService {
     private final AdminRepository repository;
 
     public List<HistoricoJazigoDTO> visualizarHistorico(Long id) {
-        Jazigo jazigo = this.jazigoService.findById(id);
-        List<HistoricoJazigoDTO> historico = new ArrayList<>();
+        log.debug("Visualizando histórico do jazigo ID: {}", id);
+        Jazigo jazigo = jazigoService.findById(id);
 
-        if(jazigo != null) {
-            for(Pet pet: jazigo.getHistoricoPets()) {
-                historico.add(new HistoricoJazigoDTO(id, pet.getNome(), pet.getDataNascimento(), pet.getEspecie(), pet.getProprietario().getNome(), pet.getDataEnterro().toLocalDate(), pet.getDataExumacao().toLocalDate()));
-            }
-
-        } else {
-            throw new IllegalArgumentException("Jazigo não encontrado");
-        }
-
-        return historico;
+        return jazigo.getHistoricoPets().stream()
+                .map(pet -> new HistoricoJazigoDTO(
+                        id,
+                        pet.getNome(),
+                        pet.getDataNascimento(),
+                        pet.getEspecie(),
+                        pet.getProprietario().getNome(),
+                        pet.getDataEnterro().toLocalDate(),
+                        pet.getDataExumacao().toLocalDate()))
+                .collect(Collectors.toList());
     }
 
     public Admin findById(Long id) {
-        Optional<Admin> admin = this.repository.findById(id);
-
-        if(admin.isPresent()) {
-            return admin.get();
-        } else {
-            throw new IllegalArgumentException("Admin não encontrado");
-        }
+        log.debug("Buscando admin com ID: {}", id);
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Admin", id));
     }
 
     public Admin findByEmail(String email) {
-        return this.repository.findByEmail(email);
+        log.debug("Buscando admin por email: {}", email);
+        return repository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Admin", "email", email));
     }
 }

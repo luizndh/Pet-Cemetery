@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petcemetery.petcemetery.integracao.weather.dto.ClimaDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Service
 public class WeatherService {
 
@@ -23,7 +25,8 @@ public class WeatherService {
         RestClient restClient = RestClient.create();
 
         String json = restClient.get()
-                .uri(String.format("https://api.weatherapi.com/v1/forecast.json?q=%s&days=%d&dt=%s&key=%s", CIDADE, Q, data, WEATHER_API_KEY))
+                .uri(String.format("https://api.weatherapi.com/v1/forecast.json?q=%s&days=%d&dt=%s&key=%s", CIDADE, Q,
+                        data, WEATHER_API_KEY))
                 .retrieve()
                 .body(String.class);
 
@@ -32,7 +35,7 @@ public class WeatherService {
         try {
             JsonNode node = objectMapper.readValue(json, JsonNode.class);
             JsonNode inicial = node.get("forecast").get("forecastday").get(0).get("day");
-            System.out.println(inicial.asText());
+            log.debug("Dados do clima obtidos para data: {}", data);
 
             String tempMaxima = inicial.get("maxtemp_c").asText();
             String tempMinima = inicial.get("mintemp_c").asText();
@@ -43,8 +46,9 @@ public class WeatherService {
                     .temperaturaMinima(tempMinima)
                     .icone(icone)
                     .build();
-        } catch(JsonProcessingException e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            log.error("Erro ao processar resposta da API de clima", e);
+            throw new RuntimeException("Erro ao buscar dados do clima", e);
         }
     }
 }
