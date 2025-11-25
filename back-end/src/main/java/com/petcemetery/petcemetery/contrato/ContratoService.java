@@ -1,18 +1,10 @@
 package com.petcemetery.petcemetery.contrato;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.petcemetery.petcemetery.contrato.dto.ContratoDTO;
 import com.petcemetery.petcemetery.usuario.cliente.dto.VisualizarDespesasDTO;
 import com.petcemetery.petcemetery.servico.Servico.ServicoEnum;
@@ -26,7 +18,7 @@ public class ContratoService {
     private final ContratoRepository repository;
 
     public List<ContratoDTO> findEnterros() {
-        List<Contrato> contratos = repository.findByServicoTipoServico(ServicoEnum.valueOf("ENTERRO"));
+        List<Contrato> contratos = repository.findByServicoTipoServico(ServicoEnum.ENTERRO);
         List<ContratoDTO> enterros = new ArrayList<>();
 
         for (Contrato contrato : contratos) {
@@ -45,48 +37,8 @@ public class ContratoService {
         return enterros;
     }
 
-    public byte[] gerarPDFEnterros(List<ContratoDTO> enterros) {
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            Document document = new Document();
-            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
-            document.open();
-
-            // Adicionando o título ao PDF
-            Paragraph paragraph = new Paragraph("Relatório de Enterros",
-                    FontFactory.getFont(FontFactory.HELVETICA, 30, Font.BOLD));
-            paragraph.setAlignment(Element.ALIGN_CENTER);
-            document.add(paragraph);
-
-            // Adicionar espaços em branco
-            Chunk chunk = new Chunk("\n");
-            document.add(chunk);
-
-            document.add(new Paragraph(
-                    "        VALOR                    JAZIGO                    CPF                                     DATA ",
-                    FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-            // Adicionando o conteúdo de cada objeto ao PDF
-            for (ContratoDTO enterro : enterros) {
-                document.add(new Paragraph(
-                        "----------------------------------------------------------------------------------------------------------------------------------"));
-                document.add(new Paragraph("         " + String.valueOf(enterro.getValor())
-                        + "                         " + enterro.getEnderecoJazigo() + "                    "
-                        + enterro.getCpfCliente() + "                       " + enterro.getDataServico()));
-            }
-            document.add(new Paragraph(
-                    "----------------------------------------------------------------------------------------------------------------------------------"));
-            document.close();
-            writer.close();
-
-            byte[] pdfBytes = outputStream.toByteArray();
-
-            return pdfBytes;
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao gerar PDF");
-        }
-    }
-
     public List<ContratoDTO> findExumacoes() {
-        List<Contrato> contratos = repository.findByServicoTipoServico(ServicoEnum.valueOf("EXUMACAO"));
+        List<Contrato> contratos = repository.findByServicoTipoServico(ServicoEnum.EXUMACAO);
         List<ContratoDTO> exumacoes = new ArrayList<>();
 
         for (Contrato contrato : contratos) {
@@ -103,46 +55,6 @@ public class ContratoService {
         }
 
         return exumacoes;
-    }
-
-    public byte[] gerarPDFExumacoes(List<ContratoDTO> exumacoes) {
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            Document document = new Document();
-            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
-            document.open();
-
-            // Adicionando o título ao PDF
-            Paragraph paragraph = new Paragraph("Relatório de Exumações",
-                    FontFactory.getFont(FontFactory.HELVETICA, 30, Font.BOLD));
-            paragraph.setAlignment(Element.ALIGN_CENTER);
-            document.add(paragraph);
-
-            // Adicionar espaços em branco
-            Chunk chunk = new Chunk("\n");
-            document.add(chunk);
-
-            document.add(new Paragraph(
-                    "        VALOR                    JAZIGO                    CPF                                     DATA ",
-                    FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
-            // Adicionando o conteúdo de cada objeto ao PDF
-            for (ContratoDTO exumacao : exumacoes) {
-                document.add(new Paragraph(
-                        "----------------------------------------------------------------------------------------------------------------------------------"));
-                document.add(new Paragraph("         " + String.valueOf(exumacao.getValor())
-                        + "                         " + exumacao.getEnderecoJazigo() + "                    "
-                        + exumacao.getCpfCliente() + "                       " + exumacao.getDataServico()));
-            }
-            document.add(new Paragraph(
-                    "----------------------------------------------------------------------------------------------------------------------------------"));
-            document.close();
-            writer.close();
-
-            byte[] pdfBytes = outputStream.toByteArray();
-
-            return pdfBytes;
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao gerar PDF");
-        }
     }
 
     public List<VisualizarDespesasDTO> visualizarDespesas(Long id) {

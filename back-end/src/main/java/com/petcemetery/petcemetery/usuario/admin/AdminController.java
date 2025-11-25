@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.petcemetery.petcemetery.usuario.cliente.dto.ClienteInadimplenteDTO;
+import com.petcemetery.petcemetery.utils.PdfGeneratorService;
 import com.petcemetery.petcemetery.contrato.dto.ContratoDTO;
 import com.petcemetery.petcemetery.jazigo.dto.HistoricoJazigoDTO;
 import com.petcemetery.petcemetery.jazigo.dto.OcupacaoJazigoDTO;
@@ -31,28 +31,23 @@ import com.petcemetery.petcemetery.contrato.ContratoService;
 import com.petcemetery.petcemetery.jazigo.JazigoService;
 import com.petcemetery.petcemetery.servico.ServicoService;
 
+import lombok.RequiredArgsConstructor;
+
 @EnableAsync
 @RestController
 @RequestMapping("/api/admin")
+@RequiredArgsConstructor
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
+    private final ServicoService servicoService;
+    private final ClienteService clienteService;
+    private final ContratoService contratoService;
+    private final JazigoService jazigoService;
+    private final PdfGeneratorService pdfGeneratorService;
 
-    @Autowired
-    private ServicoService servicoService;
-
-
-    @Autowired
-    private ClienteService clienteService;
-
-    @Autowired
-    private ContratoService contratoService;
-
-    @Autowired
-    private JazigoService jazigoService;
-
-    // Retorna, em formato JSON, informações sobre todos os pets que já passaram no jazigo passado pelo seu id.
+    // Retorna, em formato JSON, informações sobre todos os pets que já passaram no
+    // jazigo passado pelo seu id.
     @GetMapping("/{id}/historico")
     public List<HistoricoJazigoDTO> visualizarHistorico(@PathVariable Long id) {
         return this.adminService.visualizarHistorico(id);
@@ -92,7 +87,7 @@ public class AdminController {
             throw new NoSuchElementException("Não existem enterros na nossa base de dados");
         }
 
-        byte[] pdfBytes = this.contratoService.gerarPDFEnterros(enterros);
+        byte[] pdfBytes = this.pdfGeneratorService.gerarPDFEnterros(enterros);
 
         if (pdfBytes != null) {
             HttpHeaders headers = new HttpHeaders();
@@ -120,7 +115,7 @@ public class AdminController {
             throw new NoSuchElementException("Não existem exumações na nossa base de dados");
         }
 
-        byte[] pdfBytes = this.contratoService.gerarPDFExumacoes(exumacoes);
+        byte[] pdfBytes = this.pdfGeneratorService.gerarPDFExumacoes(exumacoes);
 
         if (pdfBytes != null) {
             HttpHeaders headers = new HttpHeaders();
@@ -134,7 +129,7 @@ public class AdminController {
 
     // Relatório de jazigos
     @GetMapping("/jazigos")
-    public List<OcupacaoJazigoDTO> getJazigos(){
+    public List<OcupacaoJazigoDTO> getJazigos() {
         return this.jazigoService.getJazigos();
     }
 
@@ -148,7 +143,7 @@ public class AdminController {
             throw new NoSuchElementException("Não existem jazigos na nossa base de dados");
         }
 
-        byte[] pdfBytes = this.jazigoService.gerarPDFJazigos(jazigos);
+        byte[] pdfBytes = this.pdfGeneratorService.gerarPDFJazigos(jazigos);
 
         if (pdfBytes != null) {
             HttpHeaders headers = new HttpHeaders();
@@ -160,7 +155,8 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    // Recebe um request parameter "data" no formato "yyyy-MM-dd" e seta a data atual do sistema para a data recebida. Retorna "ERR;data_invalida"
+    // Recebe um request parameter "data" no formato "yyyy-MM-dd" e seta a data
+    // atual do sistema para a data recebida. Retorna "ERR;data_invalida"
     // caso o formato da data seja inválido, e "OK" se tudo ocorrer bem.
     @PostMapping("/time-travel")
     public boolean timeTravel(@RequestParam String data) {
@@ -168,8 +164,7 @@ public class AdminController {
 
         try {
             dataAvancada = LocalDate.parse(data);
-        }
-        catch (DateTimeException e){
+        } catch (DateTimeException e) {
             throw new IllegalArgumentException("Formato de data inválido");
         }
 
