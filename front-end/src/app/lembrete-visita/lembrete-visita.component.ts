@@ -3,6 +3,7 @@ import { LembreteVisitaService } from './lembrete-visita.service';
 import { DatePipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Clima } from './model/clima.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-lembrete-visita',
@@ -12,13 +13,13 @@ import { Clima } from './model/clima.model';
 export class LembreteVisitaComponent {
     clima?: Clima;
     modalAberto: boolean = false;
-    dataSelecionada!: Date;
+    dataSelecionada: Date | null = null;
     carregandoClima: boolean = false;
 
     minDate: string;
     maxDate: string;
 
-    constructor(private service: LembreteVisitaService) {
+    constructor(private service: LembreteVisitaService, private router: Router) {
         const today = new Date();
         const min = new Date(today);
         min.setDate(today.getDate() + 1);
@@ -37,18 +38,17 @@ export class LembreteVisitaComponent {
                 this.clima = response;
                 this.carregandoClima = false;
             },
-            (error) => {
+            () => {
                 this.carregandoClima = false;
             }
         );
     }
 
     agendarLembrete(data: Date) {
-        console.log('Agendando lembrete para a data:', data);
         this.service.agendaLembreteVisita(data).subscribe(
-            (response) => {
-                console.log('Lembrete agendado com sucesso!', response);
+            () => {
                 this.modalAberto = false;
+                this.router.navigate(['/home']);
             }
         );
     }

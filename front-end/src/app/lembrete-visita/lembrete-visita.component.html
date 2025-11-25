@@ -1,29 +1,19 @@
 <div class="main">
     <h1 class="title mb-8">Agendar Lembrete</h1>
     <div class="flex flex-col items-center w-full max-w-md mx-auto card">
-      <label for="data-visita" class="form-label w-full mb-4">Escolha a data da sua visita</label>
-      <input
-        placeholder="Data da visita"
-        type="date"
-        id="data-visita"
-        name="data-visita"
-        class="form-input w-full mb-6"
-        [(ngModel)]="dataSelecionada"
-        [min]="minDate"
-        [max]="maxDate"
-        />
-      <button class="btn-primario w-full" (click)="abrirModal()">Agendar</button>
+        <label for="data-visita" class="form-label w-full mb-4">Escolha a data da sua visita</label>
+        <input placeholder="Data da visita" type="date" id="data-visita" name="data-visita"
+            class="form-input w-full mb-6" [(ngModel)]="dataSelecionada" [min]="minDate" [max]="maxDate" />
+        <button class="btn-primario w-full" (click)="abrirModal()" [disabled]="!dataSelecionada">Agendar</button>
     </div>
 
-    <div
-        *ngIf="modalAberto"
-        class="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
-        >
+    <div *ngIf="modalAberto" class="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
         <div class="bg-foreground rounded-lg shadow-lg p-6 w-full max-w-md">
             <h2 class="text-xl font-bold mb-4 text-white">Data: {{ dataSelecionada | date: 'dd/MM/yyyy'}}</h2>
 
             <div *ngIf="carregandoClima" class="flex justify-center items-center mb-6">
-                <svg class="animate-spin h-8 w-8 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin h-8 w-8 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
                 </svg>
@@ -32,25 +22,17 @@
             <div *ngIf="clima!.icone" class="mb-6 flex flex-col items-center">
                 <p class="mb-2 flex items-center">
                     <span class="form-label">Previsão:</span>
-                    <img
-                        [src]="clima?.icone"
-                        alt="Ícone do clima"
-                        class="ml-2 w-12 h-12"
-                    />
+                    <img [src]="clima?.icone" alt="Ícone do clima" class="ml-2 w-12 h-12" />
                 </p>
                 <p class="mb-2">Mínima do dia: {{ clima?.temperaturaMinima + ' ºC' }}</p>
                 <p class="mb-2">Máxima do dia: {{ clima?.temperaturaMaxima + ' ºC' }}</p>
             </div>
             <div class="flex justify-between">
-                <button
-                    class="btn-primario w-[48%]"
-                    (click)="agendarLembrete(dataSelecionada!)">
-                Agendar
+                <button class="btn-primario w-[48%]" (click)="agendarLembrete(dataSelecionada!)">
+                    Agendar
                 </button>
-                <button
-                    class="btn-danger w-[48%]"
-                    (click)="modalAberto = false">
-                Cancelar
+                <button class="btn-danger w-[48%]" (click)="modalAberto = false">
+                    Cancelar
                 </button>
             </div>
         </div>
